@@ -323,17 +323,29 @@ input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 7px rgba(255,195,
 .cta-note{font-size:12px;color:rgba(255,255,255,.35);font-weight:500}
 
 /* ── FOOTER ── */
-footer{background:var(--pd);padding:48px 5vw 32px;border-top:1px solid rgba(255,255,255,.07)}
-.fti{max-width:1100px;margin:0 auto}
-.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:36px}
-.ft-brand p{font-size:12px;color:rgba(255,255,255,.4);line-height:1.8;margin-top:12px;max-width:240px}
-.ft-col h5{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:12px}
-.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
-.ft-col a{color:rgba(255,255,255,.55);text-decoration:none;font-size:12px;font-weight:600;transition:color .2s}
-.ft-col a:hover{color:var(--y)}
-.ft-bot{display:flex;justify-content:space-between;padding-top:20px;border-top:1px solid rgba(255,255,255,.08);flex-wrap:wrap;gap:8px}
-.ft-bot p{font-size:11px;color:rgba(255,255,255,.3)}
-.ft-disc{font-size:10px;color:rgba(255,255,255,.2);margin-top:11px;line-height:1.7;max-width:840px}
+footer{background:var(--pd);padding:48px 5vw 40px}
+.fti{max-width:1000px;margin:0 auto}
+.ft-top-simple{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;padding-bottom:28px}
+.ft-logo-wrap{display:flex;align-items:center;gap:8px}
+.ft-legal-links{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
+.ft-legal-links a{color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;font-weight:600;transition:color .2s}
+.ft-legal-links a:hover{color:var(--y)}
+.ft-sep{color:rgba(255,255,255,.25);font-size:12px}
+.ft-copy{font-size:12px;color:rgba(255,255,255,.4);font-weight:500}
+.ft-divider{border:none;border-top:1px solid rgba(255,255,255,.1);margin:4px 0 24px}
+.ft-warning-bar{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 20px;margin-bottom:28px}
+.ft-warning-bar span{font-size:12px;font-weight:700;color:rgba(255,255,255,.75);letter-spacing:.02em}
+.ft-pipe{color:rgba(255,255,255,.25);font-size:14px}
+.ft-disclosures{border-top:1px solid rgba(255,255,255,.08);padding-top:22px}
+.ft-disc-title{font-size:12px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.ft-disclosures p{font-size:10.5px;color:rgba(255,255,255,.3);line-height:1.75;font-weight:400;margin-bottom:12px}
+.ft-disclosures ul{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:14px;padding-left:0}
+.ft-disclosures ul li{font-size:10.5px;color:rgba(255,255,255,.28);line-height:1.75;font-weight:400;padding-left:14px;position:relative}
+.ft-disclosures ul li::before{content:'*';position:absolute;left:0;color:rgba(255,255,255,.25)}
+.ft-disc-more{font-size:10.5px;color:rgba(255,255,255,.28);line-height:1.75;margin-bottom:10px}
+.ft-disc-more a{color:rgba(255,255,255,.45);text-decoration:underline;text-underline-offset:2px}
+.ft-disc-more a:hover{color:var(--y)}
+.ft-disc-copy{font-size:11px;color:rgba(255,255,255,.35);font-weight:600;margin-top:4px}
 
 /* ── PRICING ── */
 .pricing-sect{padding:80px 5vw;background:var(--w)}
@@ -891,23 +903,53 @@ footer{background:var(--pd);padding:48px 5vw 32px;border-top:1px solid rgba(255,
 <!-- FOOTER -->
 <footer id="legal">
   <div class="fti">
-    <div class="ft-top">
-      <div class="ft-brand">
-        <div style="display:flex;align-items:center;gap:8px">
-          <div style="font-size:32px;font-weight:700;color:var(--y);letter-spacing:-3px;line-height:1;display:flex;align-items:center">mc<div style="width:22px;height:22px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--p);margin-left:-2px;border:2px solid var(--p)">$</div></div>
-          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.7);line-height:1.3;border-left:2px solid rgba(255,255,255,.2);padding-left:7px;margin-left:4px">El Menudo<br>Cuenta<sup style="font-size:7px">®</sup></div>
-        </div>
-        <p>Invertir no es privilegio de unos pocos. Democratizamos el acceso a portafolios profesionales desde $5, con empatía y sencillez. Accede en elmenudocuenta.com.</p>
+
+    <!-- Logo + legal links + copyright -->
+    <div class="ft-top-simple">
+      <div class="ft-logo-wrap">
+        <div style="font-size:36px;font-weight:700;color:var(--y);letter-spacing:-3px;line-height:1;display:flex;align-items:center">mc<div style="width:24px;height:24px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--p);margin-left:-2px;border:2px solid var(--p)">$</div></div>
+        <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.75);line-height:1.3;border-left:2px solid rgba(255,255,255,.2);padding-left:8px;margin-left:5px">El Menudo<br>Cuenta<sup style="font-size:7px">®</sup></div>
       </div>
-      <div class="ft-col"><h5>Productos</h5><ul><li><a href="#">MC Efectivo</a></li><li><a href="#">MC Inversiones</a></li><li><a href="#">MC Futuro</a></li><li><a href="#calculadora">Calculadora</a></li></ul></div>
-      <div class="ft-col"><h5>Empresa</h5><ul><li><a href="#">Nosotros</a></li><li><a href="#">Blog</a></li><li><a href="#">Membresía</a></li><li><a href="#">Prensa</a></li></ul></div>
-      <div class="ft-col"><h5>Legal</h5><ul><li><a href="#">Términos de uso</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Divulgaciones</a></li><li><a href="#">ADV Formulario</a></li></ul></div>
+      <div class="ft-legal-links">
+        <a href="https://www.elmenudocuenta.com/legal" target="_blank">Términos y condiciones</a>
+        <span class="ft-sep">·</span>
+        <a href="https://www.elmenudocuenta.com/legal" target="_blank">Política de privacidad</a>
+        <span class="ft-sep">·</span>
+        <a href="https://www.elmenudocuenta.com/legal" target="_blank">Ver EMC Client Relationship Summary — Form ADV Part 2A Website Disclosure</a>
+      </div>
+      <div class="ft-copy">© 2026 El Menudo Cuenta, LLC. All Rights Reserved.</div>
     </div>
-    <div class="ft-bot">
-      <p>© 2023 El Menudo Cuenta LLC. Todos los derechos reservados.</p>
-      <p>SEC Registered Investment Advisor · SIPC Member</p>
+
+    <div class="ft-divider"></div>
+
+    <!-- Investment warning bar -->
+    <div class="ft-warning-bar">
+      <span>Investment products</span><span class="ft-pipe">|</span>
+      <span>Not FDIC insured</span><span class="ft-pipe">|</span>
+      <span>No bank guarantee</span><span class="ft-pipe">|</span>
+      <span>May lose value</span>
     </div>
-    <p class="ft-disc">El Menudo Cuenta LLC es un asesor de inversiones registrado. La inversión conlleva riesgos incluyendo la posible pérdida del capital. El rendimiento pasado no garantiza resultados futuros. Esta página es solo informativa y no constituye asesoría de inversión personalizada.</p>
+
+    <!-- Full disclosures -->
+    <div class="ft-disclosures">
+      <div class="ft-disc-title">Important Disclosures</div>
+      <p>Investing involves risk, including loss of principal. Please consider, among other important factors, your investment objectives, risk tolerance and El Menudo Cuenta's pricing before investing. Investment advisory services offered by El Menudo Cuenta, LLC (EMC), an SEC-registered investment advisor. Brokerage services are provided to clients of EMC by Interactive Brokers, LLC., an SEC-registered broker-dealer and member FINRA/SIPC.</p>
+      <ul>
+        <li>A properly suggested portfolio recommendation is dependent upon current and accurate financial and risk profiles. Clients who have experienced changes to their goals, financial circumstances, or investment objectives, or who wish to modify their portfolio recommendation, should promptly update their information in the EMC app.</li>
+        <li>EMC Subscription Fees are assessed based on the tier of services in which you are enrolled. EMC does not charge transactional fees, commissions or fees based on assets.</li>
+        <li>The ETFs comprising the portfolios charge fees and expenses that will reduce a client's return. Investors should consider the investment objectives, risks, charges and expenses of the funds carefully before investing. Investment policies, management fees and other information can be found in the individual ETF's prospectus. Please read each prospectus carefully before investing.</li>
+        <li>EMC Inversiones, an individual investment account which invests in a portfolio of ETFs (exchange traded funds), is recommended to clients based on their investment objectives, time horizon, and risk tolerance.</li>
+        <li>For EMC Futuro, an Individual Retirement Account (either Traditional, or ROTH IRA), please consult your tax advisor with any questions.</li>
+        <li>It is not possible to invest directly in an index. Past performance is no guarantee of future results.</li>
+        <li>EMC reserves the right to restrict or revoke any and all offers at any time.</li>
+        <li>Compounding is the process in which an asset's earning from either capital gains or interest are reinvested to generate additional earnings over time. It does not ensure positive performance, nor does it protect against loss. EMC clients may not experience compound returns and investment results will vary based on market volatility and fluctuating prices.</li>
+        <li>Diversification and asset allocation do not guarantee a profit, nor do they eliminate the risk of loss of principal.</li>
+        <li>The information contained on this website should not considered an offer, solicitation of an offer or advice to buy or sell any security or investment product. The information should not be construed as tax or legal advice. Please consult your tax advisor with any questions.</li>
+      </ul>
+      <p class="ft-disc-more">For additional important risks, disclosures, and information, please visit <a href="https://www.elmenudocuenta.com/legal/" target="_blank">https://www.elmenudocuenta.com/legal/</a></p>
+      <p class="ft-disc-copy">© 2026 El Menudo Cuenta, LLC.</p>
+    </div>
+
   </div>
 </footer>
 
