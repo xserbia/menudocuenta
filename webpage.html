@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>El Menudo Cuenta® — Invierte desde $5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#44008F;
+  --purple-dark:#2D005F;
+  --purple-mid:#5B10B8;
+  --purple-bg:#EDE8F8;
+  --purple-bg2:#F4F0FB;
+  --purple-card:#EBE5F5;
+  --yellow:#FFC300;
+  --pink:#C8B4DC;
+  --pink-pale:#F0EBF8;
+  --white:#FFFFFF;
+  --text:#1A0033;
+  --text-mid:#4A2D7A;
+  --text-muted:#6B5490;
+  --text-dim:#9B84B8;
+  --border:rgba(68,0,143,0.12);
+  --border2:rgba(68,0,143,0.07);
+  --green:#00C17A;
+  --red:#E84040;
+  --sans:'Quicksand',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--purple-bg2);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 5vw;background:rgba(255,255,255,0.94);backdrop-filter:blur(16px);border-bottom:1px solid var(--border2)}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo-mc{font-size:36px;font-weight:700;color:var(--purple);letter-spacing:-3px;line-height:1;display:flex;align-items:center}
+.logo-coin{width:26px;height:26px;background:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--purple);margin-left:-2px;flex-shrink:0;border:2px solid white}
+.logo-txt{font-size:12px;font-weight:700;color:var(--purple-dark);line-height:1.3;border-left:2px solid var(--pink);padding-left:8px;margin-left:4px}
+.nav-links{display:flex;gap:26px;list-style:none}
+.nav-links a{color:var(--text-muted);text-decoration:none;font-size:14px;font-weight:600;transition:color .2s}
+.nav-links a:hover{color:var(--purple)}
+.nav-r{display:flex;gap:10px}
+.btn-in{background:none;border:2px solid var(--border);color:var(--purple);padding:8px 20px;border-radius:100px;font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-in:hover{border-color:var(--purple);background:var(--purple-bg)}
+.btn-reg{background:var(--purple);border:none;color:#fff;padding:10px 22px;border-radius:100px;font-family:var(--sans);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s}
+.btn-reg:hover{background:var(--purple-mid);transform:translateY(-1px);box-shadow:0 6px 20px rgba(68,0,143,.3)}
+.hbg{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hbg span{display:block;width:22px;height:2px;background:var(--purple);border-radius:2px;transition:all .3s}
+.mobm{display:none;position:fixed;top:68px;left:0;right:0;background:#fff;border-bottom:1px solid var(--border);padding:20px 5vw;z-index:99;flex-direction:column;gap:12px}
+.mobm.open{display:flex}
+.mobm a{color:var(--text-muted);text-decoration:none;font-size:15px;font-weight:600;padding:10px 0;border-bottom:1px solid var(--border2)}
+
+/* HERO */
+.hero{min-height:100vh;padding:68px 5vw 0;background:var(--purple-bg2);position:relative;display:flex;align-items:center;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(68,0,143,.09),transparent 65%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-60px;left:-60px;width:360px;height:360px;background:radial-gradient(circle,rgba(255,195,0,.1),transparent 65%);pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;padding:70px 0;width:100%}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--pink-pale);border:1px solid var(--border);border-radius:100px;padding:6px 16px;font-size:11px;font-weight:700;color:var(--purple);letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
+.edot{width:7px;height:7px;background:var(--yellow);border-radius:50%;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+h1.ht{font-size:clamp(34px,4vw,56px);font-weight:700;line-height:1.1;letter-spacing:-.02em;color:var(--purple-dark);margin-bottom:18px}
+.ht .hi{background:var(--purple);color:var(--yellow);padding:0 10px;border-radius:8px;display:inline}
+.hero-p{font-size:16px;color:var(--text-muted);line-height:1.85;max-width:430px;margin-bottom:30px;font-weight:500}
+.hbtns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
+.btn-h{background:var(--purple);border:none;color:#fff;padding:14px 30px;border-radius:100px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:all .25s}
+.btn-h:hover{background:var(--purple-mid);transform:translateY(-2px);box-shadow:0 10px 30px rgba(68,0,143,.3)}
+.btn-ol{background:none;border:2px solid var(--border);color:var(--purple);padding:12px 24px;border-radius:100px;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;transition:all .25s}
+.btn-ol:hover{border-color:var(--purple);background:var(--pink-pale)}
+.hstats{display:flex;gap:28px}
+.hsn{font-size:26px;font-weight:700;color:var(--purple)}
+.hsl{font-size:11px;color:var(--text-dim);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+
+/* DASHBOARD MOCKUP */
+.dash{border-radius:24px;overflow:hidden;box-shadow:0 14px 52px rgba(68,0,143,.14);border:1.5px solid var(--border)}
+.dash-hdr{background:var(--purple);padding:20px 22px 18px;position:relative;overflow:hidden}
+.dash-hdr::after{content:'';position:absolute;right:-24px;top:-24px;width:110px;height:110px;border:2px solid rgba(255,255,255,.14);border-radius:50%}
+.dash-hdr::before{content:'';position:absolute;right:14px;top:14px;width:72px;height:72px;border:2px solid rgba(255,255,255,.09);border-radius:50%}
+.dh-hi{font-size:11px;font-weight:500;color:rgba(255,255,255,.6);margin-bottom:2px}
+.dh-name{font-size:20px;font-weight:700;color:#fff;margin-bottom:3px}
+.dh-sub{font-size:11px;color:rgba(255,255,255,.6)}
+.dash-tabs{background:#fff;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border2)}
+.dtabs{display:flex;gap:3px}
+.dt{padding:7px 14px;border-radius:100px;font-size:12px;font-weight:700;border:none;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.dt.on{background:var(--yellow);color:var(--purple-dark)}
+.dt:not(.on){background:none;color:var(--text-muted)}
+.dash-cbtn{background:var(--purple);color:#fff;border:none;padding:7px 16px;border-radius:100px;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--sans)}
+.dash-body{background:#fff;padding:14px 16px 16px;display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ac{background:var(--purple-bg2);border:1.5px solid var(--border);border-radius:16px;padding:14px;transition:all .25s;cursor:pointer}
+.ac:hover{border-color:rgba(68,0,143,.25);transform:translateY(-2px)}
+.ac-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.ac-ico{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.ac-arr{width:26px;height:26px;background:var(--purple-card);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-muted)}
+.ac-type{font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.ac-name{font-size:12px;font-weight:700;color:var(--text);margin-bottom:5px}
+.ac-st{display:flex;align-items:center;gap:4px;margin-bottom:7px}
+.ac-std{width:6px;height:6px;border-radius:50%}
+.ac-stt{font-size:9px;color:var(--text-muted);font-weight:600}
+.ac-bdg{display:inline-block;background:rgba(255,195,0,.22);color:#7A5800;font-size:8px;font-weight:700;padding:2px 7px;border-radius:100px;margin-bottom:8px}
+.ac-val{font-size:18px;font-weight:700;color:var(--text);letter-spacing:-.01em}
+.ac-val small{font-size:12px;font-weight:500;color:var(--text-muted)}
+.ac-time{font-size:8px;color:var(--text-dim);font-weight:500;margin-top:4px}
+
+/* PORTFOLIO SECTION */
+.port-section{padding:80px 5vw;background:var(--purple-bg2)}
+.sw{max-width:1100px;margin:0 auto}
+.pill{display:inline-block;background:var(--pink-pale);color:var(--purple);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:14px;border:1px solid var(--border)}
+.st{font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.15;letter-spacing:-.02em;color:var(--purple-dark);margin-bottom:14px}
+.st .acc{background:var(--purple);color:var(--yellow);padding:0 10px;border-radius:8px}
+.ss{font-size:15px;color:var(--text-muted);line-height:1.85;max-width:500px;font-weight:500}
+.port-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:18px;margin-top:36px;align-items:start}
+/* Purple chart card — exact match to app */
+.chart-card{background:var(--purple);border-radius:22px;padding:26px;position:relative;overflow:hidden}
+.cc-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:3px}
+.cc-sub{font-size:11px;color:rgba(255,255,255,.5);font-weight:500;margin-bottom:18px}
+.cc-iconbtn{width:38px;height:38px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;position:absolute;top:26px;right:26px;color:#fff;font-size:16px;cursor:pointer}
+#portChart{width:100%!important;max-height:190px}
+/* Stats card */
+.stats-card{background:#fff;border:1.5px solid var(--border);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.plan-row{display:flex;align-items:center;gap:12px;padding:13px 14px;background:var(--purple-card);border-radius:14px}
+.pi{width:38px;height:38px;background:var(--pink-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.plan-lbl{font-size:10px;color:var(--text-dim);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+.plan-nm{font-size:15px;font-weight:700;color:var(--purple-dark)}
+.plan-st{margin-left:auto;display:flex;align-items:center;gap:5px;background:#fff;padding:5px 12px;border-radius:100px;border:1px solid var(--border)}
+.ps-dot{width:8px;height:8px;border-radius:50%;background:var(--pink)}
+.ps-txt{font-size:11px;font-weight:700;color:var(--text-mid)}
+.rend-row{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:var(--purple-card);border-radius:14px}
+.rl{display:flex;align-items:center;gap:10px}
+.ri{width:38px;height:38px;background:var(--pink-pale);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px}
+.rt{font-size:15px;font-weight:700;color:var(--purple-dark)}
+.rsub{font-size:11px;color:var(--text-dim);font-weight:500}
+.ytd{background:rgba(0,193,122,.1);color:#00784A;font-size:12px;font-weight:700;padding:6px 13px;border-radius:100px;border:1px solid rgba(0,193,122,.2)}
+.valor-blk{padding:0 2px}
+.vlbl{font-size:10px;font-weight:700;color:var(--text-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.vnum{font-size:34px;font-weight:700;color:var(--text);letter-spacing:-.02em;margin-bottom:2px}
+.vnum small{font-size:20px;color:var(--text-muted);font-weight:500}
+.vdate{font-size:11px;color:var(--text-dim);font-weight:500;margin-bottom:14px}
+.perf{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.pf{background:var(--purple-bg2);border-radius:10px;padding:12px;text-align:center}
+.pf.hl{background:var(--purple-card);border:1px solid var(--border)}
+.pf-p{font-size:9px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+.pf-v{font-size:17px;font-weight:700}
+.pf-v.pos{color:var(--green)}
+.pf-v.neg{color:var(--red)}
+.pf-v.pur{color:var(--purple)}
+
+/* DONUT */
+.donut-sect{padding:80px 5vw;background:#fff}
+.donut-inner{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+.donut-wrap{background:#fff;border:1.5px solid var(--border);border-radius:22px;padding:30px;text-align:center;box-shadow:0 8px 32px rgba(68,0,143,.06)}
+.dw-title{font-size:18px;font-weight:700;color:var(--purple-dark);margin-bottom:3px}
+.dw-sub{font-size:12px;color:var(--text-muted);font-weight:500;margin-bottom:24px}
+#donutChart{max-width:200px;max-height:200px;margin:0 auto 20px}
+.comp-lbl{font-size:13px;font-weight:700;color:var(--purple);margin-bottom:12px}
+.comp-list{display:flex;flex-direction:column;gap:9px}
+.cr{display:flex;align-items:center;gap:11px;padding:11px 14px;background:var(--purple-bg2);border-radius:10px;border:1.5px solid var(--border2)}
+.cd{width:13px;height:13px;border-radius:50%;flex-shrink:0}
+.cn{font-size:13px;font-weight:600;color:var(--text);flex:1}
+.cp{font-size:12px;font-weight:700;color:var(--text-muted)}
+.feat-rows{display:flex;flex-direction:column;gap:12px;margin-top:26px}
+.fr{display:flex;align-items:center;gap:13px;padding:13px 16px;background:var(--purple-bg2);border-radius:10px;border:1.5px solid var(--border)}
+.frd{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.frn{font-size:14px;font-weight:700;color:var(--purple-dark)}
+.frs{font-size:12px;color:var(--text-muted);font-weight:500}
+
+/* PRODUCTS */
+.prod-sect{padding:80px 5vw;background:var(--purple-bg2)}
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
+.pc{background:#fff;border:1.5px solid var(--border);border-radius:22px;padding:28px 22px;position:relative;overflow:hidden;transition:all .3s;cursor:pointer}
+.pc:hover{border-color:rgba(68,0,143,.28);transform:translateY(-5px);box-shadow:0 14px 44px rgba(68,0,143,.09)}
+.pc.feat{border-color:var(--purple)}
+.ptb{position:absolute;top:0;left:0;right:0;height:4px}
+.ptb.y{background:var(--yellow)}
+.ptb.p{background:linear-gradient(90deg,var(--purple),var(--purple-mid))}
+.ptb.g{background:var(--green)}
+.pbdg{position:absolute;top:12px;right:12px;font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--purple);color:#fff;padding:3px 10px;border-radius:100px}
+.pico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:22px}
+.pico.yi{background:var(--yellow)}
+.pico.pi{background:var(--purple)}
+.pico.gi{background:rgba(0,193,122,.15)}
+.ptag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-bottom:7px}
+.pc h3{font-size:22px;font-weight:700;color:var(--purple-dark);margin-bottom:10px}
+.pc p{font-size:13px;color:var(--text-muted);line-height:1.8;margin-bottom:20px;font-weight:500}
+.pfl{display:flex;flex-direction:column;gap:7px;margin-bottom:20px}
+.pf2{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted);font-weight:500}
+.pfd{width:6px;height:6px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.plnk{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--purple);text-decoration:none;transition:gap .2s}
+.plnk:hover{gap:10px}
+.plnk svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.5}
+
+/* HOW IT WORKS */
+.how-sect{padding:80px 5vw;background:#fff}
+.steps-out{position:relative;margin-top:48px}
+.sconn{position:absolute;top:40px;left:calc(12.5% + 16px);right:calc(12.5% + 16px);height:2px;background:linear-gradient(90deg,var(--yellow),var(--purple),var(--pink));opacity:.3;border-radius:100px}
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+.step{padding:0 12px;text-align:center}
+.snum{width:78px;height:78px;border-radius:50%;background:#fff;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:24px;font-weight:700;color:var(--purple);position:relative;z-index:1;transition:all .3s}
+.step:hover .snum{background:var(--purple);color:#fff;border-color:var(--purple)}
+.step h4{font-size:15px;font-weight:700;color:var(--purple-dark);margin-bottom:7px}
+.step p{font-size:12px;color:var(--text-muted);line-height:1.75;font-weight:500}
+
+/* APRENDE */
+.apr-sect{padding:80px 5vw;background:var(--purple-bg2)}
+.apr-inner{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.atabs-wrap{display:inline-flex;background:#fff;border:1.5px solid var(--border);border-radius:100px;padding:4px;gap:3px;margin-bottom:20px}
+.atab{padding:8px 18px;border-radius:100px;font-size:13px;font-weight:700;border:none;cursor:pointer;font-family:var(--sans);color:var(--text-muted);background:none;display:flex;align-items:center;gap:5px;transition:all .2s}
+.atab.on{background:var(--white);color:var(--purple);border:1.5px solid var(--border)}
+.apr-cat{font-size:13px;font-weight:700;color:var(--purple-dark);margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.acat-bar{width:3px;height:18px;background:var(--purple);border-radius:2px;display:inline-block}
+.vid-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.vc{background:#fff;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;transition:all .3s;cursor:pointer}
+.vc:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(68,0,143,.09)}
+.vt{height:96px;display:flex;align-items:center;justify-content:center;font-size:28px;position:relative;overflow:hidden}
+.vplay{position:absolute;width:34px;height:34px;background:rgba(255,255,255,.9);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--purple)}
+.vb{padding:11px 13px}
+.vc-cat{font-size:9px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px}
+.vc-ttl{font-size:12px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:7px}
+.vc-lnk{font-size:11px;font-weight:700;color:var(--purple);display:flex;align-items:center;gap:4px}
+
+/* CALCULATOR */
+.calc-sect{padding:80px 5vw;background:var(--purple)}
+.calc-sect .pill{background:rgba(255,195,0,.15);color:var(--yellow);border-color:rgba(255,195,0,.3)}
+.calc-sect .st{color:#fff}
+.calc-sect .ss{color:rgba(255,255,255,.6)}
+.calc-inner{display:grid;grid-template-columns:1fr 1.4fr;gap:48px;align-items:start;margin-top:36px}
+.cf{display:flex;flex-direction:column;gap:22px}
+.cfl{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:rgba(255,255,255,.55);margin-bottom:9px}
+.cfl span{color:var(--yellow);font-size:14px;font-weight:700}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:4px;background:rgba(255,255,255,.2);border-radius:100px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:21px;height:21px;background:var(--yellow);border-radius:50%;box-shadow:0 0 0 4px rgba(255,195,0,.25);cursor:pointer}
+input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 7px rgba(255,195,0,.3)}
+.cres{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:18px;margin-top:4px}
+.crr{display:flex;justify-content:space-between;align-items:center;padding:8px 0}
+.crr+.crr{border-top:1px solid rgba(255,255,255,.08)}
+.crl{font-size:13px;color:rgba(255,255,255,.5);font-weight:500}
+.crv{font-size:18px;font-weight:700;color:rgba(255,255,255,.9)}
+.crv.hl{color:var(--yellow);font-size:25px}
+.cbox{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:26px}
+.cbox h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:16px}
+#calcChart{width:100%!important;max-height:252px}
+.cnote{font-size:11px;color:rgba(255,255,255,.28);margin-top:13px;line-height:1.7;font-weight:500}
+
+/* FAQ */
+.faq-sect{padding:80px 5vw;background:var(--purple-bg2)}
+.faq-lay{display:grid;grid-template-columns:1fr 2fr;gap:72px;align-items:start}
+.faq-stk{position:sticky;top:88px}
+.faq-lst{display:flex;flex-direction:column;gap:4px}
+.fi2{background:#fff;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s}
+.fi2.open{border-color:var(--purple)}
+.fq{display:flex;justify-content:space-between;align-items:center;padding:17px 20px;cursor:pointer;font-size:14px;font-weight:700;color:var(--text);gap:13px}
+.fq:hover{color:var(--purple)}
+.fchev{width:20px;height:20px;flex-shrink:0;transition:transform .3s;stroke:var(--text-dim);fill:none;stroke-width:2.5}
+.fi2.open .fchev{transform:rotate(180deg);stroke:var(--purple)}
+.fa{font-size:13px;color:var(--text-muted);line-height:1.85;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;padding:0 20px;font-weight:500}
+.fi2.open .fa{max-height:240px;padding:0 20px 17px}
+
+/* CTA */
+.cta{background:var(--purple-dark);padding:70px 5vw;text-align:center;position:relative;overflow:hidden}
+.cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:360px;background:radial-gradient(circle,rgba(255,195,0,.13),transparent 55%);pointer-events:none}
+.cta h2{font-size:clamp(26px,3.5vw,44px);font-weight:700;letter-spacing:-.02em;color:#fff;margin-bottom:11px}
+.cta h2 .acc{color:var(--yellow)}
+.cta p{font-size:15px;color:rgba(255,255,255,.6);margin-bottom:30px;font-weight:500}
+.email-r{display:flex;max-width:450px;margin:0 auto;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);border-radius:100px;overflow:hidden}
+.email-r input{flex:1;background:none;border:none;padding:12px 20px;font-family:var(--sans);font-size:14px;font-weight:500;color:#fff;outline:none}
+.email-r input::placeholder{color:rgba(255,255,255,.4)}
+.email-r button{background:var(--yellow);border:none;color:var(--purple-dark);padding:12px 22px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;border-radius:100px;margin:4px;transition:all .2s}
+.email-r button:hover{background:#fff}
+#econf{font-size:13px;color:var(--yellow);margin-top:12px;display:none;font-weight:700}
+
+/* FOOTER */
+footer{background:var(--purple-dark);padding:52px 5vw 34px;border-top:1px solid rgba(255,255,255,.07)}
+.fti{max-width:1100px;margin:0 auto}
+.ft-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
+.ft-brand p{font-size:12px;color:rgba(255,255,255,.4);line-height:1.8;margin-top:13px;max-width:250px;font-weight:400}
+.ft-col h5{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:13px}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.ft-col a{color:rgba(255,255,255,.55);text-decoration:none;font-size:13px;font-weight:600;transition:color .2s}
+.ft-col a:hover{color:var(--yellow)}
+.ft-bot{display:flex;justify-content:space-between;align-items:center;padding-top:22px;border-top:1px solid rgba(255,255,255,.08);flex-wrap:wrap;gap:8px}
+.ft-bot p{font-size:11px;color:rgba(255,255,255,.3);font-weight:500}
+.ft-disc{font-size:10px;color:rgba(255,255,255,.2);margin-top:12px;line-height:1.75;max-width:860px}
+
+/* FADE */
+.fi3{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.fi3.vis{opacity:1;transform:none}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .nav-links,.nav-r{display:none}
+  .hbg{display:flex}
+  .hero-inner{grid-template-columns:1fr;gap:32px}
+  .dash{display:none}
+  .port-grid{grid-template-columns:1fr}
+  .donut-inner{grid-template-columns:1fr}
+  .prod-grid{grid-template-columns:1fr}
+  .sgrid{grid-template-columns:1fr 1fr;gap:20px}
+  .sconn{display:none}
+  .apr-inner{grid-template-columns:1fr}
+  .calc-inner{grid-template-columns:1fr}
+  .faq-lay{grid-template-columns:1fr}
+  .faq-stk{position:static}
+  .ft-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:500px){
+  .sgrid{grid-template-columns:1fr}
+  .vid-grid{grid-template-columns:1fr}
+  .perf{grid-template-columns:1fr}
+  .ft-top{grid-template-columns:1fr}
+  .email-r{flex-direction:column;border-radius:14px}
+  .email-r button{border-radius:10px;margin:4px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">
+    <div class="logo-mc">mc<div class="logo-coin">$</div></div>
+    <div class="logo-txt">El Menudo<br>Cuenta<sup style="font-size:8px">®</sup></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#productos">Membresía</a></li>
+    <li><a href="#como-funciona">Cómo funciona</a></li>
+    <li><a href="#aprende">Aprende</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-r">
+    <button class="btn-in">Ingresar</button>
+    <button class="btn-reg">Regístrate</button>
+  </div>
+  <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobm" id="mob">
+  <a href="#productos">Membresía</a>
+  <a href="#como-funciona">Cómo funciona</a>
+  <a href="#aprende">Aprende</a>
+  <a href="#faq">FAQ</a>
+  <div style="display:flex;gap:10px;margin-top:8px">
+    <button class="btn-in" style="flex:1">Ingresar</button>
+    <button class="btn-reg" style="flex:1">Regístrate</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow"><span class="edot"></span>Robo-advisor inteligente</div>
+      <h1 class="ht">Una moneda no es<br>una moneda,<br>es un <span class="hi">inicio.</span></h1>
+      <p class="hero-p">Cada centavo puede cambiar tu futuro. Invierte desde $5, haz crecer tu patrimonio con portafolios automatizados y aprende a manejar tu dinero.</p>
+      <div class="hbtns">
+        <button class="btn-h">Comenzar ahora</button>
+        <button class="btn-ol">Ver cómo funciona</button>
+      </div>
+      <div class="hstats">
+        <div><div class="hsn">$5</div><div class="hsl">Para comenzar</div></div>
+        <div><div class="hsn">+6.39%</div><div class="hsl">Rendimiento YTD</div></div>
+        <div><div class="hsn">0.25%</div><div class="hsl">Comisión anual</div></div>
+      </div>
+    </div>
+    <!-- DASHBOARD MOCKUP — matches screenshot 1 -->
+    <div class="dash fi3">
+      <div class="dash-hdr">
+        <div class="dh-hi">Hola</div>
+        <div class="dh-name">Xavier Serbia</div>
+        <div class="dh-sub">Hoy es un buen día para empezar a invertir</div>
+      </div>
+      <div class="dash-tabs">
+        <div class="dtabs">
+          <button class="dt on">Todas</button>
+          <button class="dt">Inversiones</button>
+          <button class="dt">Futuro</button>
+        </div>
+        <button class="dash-cbtn">Crear cuenta</button>
+      </div>
+      <div class="dash-body">
+        <div class="ac">
+          <div class="ac-top"><div class="ac-ico" style="background:var(--purple)">📊</div><div class="ac-arr">→</div></div>
+          <div class="ac-type">Inversiones</div>
+          <div class="ac-name">Mis Inversiones</div>
+          <div class="ac-st"><div class="ac-std" style="background:var(--green)"></div><span class="ac-stt">Portafolio Aceptado</span></div>
+          <div class="ac-val"><small>$</small>2,429.69</div>
+          <div class="ac-time">⏱ Actualizado hace 13 horas</div>
+        </div>
+        <div class="ac">
+          <div class="ac-top"><div class="ac-ico" style="background:var(--yellow)">🔄</div><div class="ac-arr">→</div></div>
+          <div class="ac-type">Futuro</div>
+          <div class="ac-name">Mi IRA</div>
+          <div class="ac-st"><div class="ac-std" style="background:var(--pink)"></div><span class="ac-stt">En configuración</span></div>
+          <div class="ac-bdg">Cuenta en configuración</div>
+          <div class="ac-val"><small>$</small>0.00</div>
+          <div class="ac-time">⏱ Actualizado hace 1 mes</div>
+        </div>
+        <div class="ac">
+          <div class="ac-top"><div class="ac-ico" style="background:var(--yellow)">🔄</div><div class="ac-arr">→</div></div>
+          <div class="ac-type">Futuro</div>
+          <div class="ac-name">Test IRA Jan 6</div>
+          <div class="ac-st"><div class="ac-std" style="background:var(--pink)"></div><span class="ac-stt">En configuración</span></div>
+          <div class="ac-bdg">Cuenta en configuración</div>
+          <div class="ac-val"><small>$</small>0.00</div>
+          <div class="ac-time">⏱ Actualizado hace 4 meses</div>
+        </div>
+        <div class="ac">
+          <div class="ac-top"><div class="ac-ico" style="background:var(--yellow)">🔄</div><div class="ac-arr">→</div></div>
+          <div class="ac-type">Futuro</div>
+          <div class="ac-name">Mi Cuenta Roth</div>
+          <div class="ac-st"><div class="ac-std" style="background:var(--pink)"></div><span class="ac-stt">En configuración</span></div>
+          <div class="ac-bdg">Cuenta en configuración</div>
+          <div class="ac-val"><small>$</small>0.00</div>
+          <div class="ac-time">⏱ Actualizado hace 2 meses</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO SECTION — mirrors screenshots 3 & 5 -->
+<section class="port-section" id="portafolio">
+  <div class="sw">
+    <div class="pill">Tu portafolio en tiempo real</div>
+    <h2 class="st">Evolución y <span class="acc">rendimiento</span><br>de tu inversión</h2>
+    <p class="ss">Monitorea el desempeño de tu portafolio con datos reales. Visualiza cómo tu dinero crece con el tiempo.</p>
+    <div class="port-grid fi3">
+      <div class="chart-card">
+        <div class="cc-title">Evolución del Portafolio</div>
+        <div class="cc-sub">Últimos 131 días</div>
+        <div class="cc-iconbtn">↗</div>
+        <canvas id="portChart"></canvas>
+      </div>
+      <div class="stats-card">
+        <div class="plan-row">
+          <div class="pi">📋</div>
+          <div><div class="plan-lbl">Tipo de plan</div><div class="plan-nm">Inversiones</div></div>
+          <div class="plan-st"><div class="ps-dot"></div><span class="ps-txt">Portafolio Aceptado</span></div>
+        </div>
+        <div class="rend-row">
+          <div class="rl"><div class="ri">📊</div><div><div class="rt">Rendimiento</div><div class="rsub">Actualizado hace 13 horas</div></div></div>
+          <div class="ytd">↗ +6.39% YTD</div>
+        </div>
+        <div class="valor-blk">
+          <div class="vlbl">Valor actual</div>
+          <div class="vnum"><small>$ </small>2,429.69</div>
+          <div class="vdate">al 07 de May, 2026</div>
+          <div class="perf">
+            <div class="pf"><div class="pf-p">Este mes</div><div class="pf-v neg">-0.02%</div></div>
+            <div class="pf"><div class="pf-p">Este trimestre</div><div class="pf-v pos">+2.62%</div></div>
+            <div class="pf hl"><div class="pf-p">Este año</div><div class="pf-v pur">+6.39%</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DONUT — mirrors screenshot 4 -->
+<section class="donut-sect">
+  <div class="sw">
+    <div class="donut-inner">
+      <div class="donut-wrap fi3">
+        <div class="dw-title">Portafolio</div>
+        <div class="dw-sub">MC Portafolio Moderado Agresivo</div>
+        <canvas id="donutChart"></canvas>
+        <div class="comp-lbl">Componentes ⓘ</div>
+        <div class="comp-list">
+          <div class="cr"><div class="cd" style="background:#E84040"></div><span class="cn">Efectivos</span><span class="cp">5%</span></div>
+          <div class="cr"><div class="cd" style="background:var(--purple)"></div><span class="cn">Acciones</span><span class="cp">65%</span></div>
+          <div class="cr"><div class="cd" style="background:var(--yellow)"></div><span class="cn">Renta fija</span><span class="cp">20%</span></div>
+          <div class="cr"><div class="cd" style="background:var(--pink)"></div><span class="cn">Alternativos</span><span class="cp">10%</span></div>
+        </div>
+      </div>
+      <div class="fi3">
+        <div class="pill">Diversificación</div>
+        <h2 class="st">Portafolios para<br><span class="acc">cada objetivo</span></h2>
+        <p class="ss">Desde perfiles conservadores hasta agresivos. Nuestros algoritmos mantienen el balance ideal según tu tolerancia al riesgo.</p>
+        <div class="feat-rows">
+          <div class="fr"><div class="frd" style="background:var(--purple)"></div><div><div class="frn">Rebalanceo automático</div><div class="frs">Tu portafolio se ajusta solo, siempre optimizado</div></div></div>
+          <div class="fr"><div class="frd" style="background:var(--yellow)"></div><div><div class="frn">ETFs diversificados globalmente</div><div class="frs">Acceso a mercados de todo el mundo desde $5</div></div></div>
+          <div class="fr"><div class="frd" style="background:var(--green)"></div><div><div class="frn">Monitoreo en tiempo real</div><div class="frs">Actualizado diariamente desde tu app o web</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="productos" class="prod-sect">
+  <div class="sw">
+    <div class="pill">Productos</div>
+    <h2 class="st">Ahorra, invierte y <span class="acc">aprende</span><br>a manejar tu dinero</h2>
+    <p class="ss">Múltiples herramientas para que controles tu futuro financiero de forma fácil, rápida y accesible.</p>
+    <div class="prod-grid fi3">
+      <div class="pc"><div class="ptb y"></div>
+        <div class="pico yi">💵</div>
+        <div class="ptag">Liquidez & ahorro</div>
+        <h3>MC Efectivo</h3>
+        <p>Gestiona tu dinero siempre. Fondo de emergencia o reserva de liquidez con rendimiento superior al bancario.</p>
+        <div class="pfl"><div class="pf2"><div class="pfd"></div>Retiro sin penalizaciones</div><div class="pf2"><div class="pfd"></div>Rendimiento superior al bancario</div><div class="pf2"><div class="pfd"></div>Desde $5 o $5/día automático</div></div>
+        <a href="#" class="plnk">Comenzar <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="pc feat"><div class="ptb p"></div>
+        <div class="pbdg">Más popular</div>
+        <div class="pico pi" style="color:#fff">📈</div>
+        <div class="ptag">Inversión automatizada</div>
+        <h3>MC Inversiones</h3>
+        <p>Portafolios de ETFs diversificados rebalanceados automáticamente según tus metas. Desde $5.</p>
+        <div class="pfl"><div class="pf2"><div class="pfd"></div>ETFs globales diversificados</div><div class="pf2"><div class="pfd"></div>Rebalanceo automático 24/7</div><div class="pf2"><div class="pfd"></div>Solo 0.25% comisión anual</div></div>
+        <a href="#" class="plnk">Comenzar <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="pc"><div class="ptb g"></div>
+        <div class="pico gi">🏛️</div>
+        <div class="ptag">Retiro / Jubilación</div>
+        <h3>MC Futuro</h3>
+        <p>Ahorra para tu jubilación con cuentas IRA Tradicional y Roth IRA con ventajas fiscales comprobadas.</p>
+        <div class="pfl"><div class="pf2"><div class="pfd"></div>IRA Tradicional y Roth IRA</div><div class="pf2"><div class="pfd"></div>Ventajas fiscales comprobadas</div><div class="pf2"><div class="pfd"></div>Proyección de retiro personalizada</div></div>
+        <a href="#" class="plnk">Comenzar <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="como-funciona" class="how-sect">
+  <div class="sw" style="text-align:center">
+    <div class="pill">Proceso</div>
+    <h2 class="st" style="text-align:center">Invertir nunca fue <span class="acc">tan sencillo</span></h2>
+    <div class="steps-out fi3">
+      <div class="sconn"></div>
+      <div class="sgrid">
+        <div class="step"><div class="snum">01</div><h4>Crea tu cuenta</h4><p>Regístrate en minutos desde tu teléfono o computadora sin papeleos.</p></div>
+        <div class="step"><div class="snum">02</div><h4>Define tu perfil</h4><p>Un cuestionario breve para conocer tus objetivos y tolerancia al riesgo.</p></div>
+        <div class="step"><div class="snum">03</div><h4>Deposita desde $5</h4><p>Conecta tu banco y deposita via ACH, tarjeta o cheque digital.</p></div>
+        <div class="step"><div class="snum">04</div><h4>MC invierte por ti</h4><p>Nuestros algoritmos gestionan tu portafolio automáticamente 24/7.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APRENDE — mirrors screenshot 2 -->
+<section id="aprende" class="apr-sect">
+  <div class="sw">
+    <div class="apr-inner">
+      <div>
+        <div class="pill">Sección Aprende</div>
+        <h2 class="st">Explora contenido educativo<br>sobre <span class="acc">inversiones</span></h2>
+        <p class="ss">Aprende a tu propio ritmo dónde quieras. Sumérgete en el aprendizaje hoy y avanza hacia el éxito financiero.</p>
+        <div style="display:flex;flex-direction:column;gap:16px;margin-top:26px" class="fi3">
+          <div style="display:flex;align-items:flex-start;gap:13px"><div style="width:40px;height:40px;border-radius:11px;background:rgba(255,195,0,.15);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">📚</div><div><div style="font-size:14px;font-weight:700;color:var(--purple-dark);margin-bottom:2px">Cursos paso a paso</div><div style="font-size:12px;color:var(--text-muted);font-weight:500">Desde presupuesto básico hasta gestión de portafolios. En tu idioma y ritmo.</div></div></div>
+          <div style="display:flex;align-items:flex-start;gap:13px"><div style="width:40px;height:40px;border-radius:11px;background:var(--pink-pale);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🎥</div><div><div style="font-size:14px;font-weight:700;color:var(--purple-dark);margin-bottom:2px">Videos educativos</div><div style="font-size:12px;color:var(--text-muted);font-weight:500">Cómo enseñar a jóvenes a manejar el dinero, metas familiares y más.</div></div></div>
+          <div style="display:flex;align-items:flex-start;gap:13px"><div style="width:40px;height:40px;border-radius:11px;background:rgba(0,193,122,.1);display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0">🎯</div><div><div style="font-size:14px;font-weight:700;color:var(--purple-dark);margin-bottom:2px">Simulador de metas</div><div style="font-size:12px;color:var(--text-muted);font-weight:500">Visualiza cuánto necesitas ahorrar para tus metas más importantes.</div></div></div>
+        </div>
+      </div>
+      <div class="fi3">
+        <div class="atabs-wrap">
+          <button class="atab on">▶ Videos</button>
+          <button class="atab">📖 Cursos</button>
+        </div>
+        <div class="apr-cat"><span class="acat-bar"></span>Familia <span style="font-size:12px;color:var(--text-dim);font-weight:500;margin-left:4px">2 videos</span></div>
+        <div class="vid-grid">
+          <div class="vc">
+            <div class="vt" style="background:linear-gradient(135deg,#FFE0EE,#DCCEFF)">🧠<div class="vplay">▶</div></div>
+            <div class="vb"><div class="vc-cat">Familia</div><div class="vc-ttl">5 consejos para enseñar a un joven a manejar el dinero</div><div class="vc-lnk">↗ Ver video</div></div>
+          </div>
+          <div class="vc">
+            <div class="vt" style="background:linear-gradient(135deg,#2D005F,#44008F)"><span style="font-size:24px;color:var(--yellow)">💼</span><div class="vplay">▶</div></div>
+            <div class="vb"><div class="vc-cat">Familia</div><div class="vc-ttl">¿Cómo hacer para lograr metas financieras en familia?</div><div class="vc-lnk">↗ Ver video</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="calc-sect" id="calculadora">
+  <div class="sw">
+    <div class="pill">Calculadora</div>
+    <h2 class="st">El poder del <span style="color:var(--yellow)">interés compuesto</span></h2>
+    <p class="ss">Descubre cuánto puede crecer tu dinero con aportaciones consistentes a lo largo del tiempo.</p>
+    <div class="calc-inner">
+      <div>
+        <div class="cf">
+          <div><label class="cfl">Inversión inicial<span id="ini-out">$5,000</span></label><input type="range" min="100" max="100000" step="100" value="5000" id="ini" oninput="uc()"></div>
+          <div><label class="cfl">Aportación mensual<span id="mo-out">$200</span></label><input type="range" min="0" max="5000" step="50" value="200" id="mo" oninput="uc()"></div>
+          <div><label class="cfl">Años de inversión<span id="yr-out">20 años</span></label><input type="range" min="1" max="40" step="1" value="20" id="yr" oninput="uc()"></div>
+          <div><label class="cfl">Tasa de retorno anual<span id="rt-out">8%</span></label><input type="range" min="1" max="20" step="0.5" value="8" id="rt" oninput="uc()"></div>
+          <div class="cres">
+            <div class="crr"><span class="crl">Capital invertido</span><span class="crv" id="r-cap">$53,000</span></div>
+            <div class="crr"><span class="crl">Ganancias por interés</span><span class="crv" id="r-int">$170,452</span></div>
+            <div class="crr"><span class="crl">Total acumulado</span><span class="crv hl" id="r-tot">$223,452</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="cbox fi3">
+        <h3>Crecimiento de tu inversión</h3>
+        <canvas id="calcChart"></canvas>
+        <p class="cnote">Esta calculadora muestra una estimación. No predice el rendimiento de ningún portafolio de El Menudo Cuenta ni considera factores económicos o de mercado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-sect" id="faq">
+  <div class="sw">
+    <div class="faq-lay">
+      <div class="faq-stk">
+        <div class="pill">FAQ</div>
+        <h2 class="st">Aquí resolvemos<br><span class="acc">tus dudas</span></h2>
+        <p class="ss" style="font-size:14px">¿No encuentras lo que buscas? Nuestro equipo está listo.</p>
+        <button class="btn-reg" style="margin-top:22px">Hablar con soporte</button>
+      </div>
+      <div class="faq-lst fi3">
+        <div class="fi2 open"><div class="fq" onclick="tf(this)">¿Para qué se usa MC Efectivo?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">El objetivo de MC Efectivo es que el dinero depositado no pierda valor, que puedas retirarlo en cualquier momento sin penalizaciones y que obtengas mayor rendimiento que una cuenta de ahorros bancaria. Es ideal para fondos de emergencia, reserva para gastos próximos o como fondo de liquidación para invertir.</div></div>
+        <div class="fi2"><div class="fq" onclick="tf(this)">¿Cuánto dinero necesito para comenzar?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">Puedes comenzar a invertir con solo $5 o configurar una inversión recurrente automática a partir de $5 por día, semana o mes. No se requiere un mínimo para abrir una cuenta MC, pero sí necesitas fondos para comenzar a invertir.</div></div>
+        <div class="fi2"><div class="fq" onclick="tf(this)">¿Cómo se invierte mi dinero?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">Una vez que depositas, automáticamente invertimos en portafolios recomendados según tus objetivos, horizonte temporal y tolerancia al riesgo. Nuestros algoritmos monitoran y administran continuamente tu cartera, desde portafolios agresivos (acciones) hasta conservadores (bonos).</div></div>
+        <div class="fi2"><div class="fq" onclick="tf(this)">¿Cuál es la diferencia entre MC Inversiones y MC Futuro?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">MC Inversiones es una cuenta de inversión normal sin límite de aportación, puedes retirar cuando quieras. MC Futuro son cuentas IRA de retiro. Con IRA Tradicional no pagas impuestos hasta el retiro. Con Roth IRA pagas impuestos ahora pero los retiros en jubilación son libres de impuestos.</div></div>
+        <div class="fi2"><div class="fq" onclick="tf(this)">¿Qué comisiones cobra El Menudo Cuenta?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">Cobramos una comisión de gestión anual del 0.25% sobre el saldo administrado. No hay comisiones por depósitos, retiros ni transacciones. Los ETFs tienen sus propios gastos (expense ratio), generalmente entre 0.03% y 0.20% anual.</div></div>
+        <div class="fi2"><div class="fq" onclick="tf(this)">¿Mi dinero está seguro?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">Tu dinero está custodiado por un broker registrado ante la SEC y cubierto por SIPC hasta $500,000. El Menudo Cuenta actúa como asesor de inversiones, no como custodio. Todas las transacciones usan cifrado de nivel bancario institucional.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta">
+  <h2>¡Cambiamos la forma de ahorrar e invertir,<br><span class="acc">empieza ahora!</span></h2>
+  <p>Únete a nuestra lista y mantente al tanto de lo último. El menudo sí cuenta.</p>
+  <div class="email-r">
+    <input type="email" placeholder="Escribe tu email" id="eml">
+    <button onclick="se()">Enviar</button>
+  </div>
+  <p id="econf">✓ Confirmado. Ya tenemos registrado tu email.</p>
+</div>
+
+<!-- FOOTER -->
+<footer id="legal">
+  <div class="fti">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="font-size:34px;font-weight:700;color:var(--yellow);letter-spacing:-3px;line-height:1;display:flex;align-items:center">mc<div style="width:24px;height:24px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--purple);margin-left:-2px;border:2px solid var(--purple)">$</div></div>
+          <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.7);line-height:1.3;border-left:2px solid rgba(255,255,255,.2);padding-left:8px;margin-left:4px">El Menudo<br>Cuenta<sup style="font-size:7px">®</sup></div>
+        </div>
+        <p>Invertir no es privilegio de unos pocos. El Menudo Cuenta democratiza el acceso a portafolios profesionales desde $5, con empatía y sencillez.</p>
+      </div>
+      <div class="ft-col"><h5>Productos</h5><ul><li><a href="#">MC Efectivo</a></li><li><a href="#">MC Inversiones</a></li><li><a href="#">MC Futuro</a></li><li><a href="#calculadora">Calculadora</a></li></ul></div>
+      <div class="ft-col"><h5>Empresa</h5><ul><li><a href="#">Nosotros</a></li><li><a href="#">Blog</a></li><li><a href="#">Membresía</a></li><li><a href="#">Prensa</a></li></ul></div>
+      <div class="ft-col"><h5>Legal</h5><ul><li><a href="#">Términos de uso</a></li><li><a href="#">Privacidad</a></li><li><a href="#">Divulgaciones</a></li><li><a href="#">ADV Formulario</a></li></ul></div>
+    </div>
+    <div class="ft-bot">
+      <p>© 2023 El Menudo Cuenta LLC. Todos los derechos reservados.</p>
+      <p>SEC Registered Investment Advisor · SIPC Member</p>
+    </div>
+    <p class="ft-disc">El Menudo Cuenta LLC es un asesor de inversiones registrado. La inversión conlleva riesgos, incluyendo la posible pérdida del capital. El rendimiento pasado no garantiza resultados futuros. Esta página es solo informativa y no constituye asesoría de inversión personalizada. Por favor lea nuestras divulgaciones completas antes de invertir.</p>
+  </div>
+</footer>
+
+<script>
+/* Portfolio Chart — purple bg + yellow dots matching screenshot 3/5 */
+(function(){
+  var pts=[2150,2170,2165,2190,2210,2230,2200,2260,2300,2285,2340,2390,2430,2470,2510,2530,2520,2490,2440,2420,2400,2385,2405,2425,2415,2430];
+  var ctx=document.getElementById('portChart').getContext('2d');
+  new Chart(ctx,{type:'line',data:{
+    labels:Array.from({length:pts.length},(_,i)=>''),
+    datasets:[{data:pts,borderColor:'#FFC300',backgroundColor:'transparent',tension:0.3,borderWidth:2,pointRadius:3,pointBackgroundColor:'#FFC300',pointBorderColor:'#44008F',pointHoverRadius:5}]
+  },options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(255,255,255,.95)',titleColor:'#2D005F',bodyColor:'#44008F',callbacks:{label:function(c){return'$'+c.raw.toLocaleString()}}}},scales:{x:{grid:{color:'rgba(255,255,255,.12)'},ticks:{color:'rgba(255,255,255,.45)',font:{family:'Quicksand',size:9},maxTicksLimit:7,callback:function(_,i){var L=['30 Oct','14 Nov','8 Dic','23 Dic','7 Ene','22 Ene','6 Feb','23 Feb','10 Mar','25 Mar','9 Abr','24 Abr','1 May'];return L[Math.floor(i*L.length/pts.length)]||''}}},y:{grid:{color:'rgba(255,255,255,.12)'},ticks:{color:'rgba(255,255,255,.45)',font:{family:'Quicksand',size:9},callback:function(v){return(v/1000).toFixed(1)+'k'}}}}}});
+})();
+
+/* Donut Chart — matches screenshot 4 exactly */
+(function(){
+  var ctx=document.getElementById('donutChart').getContext('2d');
+  new Chart(ctx,{type:'doughnut',data:{datasets:[{data:[5,65,20,10],backgroundColor:['#E84040','#44008F','#FFC300','#C8B4DC'],borderWidth:0,hoverOffset:5}]},options:{responsive:true,cutout:'60%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return['Efectivos','Acciones','Renta fija','Alternativos'][c.dataIndex]+': '+c.parsed+'%'}}}}}});
+})();
+
+/* Calc chart */
+var cc;
+function fmt(n){return'$'+Math.round(n).toLocaleString('en-US')}
+function uc(){
+  var i=+document.getElementById('ini').value,m=+document.getElementById('mo').value,y=+document.getElementById('yr').value,r=+document.getElementById('rt').value/100;
+  document.getElementById('ini-out').textContent=fmt(i);
+  document.getElementById('mo-out').textContent=fmt(m);
+  document.getElementById('yr-out').textContent=y+' años';
+  document.getElementById('rt-out').textContent=document.getElementById('rt').value+'%';
+  var mr=r/12,ms=y*12,tot=i*Math.pow(1+mr,ms)+m*(Math.pow(1+mr,ms)-1)/mr,inv=i+m*ms;
+  document.getElementById('r-cap').textContent=fmt(inv);
+  document.getElementById('r-int').textContent=fmt(tot-inv);
+  document.getElementById('r-tot').textContent=fmt(tot);
+  var lb=[],dT=[],dI=[];
+  for(var k=0;k<=y;k++){var ms2=k*12,t=i*Math.pow(1+mr,ms2)+(ms2>0?m*(Math.pow(1+mr,ms2)-1)/mr:0);lb.push(k===0?'Hoy':k+'a');dT.push(Math.round(t));dI.push(Math.round(i+m*ms2));}
+  if(cc){cc.data.labels=lb;cc.data.datasets[0].data=dT;cc.data.datasets[1].data=dI;cc.update();}
+  else{var ctx=document.getElementById('calcChart').getContext('2d');
+    cc=new Chart(ctx,{type:'line',data:{labels:lb,datasets:[
+      {label:'Total',data:dT,borderColor:'#FFC300',backgroundColor:'rgba(255,195,0,.15)',fill:true,tension:.4,borderWidth:2.5,pointRadius:0,pointHoverRadius:5},
+      {label:'Invertido',data:dI,borderColor:'rgba(200,180,220,.55)',fill:false,tension:.4,borderWidth:1.5,borderDash:[5,5],pointRadius:0}
+    ]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{color:'rgba(255,255,255,.5)',font:{family:'Quicksand',size:12},boxWidth:10}},tooltip:{backgroundColor:'rgba(36,0,80,.95)',titleColor:'#fff',bodyColor:'rgba(255,255,255,.7)',callbacks:{label:function(c){return c.dataset.label+': '+fmt(c.raw)}}}},scales:{x:{grid:{color:'rgba(255,255,255,.06)'},ticks:{color:'rgba(255,255,255,.4)',font:{family:'Quicksand',size:10},maxTicksLimit:8}},y:{grid:{color:'rgba(255,255,255,.06)'},ticks:{color:'rgba(255,255,255,.4)',font:{family:'Quicksand',size:10},callback:function(v){return v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1000?'$'+(v/1000).toFixed(0)+'k':'$'+v}}}}}});}
+}
+function tf(el){var it=el.parentElement,op=it.classList.contains('open');document.querySelectorAll('.fi2.open').forEach(function(x){x.classList.remove('open')});if(!op)it.classList.add('open');}
+function se(){var v=document.getElementById('eml').value;if(v&&v.includes('@')){document.getElementById('econf').style.display='block';document.getElementById('eml').value='';}}
+document.getElementById('hbg').addEventListener('click',function(){document.getElementById('mob').classList.toggle('open');});
+document.querySelectorAll('.mobm a').forEach(function(a){a.addEventListener('click',function(){document.getElementById('mob').classList.remove('open');});});
+var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('vis')});},{threshold:.08});
+document.querySelectorAll('.fi3').forEach(function(el){obs.observe(el);});
+uc();
+</script>
+</body>
+</html>
