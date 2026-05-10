@@ -42,7 +42,8 @@ body{background:var(--pbg);color:var(--text);font-family:var(--sans);font-size:1
 
 /* ── HERO ── */
 .hero{padding:66px 0 0;background:var(--w);overflow:hidden}
-.hero-top{max-width:1060px;margin:0 auto;padding:54px 5vw 40px;text-align:center}
+.hero-top{max-width:1060px;margin:0 auto;padding:54px 5vw 32px;text-align:center}
+.hero-cta-below{text-align:center;padding:36px 5vw 52px;background:var(--w)}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;background:var(--ppale);border:1px solid var(--border);border-radius:100px;padding:6px 16px;font-size:11px;font-weight:700;color:var(--p);letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
 .edot{width:7px;height:7px;background:var(--y);border-radius:50%;animation:blink 2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
@@ -457,17 +458,6 @@ footer{background:var(--pd);padding:48px 5vw 40px}
     <div class="eyebrow"><span class="edot"></span>Web App · elmenudocuenta.com</div>
     <h1>Una moneda no es<br>una moneda, es un <span class="hy">inicio.</span></h1>
     <p class="hero-sub">Cada centavo puede cambiar tu futuro. Portafolios automatizados, educación financiera y herramientas para que tu dinero trabaje por ti — desde cualquier dispositivo.</p>
-    <div class="hero-auth">
-      <button class="btn-hero-reg" onclick="window.open('https://elmenudocuenta.com','_blank')">🚀 Crear cuenta gratis</button>
-      <button class="btn-hero-login" onclick="window.open('https://elmenudocuenta.com','_blank')">Ya tengo cuenta — Ingresar</button>
-    </div>
-    <p class="hero-note">Sin tarjeta de crédito &nbsp;·&nbsp; Sin monto mínimo &nbsp;·&nbsp; 0.25% comisión anual</p>
-    <div class="hero-stats">
-      <div><div class="hs-n">$5</div><div class="hs-l">Para comenzar</div></div>
-      <div><div class="hs-n">+6.39%</div><div class="hs-l">Rendimiento YTD</div></div>
-      <div><div class="hs-n">0.25%</div><div class="hs-l">Comisión anual</div></div>
-      <div><div class="hs-n">3</div><div class="hs-l">Tipos de cuenta</div></div>
-    </div>
   </div>
 
   <!-- ══════════════════════════════════
@@ -610,6 +600,15 @@ footer{background:var(--pd);padding:48px 5vw 40px}
 
   </div><!-- /devices-wrap -->
   <div class="devices-glow"></div>
+
+  <!-- CTA BUTTONS — below the devices -->
+  <div class="hero-cta-below">
+    <div class="hero-auth">
+      <button class="btn-hero-reg" onclick="window.open('https://elmenudocuenta.com','_blank')">🚀 Crear cuenta gratis</button>
+      <button class="btn-hero-login" onclick="window.open('https://elmenudocuenta.com','_blank')">Ya tengo cuenta — Ingresar</button>
+    </div>
+  </div>
+
 </section>
 
 <!-- PRODUCTS -->
