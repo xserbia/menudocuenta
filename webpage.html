@@ -335,6 +335,41 @@ footer{background:var(--pd);padding:48px 5vw 32px;border-top:1px solid rgba(255,
 .ft-bot p{font-size:11px;color:rgba(255,255,255,.3)}
 .ft-disc{font-size:10px;color:rgba(255,255,255,.2);margin-top:11px;line-height:1.7;max-width:840px}
 
+/* ── PRICING ── */
+.pricing-sect{padding:80px 5vw;background:var(--w)}
+.pricing-header{text-align:center;max-width:660px;margin:0 auto 52px}
+.pricing-header h2{font-size:clamp(30px,3.5vw,48px);font-weight:700;letter-spacing:-.02em;color:var(--pd);line-height:1.15;margin-bottom:14px}
+.pricing-header h2 span{color:var(--p)}
+.pricing-header p{font-size:15px;color:var(--ts);line-height:1.8;font-weight:500}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:820px;margin:0 auto}
+.plan-card{border-radius:22px;overflow:hidden;box-shadow:0 8px 40px rgba(68,0,143,.1);transition:transform .3s}
+.plan-card:hover{transform:translateY(-6px)}
+.plan-card.premium{box-shadow:0 12px 52px rgba(68,0,143,.18)}
+.plan-header{padding:18px 24px;text-align:center}
+.plan-header.basic{background:var(--p)}
+.plan-header.prem{background:var(--y)}
+.plan-header-name{font-size:20px;font-weight:700;letter-spacing:.02em}
+.plan-header.basic .plan-header-name{color:#fff}
+.plan-header.prem .plan-header-name{color:var(--pd)}
+.plan-body{background:#fff;border:1.5px solid var(--border);border-top:none;border-radius:0 0 22px 22px;padding:28px 28px 32px}
+.plan-price{text-align:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.plan-price-currency{font-size:16px;font-weight:700;color:var(--ts);vertical-align:top;margin-top:10px;display:inline-block}
+.plan-price-amount{font-size:64px;font-weight:700;color:var(--pd);letter-spacing:-.04em;line-height:1}
+.plan-price-period{font-size:15px;font-weight:600;color:var(--ts)}
+.plan-features{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
+.plan-feature{display:flex;align-items:flex-start;gap:12px}
+.plan-feature-text{font-size:14px;font-weight:500;line-height:1.45}
+.plan-feature-text.active{color:var(--text)}
+.plan-feature-text.inactive{color:var(--td)}
+.feat-check{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;margin-top:1px}
+.feat-check.yes{background:rgba(0,193,122,.12);color:var(--grn)}
+.feat-check.no{background:rgba(68,0,143,.07);color:var(--td)}
+.plan-cta-btn{width:100%;padding:14px;border-radius:100px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:all .25s;border:none;letter-spacing:.01em}
+.plan-card.basic .plan-cta-btn{background:var(--p);color:#fff}
+.plan-card.basic .plan-cta-btn:hover{background:var(--pm);transform:translateY(-1px);box-shadow:0 8px 24px rgba(68,0,143,.3)}
+.plan-card.premium .plan-cta-btn{background:var(--y);color:var(--pd)}
+.plan-card.premium .plan-cta-btn:hover{background:var(--yd,#E0A800);transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,195,0,.4)}
+
 /* FADE */
 .fi{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
 .fi.vis{opacity:1;transform:none}
@@ -350,6 +385,7 @@ footer{background:var(--pd);padding:48px 5vw 32px;border-top:1px solid rgba(255,
   .cards-g{grid-template-columns:1fr 1fr}
   .port-grid,.donut-inner,.apr-inner{grid-template-columns:1fr}
   .prod-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
   .sgrid{grid-template-columns:1fr 1fr;gap:18px}
   .sline{display:none}
   .calc-inner{grid-template-columns:1fr}
@@ -381,6 +417,7 @@ footer{background:var(--pd);padding:48px 5vw 32px;border-top:1px solid rgba(255,
     <li><a href="#productos">Membresía</a></li>
     <li><a href="#como-funciona">Cómo funciona</a></li>
     <li><a href="#aprende">Aprende</a></li>
+    <li><a href="#membresia">Membresía</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
   <div class="nav-auth">
@@ -394,6 +431,7 @@ footer{background:var(--pd);padding:48px 5vw 32px;border-top:1px solid rgba(255,
   <a href="#productos">Membresía</a>
   <a href="#como-funciona">Cómo funciona</a>
   <a href="#aprende">Aprende</a>
+  <a href="#membresia">Membresía</a>
   <a href="#faq">FAQ</a>
   <div style="display:flex;gap:8px;margin-top:8px">
     <button class="btn-login" style="flex:1">Ingresar</button>
@@ -725,6 +763,94 @@ footer{background:var(--pd);padding:48px 5vw 32px;border-top:1px solid rgba(255,
         <canvas id="calcChart"></canvas>
         <p class="cnote">Esta calculadora muestra una estimación. No predice el rendimiento de ningún portafolio de El Menudo Cuenta ni considera factores de mercado.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING / MEMBRESIA -->
+<section class="pricing-sect" id="membresia">
+  <div class="sw">
+    <div class="pricing-header fi">
+      <div class="pill">Membresía</div>
+      <h2>¡Elige el paquete que hará crecer <span>tu menudo!</span></h2>
+      <p>¡Haz que cada elección cuente! Opta por nuestro paquete de suscripción premium y desbloquea experiencias exclusivas. Tu mejor decisión comienza aquí.</p>
+    </div>
+    <div class="pricing-grid fi">
+
+      <!-- BÁSICO -->
+      <div class="plan-card basic">
+        <div class="plan-header basic">
+          <div class="plan-header-name">Básico</div>
+        </div>
+        <div class="plan-body">
+          <div class="plan-price">
+            <span class="plan-price-currency">US$</span>
+            <span class="plan-price-amount">5</span>
+            <span class="plan-price-period"> / mes</span>
+          </div>
+          <div class="plan-features">
+            <div class="plan-feature">
+              <div class="feat-check yes">✓</div>
+              <span class="plan-feature-text active">1 cuenta de inversiones o de retiro</span>
+            </div>
+            <div class="plan-feature">
+              <div class="feat-check yes">✓</div>
+              <span class="plan-feature-text active">Rebalanceo y reinversión automática</span>
+            </div>
+            <div class="plan-feature">
+              <div class="feat-check yes">✓</div>
+              <span class="plan-feature-text active">Portafolios avanzados construidos por expertos</span>
+            </div>
+            <div class="plan-feature">
+              <div class="feat-check no">✕</div>
+              <span class="plan-feature-text inactive">Abrir múltiples cuentas</span>
+            </div>
+            <div class="plan-feature">
+              <div class="feat-check no">✕</div>
+              <span class="plan-feature-text inactive">Acceso a contenido educativo de inversiones y retiro</span>
+            </div>
+          </div>
+          <button class="plan-cta-btn" onclick="window.open('https://elmenudocuenta.com','_blank')">Empezar Ahora</button>
+        </div>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="plan-card premium">
+        <div class="plan-header prem">
+          <div class="plan-header-name">Premium</div>
+        </div>
+        <div class="plan-body">
+          <div class="plan-price">
+            <span class="plan-price-currency">US$</span>
+            <span class="plan-price-amount">10</span>
+            <span class="plan-price-period"> / mes</span>
+          </div>
+          <div class="plan-features">
+            <div class="plan-feature">
+              <div class="feat-check yes">✓</div>
+              <span class="plan-feature-text active">Múltiples cuentas de inversiones, de retiro o una combinación de ambas</span>
+            </div>
+            <div class="plan-feature">
+              <div class="feat-check yes">✓</div>
+              <span class="plan-feature-text active">Rebalanceo y reinversión automática</span>
+            </div>
+            <div class="plan-feature">
+              <div class="feat-check yes">✓</div>
+              <span class="plan-feature-text active">Portafolios avanzados construidos por expertos</span>
+            </div>
+            <div class="plan-feature">
+              <div class="feat-check yes">✓</div>
+              <span class="plan-feature-text active">Abrir múltiples cuentas</span>
+            </div>
+            <div class="plan-feature">
+              <div class="feat-check yes">✓</div>
+              <span class="plan-feature-text active">Acceso a contenido educativo de inversiones y finanzas personales</span>
+            </div>
+          </div>
+          <button class="plan-cta-btn" onclick="window.open('https://elmenudocuenta.com','_blank')">Empezar Ahora</button>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
