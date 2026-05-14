@@ -49,24 +49,17 @@ body{background:var(--pbg);color:var(--text);font-family:var(--sans);font-size:1
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 h1{font-size:clamp(32px,4.2vw,58px);font-weight:700;line-height:1.08;letter-spacing:-.025em;color:var(--pd);margin-bottom:16px}
 h1 .hy{background:var(--p);color:var(--y);padding:2px 12px;border-radius:10px;display:inline}
-.hero-sub{font-size:17px;color:var(--ts);line-height:1.8;max-width:540px;margin:0 auto 28px;font-weight:500}
-.hero-auth{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.hero-sub{font-size:17px;color:var(--ts);line-height:1.8;max-width:540px;margin:0 auto;font-weight:500}
+.hero-auth{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
 .btn-hero-reg{background:var(--p);border:none;color:#fff;padding:15px 36px;border-radius:100px;font-family:var(--sans);font-size:16px;font-weight:700;cursor:pointer;transition:all .25s}
 .btn-hero-reg:hover{background:var(--pm);transform:translateY(-2px);box-shadow:0 12px 36px rgba(68,0,143,.3)}
 .btn-hero-login{background:none;border:2.5px solid var(--border);color:var(--p);padding:13px 32px;border-radius:100px;font-family:var(--sans);font-size:16px;font-weight:700;cursor:pointer;transition:all .25s}
 .btn-hero-login:hover{border-color:var(--p);background:var(--ppale)}
-.hero-note{font-size:12px;color:var(--td);font-weight:500;margin-bottom:36px}
-.hero-stats{display:flex;justify-content:center;gap:36px;margin-bottom:44px;flex-wrap:wrap}
-.hs-n{font-size:26px;font-weight:700;color:var(--p)}
-.hs-l{font-size:11px;font-weight:600;color:var(--td);text-transform:uppercase;letter-spacing:.06em;margin-top:1px}
 
-/* ════════════════════════════════════════
-   DUAL DEVICE SHOWCASE
-   Desktop browser + Mobile browser side by side
-═══════════════════════════════════════════ */
+/* ── DUAL DEVICE SHOWCASE ── */
 .devices-wrap{position:relative;padding:0 3vw 0;max-width:1200px;margin:0 auto;display:flex;align-items:flex-end;gap:0}
 
-/* ── DESKTOP BROWSER ── */
+/* Desktop browser */
 .desktop-device{flex:1;position:relative;z-index:1}
 .browser-shell{background:#D8D2EC;border-radius:14px 14px 0 0;padding:10px 14px 0;border:1.5px solid rgba(68,0,143,.15);border-bottom:none;box-shadow:0 -4px 30px rgba(68,0,143,.08)}
 .browser-bar{display:flex;align-items:center;gap:8px;margin-bottom:9px}
@@ -74,7 +67,6 @@ h1 .hy{background:var(--p);color:var(--y);padding:2px 12px;border-radius:10px;di
 .b-dot{width:11px;height:11px;border-radius:50%}
 .b-url{flex:1;background:rgba(255,255,255,.75);border-radius:100px;padding:5px 12px;font-size:11px;font-weight:600;color:var(--ts);text-align:center;letter-spacing:.01em}
 .b-url::before{content:'🔒 ';font-size:10px}
-/* App window inside browser */
 .app-win{background:var(--pbg);display:grid;grid-template-columns:200px 1fr;min-height:430px;border-top:1.5px solid rgba(68,0,143,.1)}
 .app-sidebar{background:#fff;border-right:1px solid var(--border2);padding:16px 0}
 .asl{display:flex;align-items:center;gap:6px;padding:0 16px 18px;border-bottom:1px solid var(--border2)}
@@ -119,19 +111,16 @@ h1 .hy{background:var(--p);color:var(--y);padding:2px 12px;border-radius:10px;di
 .ac-v small{font-size:10px;font-weight:500;color:var(--ts)}
 .ac-t{font-size:8px;color:var(--td);font-weight:500;margin-top:3px}
 
-/* ── MOBILE BROWSER (phone) ── */
-.mobile-device{width:210px;flex-shrink:0;margin-left:-28px;position:relative;z-index:2;align-self:flex-end;margin-bottom:0}
-.phone-shell{background:#2D005F;border-radius:32px;padding:10px;box-shadow:0 20px 60px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.1);position:relative}
+/* Mobile phone */
+.mobile-device{width:210px;flex-shrink:0;margin-left:-28px;position:relative;z-index:2;align-self:flex-end}
+.phone-shell{background:#2D005F;border-radius:32px;padding:10px;box-shadow:0 20px 60px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.1)}
 .phone-notch{width:70px;height:22px;background:#1A0033;border-radius:0 0 14px 14px;margin:0 auto 4px}
-/* mini browser bar inside phone */
 .phone-browser-bar{background:#3D1070;border-radius:8px;padding:5px 10px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
 .phone-url{flex:1;font-size:8px;font-weight:600;color:rgba(255,255,255,.55);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .phone-screen{background:var(--pbg);border-radius:10px;overflow:hidden}
-/* phone app content */
 .ph-topbar{background:#fff;padding:7px 10px;display:flex;justify-content:space-between;align-items:center}
 .ph-logo-mc{font-size:18px;font-weight:700;color:var(--p);letter-spacing:-2px;display:flex;align-items:center}
 .ph-coin{width:13px;height:13px;background:var(--y);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:700;color:var(--p);margin-left:-1px;border:1px solid #fff}
-/* screen 1: dashboard */
 .ph-banner{background:var(--p);padding:10px 10px 8px;position:relative;overflow:hidden}
 .ph-banner::after{content:'🕐';position:absolute;right:6px;top:50%;transform:translateY(-50%);font-size:28px;opacity:.15}
 .ph-hi{font-size:8px;color:rgba(255,255,255,.6);font-weight:500}
@@ -142,7 +131,6 @@ h1 .hy{background:var(--p);color:var(--y);padding:2px 12px;border-radius:10px;di
 .ph-t{padding:4px 8px;border-radius:100px;font-size:8px;font-weight:700;border:none;cursor:pointer;font-family:var(--sans)}
 .ph-t.on{background:var(--y);color:var(--pd)}
 .ph-t:not(.on){background:var(--ppale);color:var(--ts)}
-/* inv card on phone */
 .ph-inv-card{background:var(--pbg);border:1.5px solid var(--border);border-radius:10px;padding:9px}
 .ph-inv-top{display:flex;align-items:center;gap:6px;margin-bottom:6px}
 .ph-inv-ico{width:22px;height:22px;background:var(--p);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff}
@@ -157,8 +145,6 @@ h1 .hy{background:var(--p);color:var(--y);padding:2px 12px;border-radius:10px;di
 .ph-val-row{margin-top:6px;text-align:center}
 .ph-val{font-size:16px;font-weight:700;color:var(--pd)}
 .ph-delta{font-size:9px;color:var(--grn);font-weight:700}
-
-/* shadow glow under devices */
 .devices-glow{height:40px;background:linear-gradient(to bottom,rgba(68,0,143,.08),transparent);border-radius:0 0 20px 20px;max-width:1200px;margin:0 auto}
 
 /* ── SECTIONS ── */
@@ -171,17 +157,13 @@ section{padding:80px 5vw}
 
 /* ── PRODUCTS ── */
 .prod-sect{background:var(--w)}
-.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
 .pc{background:var(--pbg);border:1.5px solid var(--border);border-radius:20px;padding:26px 22px;position:relative;overflow:hidden;transition:all .3s;cursor:pointer}
 .pc:hover{border-color:rgba(68,0,143,.28);transform:translateY(-5px);box-shadow:0 14px 44px rgba(68,0,143,.09);background:#fff}
 .pc.feat{border-color:var(--p);background:#fff}
 .ptb{position:absolute;top:0;left:0;right:0;height:4px}
-.ptb.y{background:var(--y)}
 .ptb.p{background:linear-gradient(90deg,var(--p),var(--pm))}
 .ptb.g{background:var(--grn)}
-.pbdg{position:absolute;top:12px;right:12px;font-size:9px;font-weight:700;background:var(--p);color:#fff;padding:3px 10px;border-radius:100px}
 .pico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;font-size:22px}
-.pico.yi{background:var(--y)}
 .pico.pi{background:var(--p)}
 .pico.gi{background:rgba(0,193,122,.15)}
 .ptag{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--td);margin-bottom:7px}
@@ -296,6 +278,41 @@ input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 7px rgba(255,195,
 #calcChart{width:100%!important;max-height:240px}
 .cnote{font-size:10px;color:rgba(255,255,255,.28);margin-top:12px;line-height:1.7}
 
+/* ── PRICING ── */
+.pricing-sect{padding:80px 5vw;background:var(--w)}
+.pricing-header{text-align:center;max-width:660px;margin:0 auto 52px}
+.pricing-header h2{font-size:clamp(30px,3.5vw,48px);font-weight:700;letter-spacing:-.02em;color:var(--pd);line-height:1.15;margin-bottom:14px}
+.pricing-header h2 span{color:var(--p)}
+.pricing-header p{font-size:15px;color:var(--ts);line-height:1.8;font-weight:500}
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:820px;margin:0 auto}
+.plan-card{border-radius:22px;overflow:hidden;box-shadow:0 8px 40px rgba(68,0,143,.1);transition:transform .3s}
+.plan-card:hover{transform:translateY(-6px)}
+.plan-card.premium{box-shadow:0 12px 52px rgba(68,0,143,.18)}
+.plan-header{padding:18px 24px;text-align:center}
+.plan-header.basic{background:var(--p)}
+.plan-header.prem{background:var(--y)}
+.plan-header-name{font-size:20px;font-weight:700;letter-spacing:.02em}
+.plan-header.basic .plan-header-name{color:#fff}
+.plan-header.prem .plan-header-name{color:var(--pd)}
+.plan-body{background:#fff;border:1.5px solid var(--border);border-top:none;border-radius:0 0 22px 22px;padding:28px 28px 32px}
+.plan-price{text-align:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.plan-price-currency{font-size:16px;font-weight:700;color:var(--ts);vertical-align:top;margin-top:10px;display:inline-block}
+.plan-price-amount{font-size:64px;font-weight:700;color:var(--pd);letter-spacing:-.04em;line-height:1}
+.plan-price-period{font-size:15px;font-weight:600;color:var(--ts)}
+.plan-features{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
+.plan-feature{display:flex;align-items:flex-start;gap:12px}
+.plan-feature-text{font-size:14px;font-weight:500;line-height:1.45}
+.plan-feature-text.active{color:var(--text)}
+.plan-feature-text.inactive{color:var(--td)}
+.feat-check{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;margin-top:1px}
+.feat-check.yes{background:rgba(0,193,122,.12);color:var(--grn)}
+.feat-check.no{background:rgba(68,0,143,.07);color:var(--td)}
+.plan-cta-btn{width:100%;padding:14px;border-radius:100px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:all .25s;border:none;letter-spacing:.01em}
+.plan-card.basic .plan-cta-btn{background:var(--p);color:#fff}
+.plan-card.basic .plan-cta-btn:hover{background:var(--pm);transform:translateY(-1px);box-shadow:0 8px 24px rgba(68,0,143,.3)}
+.plan-card.premium .plan-cta-btn{background:var(--y);color:var(--pd)}
+.plan-card.premium .plan-cta-btn:hover{background:#E0A800;transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,195,0,.4)}
+
 /* ── FAQ ── */
 .faq-sect{background:var(--pbg)}
 .faq-lay{display:grid;grid-template-columns:1fr 2fr;gap:64px;align-items:start}
@@ -348,73 +365,89 @@ footer{background:var(--pd);padding:48px 5vw 40px}
 .ft-disc-more a:hover{color:var(--y)}
 .ft-disc-copy{font-size:11px;color:rgba(255,255,255,.35);font-weight:600;margin-top:4px}
 
-/* ── PRICING ── */
-.pricing-sect{padding:80px 5vw;background:var(--w)}
-.pricing-header{text-align:center;max-width:660px;margin:0 auto 52px}
-.pricing-header h2{font-size:clamp(30px,3.5vw,48px);font-weight:700;letter-spacing:-.02em;color:var(--pd);line-height:1.15;margin-bottom:14px}
-.pricing-header h2 span{color:var(--p)}
-.pricing-header p{font-size:15px;color:var(--ts);line-height:1.8;font-weight:500}
-.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:820px;margin:0 auto}
-.plan-card{border-radius:22px;overflow:hidden;box-shadow:0 8px 40px rgba(68,0,143,.1);transition:transform .3s}
-.plan-card:hover{transform:translateY(-6px)}
-.plan-card.premium{box-shadow:0 12px 52px rgba(68,0,143,.18)}
-.plan-header{padding:18px 24px;text-align:center}
-.plan-header.basic{background:var(--p)}
-.plan-header.prem{background:var(--y)}
-.plan-header-name{font-size:20px;font-weight:700;letter-spacing:.02em}
-.plan-header.basic .plan-header-name{color:#fff}
-.plan-header.prem .plan-header-name{color:var(--pd)}
-.plan-body{background:#fff;border:1.5px solid var(--border);border-top:none;border-radius:0 0 22px 22px;padding:28px 28px 32px}
-.plan-price{text-align:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border)}
-.plan-price-currency{font-size:16px;font-weight:700;color:var(--ts);vertical-align:top;margin-top:10px;display:inline-block}
-.plan-price-amount{font-size:64px;font-weight:700;color:var(--pd);letter-spacing:-.04em;line-height:1}
-.plan-price-period{font-size:15px;font-weight:600;color:var(--ts)}
-.plan-features{display:flex;flex-direction:column;gap:14px;margin-bottom:32px}
-.plan-feature{display:flex;align-items:flex-start;gap:12px}
-.plan-feature-text{font-size:14px;font-weight:500;line-height:1.45}
-.plan-feature-text.active{color:var(--text)}
-.plan-feature-text.inactive{color:var(--td)}
-.feat-check{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:700;margin-top:1px}
-.feat-check.yes{background:rgba(0,193,122,.12);color:var(--grn)}
-.feat-check.no{background:rgba(68,0,143,.07);color:var(--td)}
-.plan-cta-btn{width:100%;padding:14px;border-radius:100px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;transition:all .25s;border:none;letter-spacing:.01em}
-.plan-card.basic .plan-cta-btn{background:var(--p);color:#fff}
-.plan-card.basic .plan-cta-btn:hover{background:var(--pm);transform:translateY(-1px);box-shadow:0 8px 24px rgba(68,0,143,.3)}
-.plan-card.premium .plan-cta-btn{background:var(--y);color:var(--pd)}
-.plan-card.premium .plan-cta-btn:hover{background:var(--yd,#E0A800);transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,195,0,.4)}
-
-/* FADE */
+/* ── FADE ── */
 .fi{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
 .fi.vis{opacity:1;transform:none}
 
-/* RESPONSIVE */
+/* ══════════════════════════════
+   DESKTOP: 960px+  →  full layout
+   MOBILE:  <600px  →  simplified
+══════════════════════════════ */
 @media(max-width:960px){
   .nav-links,.nav-auth{display:none}
   .hbg{display:flex}
-  .devices-wrap{flex-direction:column;align-items:center}
-  .desktop-device{width:100%}
-  .mobile-device{width:180px;margin-left:0;margin-top:-20px}
-  .app-win{grid-template-columns:160px 1fr}
-  .cards-g{grid-template-columns:1fr 1fr}
-  .port-grid,.donut-inner,.apr-inner{grid-template-columns:1fr}
-  .prod-grid{grid-template-columns:1fr}
-  .pricing-grid{grid-template-columns:1fr}
-  .sgrid{grid-template-columns:1fr 1fr;gap:18px}
-  .sline{display:none}
-  .calc-inner{grid-template-columns:1fr}
-  .faq-lay{grid-template-columns:1fr}
-  .faq-stk{position:static}
-  .ft-top{grid-template-columns:1fr 1fr}
-  .hero-auth{flex-direction:column;align-items:center}
 }
-@media(max-width:520px){
-  .sgrid{grid-template-columns:1fr}
-  .vid-grid{grid-template-columns:1fr}
-  .perf{grid-template-columns:1fr}
-  .ft-top{grid-template-columns:1fr}
-  .app-win{grid-template-columns:1fr}
-  .app-sidebar{display:none}
-  .cards-g{grid-template-columns:1fr}
+
+@media(max-width:600px){
+  /* layout */
+  section{padding:48px 20px}
+  .sw{padding:0}
+
+  /* hero */
+  .hero-top{padding:36px 20px 24px}
+  h1{font-size:30px}
+  .hero-sub{font-size:15px}
+  .hero-cta-below{padding:24px 20px 40px}
+  .hero-auth{flex-direction:column;align-items:center;gap:10px}
+  .btn-hero-reg,.btn-hero-login{width:100%;max-width:300px;padding:14px 20px;font-size:15px;text-align:center}
+
+  /* devices: phone only */
+  .devices-wrap{padding:24px 20px 0;justify-content:center}
+  .desktop-device{display:none}
+  .mobile-device{width:200px;margin-left:0}
+  .devices-glow{display:none}
+
+  /* titles */
+  .st{font-size:24px}
+  .ss{font-size:14px}
+
+  /* products */
+  .prod-grid-inner{grid-template-columns:1fr !important;max-width:100% !important}
+
+  /* how */
+  .sgrid{grid-template-columns:1fr;gap:20px;margin-top:28px}
+  .sline{display:none}
+  .snum{width:60px;height:60px;font-size:18px;margin-bottom:12px}
+
+  /* portfolio */
+  .port-grid{grid-template-columns:1fr;gap:14px}
+  .perf{grid-template-columns:repeat(3,1fr)}
+
+  /* donut */
+  .donut-inner{grid-template-columns:1fr;gap:24px}
+  #donutChart{max-width:150px;max-height:150px}
+
+  /* aprende */
+  .apr-inner{grid-template-columns:1fr;gap:24px}
+  .vid-grid{grid-template-columns:1fr;gap:10px}
+
+  /* calc */
+  .calc-sect{padding:48px 20px}
+  .calc-inner{grid-template-columns:1fr;gap:24px}
+
+  /* pricing */
+  .pricing-grid{grid-template-columns:1fr}
+  .plan-price-amount{font-size:52px}
+
+  /* faq */
+  .faq-sect{padding:48px 20px}
+  .faq-lay{grid-template-columns:1fr;gap:24px}
+  .faq-stk{position:static}
+  .faq-stk .btn-signup{display:none}
+  .fq{font-size:13px;padding:13px 16px}
+
+  /* cta */
+  .cta-final{padding:48px 20px}
+  .cta-btns{flex-direction:column;align-items:center}
+  .btn-cta-reg,.btn-cta-login{width:100%;max-width:300px}
+
+  /* footer */
+  footer{padding:32px 20px 28px}
+  .ft-legal-links{flex-direction:column;gap:6px}
+  .ft-sep{display:none}
+  .ft-pipe{display:none}
+  .ft-warning-bar{gap:6px;padding:10px 14px}
+  .ft-warning-bar span{font-size:11px}
 }
 </style>
 </head>
@@ -427,28 +460,28 @@ footer{background:var(--pd);padding:48px 5vw 40px}
     <div class="logo-txt">El Menudo<br>Cuenta<sup style="font-size:8px">®</sup></div>
   </a>
   <ul class="nav-links">
-    <li><a href="#productos">Membresía</a></li>
+    <li><a href="#productos">Productos</a></li>
     <li><a href="#como-funciona">Cómo funciona</a></li>
     <li><a href="#aprende">Aprende</a></li>
     <li><a href="#membresia">Membresía</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
   <div class="nav-auth">
-    <button class="btn-login">Ingresar</button>
-    <button class="btn-signup">Crear cuenta gratis</button>
+    <button class="btn-login" onclick="window.open('https://elmenudocuenta.com','_blank')">Ingresar</button>
+    <button class="btn-signup" onclick="window.open('https://elmenudocuenta.com','_blank')">Crear cuenta gratis</button>
   </div>
   <button class="hbg" id="hbg"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="mob" id="mob">
-  <a href="#productos">Membresía</a>
+  <a href="#productos">Productos</a>
   <a href="#como-funciona">Cómo funciona</a>
   <a href="#aprende">Aprende</a>
   <a href="#membresia">Membresía</a>
   <a href="#faq">FAQ</a>
-  <div style="display:flex;gap:8px;margin-top:8px">
-    <button class="btn-login" style="flex:1">Ingresar</button>
-    <button class="btn-signup" style="flex:1">Crear cuenta</button>
+  <div style="display:flex;gap:8px;margin-top:10px">
+    <button class="btn-login" style="flex:1" onclick="window.open('https://elmenudocuenta.com','_blank')">Ingresar</button>
+    <button class="btn-signup" style="flex:1" onclick="window.open('https://elmenudocuenta.com','_blank')">Crear cuenta</button>
   </div>
 </div>
 
@@ -460,11 +493,8 @@ footer{background:var(--pd);padding:48px 5vw 40px}
     <p class="hero-sub">Cada centavo puede cambiar tu futuro. Portafolios automatizados, educación financiera y herramientas para que tu dinero trabaje por ti — desde cualquier dispositivo.</p>
   </div>
 
-  <!-- ══════════════════════════════════
-       DUAL DEVICE: Desktop + Mobile
-  ═══════════════════════════════════════ -->
+  <!-- DUAL DEVICE SHOWCASE -->
   <div class="devices-wrap fi">
-
     <!-- DESKTOP BROWSER -->
     <div class="desktop-device">
       <div class="browser-shell">
@@ -477,9 +507,7 @@ footer{background:var(--pd);padding:48px 5vw 40px}
           <div class="b-url">elmenudocuenta.com/cuentas</div>
         </div>
       </div>
-      <!-- APP WINDOW -->
       <div class="app-win">
-        <!-- sidebar -->
         <div class="app-sidebar">
           <div class="asl">
             <div class="asl-mc">mc<div class="asl-coin">$</div></div>
@@ -493,11 +521,10 @@ footer{background:var(--pd);padding:48px 5vw 40px}
             <div class="si"><span class="si-ico">⚙️</span>Ajustes</div>
           </div>
         </div>
-        <!-- main -->
         <div class="app-main">
           <div class="app-topbar">
             <div></div>
-            <div class="app-topbar-user"><div class="user-dot"></div>xsmllc@gmail.com &nbsp; ☰</div>
+            <div class="app-topbar-user"><div class="user-dot"></div>xsmllc@gmail.com &nbsp;☰</div>
           </div>
           <div class="app-banner">
             <div class="ab-hi">Hola</div>
@@ -544,19 +571,17 @@ footer{background:var(--pd);padding:48px 5vw 40px}
           </div>
         </div>
       </div>
-    </div><!-- /desktop -->
+    </div>
 
-    <!-- MOBILE BROWSER (phone) -->
+    <!-- MOBILE PHONE -->
     <div class="mobile-device">
       <div class="phone-shell">
         <div class="phone-notch"></div>
-        <!-- browser bar inside phone -->
         <div class="phone-browser-bar">
           <span style="font-size:8px;color:rgba(255,255,255,.4)">🔒</span>
           <span class="phone-url">elmenudocuenta.com</span>
           <span style="font-size:10px;color:rgba(255,255,255,.3)">⟳</span>
         </div>
-        <!-- app screen -->
         <div class="phone-screen">
           <div class="ph-topbar">
             <div class="ph-logo-mc">mc<div class="ph-coin">$</div></div>
@@ -570,7 +595,7 @@ footer{background:var(--pd);padding:48px 5vw 40px}
           <div class="ph-body">
             <div class="ph-tabs">
               <button class="ph-t on">Todas</button>
-              <button class="ph-t">Inversiones</button>
+              <button class="ph-t">Inv.</button>
               <button class="ph-t">Futuro</button>
             </div>
             <div class="ph-inv-card">
@@ -582,7 +607,6 @@ footer{background:var(--pd);padding:48px 5vw 40px}
                 </div>
               </div>
               <div class="ph-inv-st"><div class="ph-inv-dot"></div><span class="ph-inv-stxt">Portafolio Aceptado</span></div>
-              <!-- mini purple chart -->
               <div class="ph-chart-box">
                 <div class="ph-chart-title">Evolución del Portafolio</div>
                 <div class="ph-chart-sub">Últimos 131 días</div>
@@ -596,40 +620,50 @@ footer{background:var(--pd);padding:48px 5vw 40px}
           </div>
         </div>
       </div>
-    </div><!-- /mobile -->
-
-  </div><!-- /devices-wrap -->
+    </div>
+  </div>
   <div class="devices-glow"></div>
 
-  <!-- CTA BUTTONS — below the devices -->
+  <!-- CTA BUTTONS below devices -->
   <div class="hero-cta-below">
     <div class="hero-auth">
       <button class="btn-hero-reg" onclick="window.open('https://elmenudocuenta.com','_blank')">🚀 Crear cuenta gratis</button>
       <button class="btn-hero-login" onclick="window.open('https://elmenudocuenta.com','_blank')">Ya tengo cuenta — Ingresar</button>
     </div>
   </div>
-
 </section>
 
 <!-- PRODUCTS -->
-<section id="productos" class="prod-sect sw" style="max-width:none">
+<section id="productos" class="prod-sect">
   <div class="sw">
     <div class="pill">Productos</div>
-    <h2 class="st">Ahorra, invierte y <span class="acc">aprende</span><br>a manejar tu dinero</h2>
-    <p class="ss">Tres cuentas diseñadas para cada etapa de tu camino financiero, accesibles desde cualquier dispositivo.</p>
-    <div class="prod-grid fi" style="grid-template-columns:1fr 1fr;max-width:740px;margin:40px auto 0">
+    <h2 class="st">Invierte y construye tu <span class="acc">retiro</span></h2>
+    <p class="ss">Dos cuentas diseñadas para hacer crecer tu dinero hoy y asegurar tu futuro, accesibles desde cualquier dispositivo en elmenudocuenta.com.</p>
+    <div class="prod-grid-inner fi" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:740px;margin:40px auto 0">
       <div class="pc feat"><div class="ptb p"></div>
-        <div class="pico pi" style="color:#fff">📈</div><div class="ptag">Inversión automatizada</div>
+        <div class="pico pi" style="color:#fff">📈</div>
+        <div class="ptag">Inversión automatizada</div>
         <h3>MC Inversiones</h3>
         <p>Portafolios de ETFs diversificados rebalanceados automáticamente según tus metas. Desde $5, comisión de solo 0.25% anual.</p>
-        <div class="pfl"><div class="pf2"><div class="pfd"></div>ETFs globales diversificados</div><div class="pf2"><div class="pfd"></div>Rebalanceo automático 24/7</div><div class="pf2"><div class="pfd"></div>Solo 0.25% comisión anual</div><div class="pf2"><div class="pfd"></div>Desde $5 para comenzar</div></div>
+        <div class="pfl">
+          <div class="pf2"><div class="pfd"></div>ETFs globales diversificados</div>
+          <div class="pf2"><div class="pfd"></div>Rebalanceo automático 24/7</div>
+          <div class="pf2"><div class="pfd"></div>Solo 0.25% comisión anual</div>
+          <div class="pf2"><div class="pfd"></div>Desde $5 para comenzar</div>
+        </div>
         <a href="https://elmenudocuenta.com" target="_blank" class="plnk">Abrir cuenta <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
       <div class="pc feat"><div class="ptb g"></div>
-        <div class="pico gi">🏛️</div><div class="ptag">Retiro / Jubilación</div>
+        <div class="pico gi">🏛️</div>
+        <div class="ptag">Retiro / Jubilación</div>
         <h3>MC Futuro</h3>
         <p>IRA Tradicional y Roth IRA con ventajas fiscales comprobadas para construir tu retiro desde hoy.</p>
-        <div class="pfl"><div class="pf2"><div class="pfd"></div>IRA Tradicional y Roth IRA</div><div class="pf2"><div class="pfd"></div>Ventajas fiscales comprobadas</div><div class="pf2"><div class="pfd"></div>Aportaciones automáticas</div><div class="pf2"><div class="pfd"></div>Proyección de retiro personalizada</div></div>
+        <div class="pfl">
+          <div class="pf2"><div class="pfd"></div>IRA Tradicional y Roth IRA</div>
+          <div class="pf2"><div class="pfd"></div>Ventajas fiscales comprobadas</div>
+          <div class="pf2"><div class="pfd"></div>Aportaciones automáticas</div>
+          <div class="pf2"><div class="pfd"></div>Proyección de retiro personalizada</div>
+        </div>
         <a href="https://elmenudocuenta.com" target="_blank" class="plnk">Abrir cuenta <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
       </div>
     </div>
@@ -641,7 +675,7 @@ footer{background:var(--pd);padding:48px 5vw 40px}
   <div class="sw" style="text-align:center">
     <div class="pill">Proceso</div>
     <h2 class="st" style="text-align:center">Invertir nunca fue <span class="acc">tan sencillo</span></h2>
-    <div class="sgrid fi" style="margin-top:44px">
+    <div class="sgrid fi">
       <div class="sline"></div>
       <div class="step"><div class="snum">01</div><h4>Entra a elmenudocuenta.com</h4><p>Desde tu computadora o teléfono, sin descargar nada.</p></div>
       <div class="step"><div class="snum">02</div><h4>Crea tu cuenta</h4><p>Regístrate en minutos y define tu perfil de riesgo y objetivos.</p></div>
@@ -651,7 +685,7 @@ footer{background:var(--pd);padding:48px 5vw 40px}
   </div>
 </section>
 
-<!-- PORTFOLIO -->
+<!-- PORTFOLIO DETAIL -->
 <section class="port-sect" id="portafolio">
   <div class="sw">
     <div class="pill">Rendimiento real</div>
@@ -770,7 +804,7 @@ footer{background:var(--pd);padding:48px 5vw 40px}
   </div>
 </section>
 
-<!-- PRICING / MEMBRESIA -->
+<!-- PRICING -->
 <section class="pricing-sect" id="membresia">
   <div class="sw">
     <div class="pricing-header fi">
@@ -779,81 +813,38 @@ footer{background:var(--pd);padding:48px 5vw 40px}
       <p>¡Haz que cada elección cuente! Opta por nuestro paquete de suscripción premium y desbloquea experiencias exclusivas. Tu mejor decisión comienza aquí.</p>
     </div>
     <div class="pricing-grid fi">
-
-      <!-- BÁSICO -->
       <div class="plan-card basic">
-        <div class="plan-header basic">
-          <div class="plan-header-name">Básico</div>
-        </div>
+        <div class="plan-header basic"><div class="plan-header-name">Básico</div></div>
         <div class="plan-body">
           <div class="plan-price">
-            <span class="plan-price-currency">US$</span>
-            <span class="plan-price-amount">5</span>
-            <span class="plan-price-period"> / mes</span>
+            <span class="plan-price-currency">US$</span><span class="plan-price-amount">5</span><span class="plan-price-period"> / mes</span>
           </div>
           <div class="plan-features">
-            <div class="plan-feature">
-              <div class="feat-check yes">✓</div>
-              <span class="plan-feature-text active">1 cuenta de inversiones o de retiro</span>
-            </div>
-            <div class="plan-feature">
-              <div class="feat-check yes">✓</div>
-              <span class="plan-feature-text active">Rebalanceo y reinversión automática</span>
-            </div>
-            <div class="plan-feature">
-              <div class="feat-check yes">✓</div>
-              <span class="plan-feature-text active">Portafolios avanzados construidos por expertos</span>
-            </div>
-            <div class="plan-feature">
-              <div class="feat-check no">✕</div>
-              <span class="plan-feature-text inactive">Abrir múltiples cuentas</span>
-            </div>
-            <div class="plan-feature">
-              <div class="feat-check no">✕</div>
-              <span class="plan-feature-text inactive">Acceso a contenido educativo de inversiones y retiro</span>
-            </div>
+            <div class="plan-feature"><div class="feat-check yes">✓</div><span class="plan-feature-text active">1 cuenta de inversiones o de retiro</span></div>
+            <div class="plan-feature"><div class="feat-check yes">✓</div><span class="plan-feature-text active">Rebalanceo y reinversión automática</span></div>
+            <div class="plan-feature"><div class="feat-check yes">✓</div><span class="plan-feature-text active">Portafolios avanzados construidos por expertos</span></div>
+            <div class="plan-feature"><div class="feat-check no">✕</div><span class="plan-feature-text inactive">Abrir múltiples cuentas</span></div>
+            <div class="plan-feature"><div class="feat-check no">✕</div><span class="plan-feature-text inactive">Acceso a contenido educativo de inversiones y retiro</span></div>
           </div>
           <button class="plan-cta-btn" onclick="window.open('https://elmenudocuenta.com','_blank')">Empezar Ahora</button>
         </div>
       </div>
-
-      <!-- PREMIUM -->
       <div class="plan-card premium">
-        <div class="plan-header prem">
-          <div class="plan-header-name">Premium</div>
-        </div>
+        <div class="plan-header prem"><div class="plan-header-name">Premium</div></div>
         <div class="plan-body">
           <div class="plan-price">
-            <span class="plan-price-currency">US$</span>
-            <span class="plan-price-amount">10</span>
-            <span class="plan-price-period"> / mes</span>
+            <span class="plan-price-currency">US$</span><span class="plan-price-amount">10</span><span class="plan-price-period"> / mes</span>
           </div>
           <div class="plan-features">
-            <div class="plan-feature">
-              <div class="feat-check yes">✓</div>
-              <span class="plan-feature-text active">Múltiples cuentas de inversiones, de retiro o una combinación de ambas</span>
-            </div>
-            <div class="plan-feature">
-              <div class="feat-check yes">✓</div>
-              <span class="plan-feature-text active">Rebalanceo y reinversión automática</span>
-            </div>
-            <div class="plan-feature">
-              <div class="feat-check yes">✓</div>
-              <span class="plan-feature-text active">Portafolios avanzados construidos por expertos</span>
-            </div>
-            <div class="plan-feature">
-              <div class="feat-check yes">✓</div>
-              <span class="plan-feature-text active">Abrir múltiples cuentas</span>
-            </div>
-            <div class="plan-feature">
-              <div class="feat-check yes">✓</div>
-              <span class="plan-feature-text active">Acceso a contenido educativo de inversiones y finanzas personales</span>
-            </div>
+            <div class="plan-feature"><div class="feat-check yes">✓</div><span class="plan-feature-text active">Múltiples cuentas de inversiones, de retiro o una combinación de ambas</span></div>
+            <div class="plan-feature"><div class="feat-check yes">✓</div><span class="plan-feature-text active">Rebalanceo y reinversión automática</span></div>
+            <div class="plan-feature"><div class="feat-check yes">✓</div><span class="plan-feature-text active">Portafolios avanzados construidos por expertos</span></div>
+            <div class="plan-feature"><div class="feat-check yes">✓</div><span class="plan-feature-text active">Abrir múltiples cuentas</span></div>
+            <div class="plan-feature"><div class="feat-check yes">✓</div><span class="plan-feature-text active">Acceso a contenido educativo de inversiones y finanzas personales</span></div>
           </div>
           <button class="plan-cta-btn" onclick="window.open('https://elmenudocuenta.com','_blank')">Empezar Ahora</button>
         </div>
       </div>
-
     </div>
   </div>
 </section>
@@ -865,13 +856,13 @@ footer{background:var(--pd);padding:48px 5vw 40px}
       <div class="faq-stk">
         <div class="pill">FAQ</div>
         <h2 class="st">Aquí resolvemos<br><span class="acc">tus dudas</span></h2>
-        <p class="ss" style="font-size:14px">¿Más preguntas? Nuestro equipo está listo para ayudarte en elmenudocuenta.com.</p>
-        <button class="btn-signup" style="margin-top:20px">Hablar con soporte</button>
+        <p class="ss" style="font-size:14px">¿Más preguntas? Nuestro equipo está listo en elmenudocuenta.com.</p>
+        <button class="btn-signup" style="margin-top:20px" onclick="window.open('https://elmenudocuenta.com','_blank')">Hablar con soporte</button>
       </div>
       <div class="faq-lst fi">
-        <div class="fi2 open"><div class="fq" onclick="tf(this)">¿Para qué se usa MC Efectivo?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">MC Efectivo protege tu dinero de la inflación sin perder liquidez. Ideal para fondos de emergencia, dinero que necesitas pronto o como zona de tránsito antes de invertir. Puedes retirar en cualquier momento sin penalizaciones con mayor rendimiento que una cuenta bancaria.</div></div>
-        <div class="fi2"><div class="fq" onclick="tf(this)">¿Cuánto dinero necesito para comenzar?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">Puedes comenzar con solo $5 o configurar una inversión recurrente desde $5 por día, semana o mes. No hay monto mínimo para abrir tu cuenta en elmenudocuenta.com.</div></div>
+        <div class="fi2 open"><div class="fq" onclick="tf(this)">¿Cuánto dinero necesito para comenzar?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">Puedes comenzar con solo $5 o configurar una inversión recurrente desde $5 por día, semana o mes. No hay monto mínimo para abrir tu cuenta en elmenudocuenta.com.</div></div>
         <div class="fi2"><div class="fq" onclick="tf(this)">¿Cómo accedo a la plataforma?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">El Menudo Cuenta es una web app accesible desde cualquier navegador en elmenudocuenta.com. No necesitas descargar ninguna aplicación. Funciona perfectamente en tu teléfono, tablet o computadora.</div></div>
+        <div class="fi2"><div class="fq" onclick="tf(this)">¿Cómo se invierte mi dinero?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">Una vez que depositas, nuestros algoritmos invierten automáticamente en portafolios de ETFs recomendados según tus objetivos, horizonte temporal y tolerancia al riesgo. Monitoreamos y rebalanceamos continuamente.</div></div>
         <div class="fi2"><div class="fq" onclick="tf(this)">¿Cuál es la diferencia entre MC Inversiones y MC Futuro?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">MC Inversiones es una cuenta de inversión estándar sin límite de aportación, puedes retirar cuando quieras. MC Futuro son cuentas IRA de retiro (Tradicional y Roth) con ventajas fiscales especiales pero con restricciones de retiro anticipado.</div></div>
         <div class="fi2"><div class="fq" onclick="tf(this)">¿Qué comisiones cobra El Menudo Cuenta?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">Solo 0.25% anual sobre el saldo administrado. Sin comisiones por depósitos, retiros ni transacciones. Los ETFs tienen sus propios gastos (expense ratio) generalmente entre 0.03% y 0.20% anual.</div></div>
         <div class="fi2"><div class="fq" onclick="tf(this)">¿Mi dinero está seguro?<svg class="fchev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></div><div class="fa">Tu dinero está custodiado por un broker registrado ante la SEC y cubierto por SIPC hasta $500,000. El Menudo Cuenta actúa como asesor de inversiones, no como custodio. Todas las transacciones usan cifrado de nivel bancario institucional.</div></div>
@@ -894,8 +885,6 @@ footer{background:var(--pd);padding:48px 5vw 40px}
 <!-- FOOTER -->
 <footer id="legal">
   <div class="fti">
-
-    <!-- Logo + legal links + copyright -->
     <div class="ft-top-simple">
       <div class="ft-logo-wrap">
         <div style="font-size:36px;font-weight:700;color:var(--y);letter-spacing:-3px;line-height:1;display:flex;align-items:center">mc<div style="width:24px;height:24px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--p);margin-left:-2px;border:2px solid var(--p)">$</div></div>
@@ -910,18 +899,13 @@ footer{background:var(--pd);padding:48px 5vw 40px}
       </div>
       <div class="ft-copy">© 2026 El Menudo Cuenta, LLC. All Rights Reserved.</div>
     </div>
-
     <div class="ft-divider"></div>
-
-    <!-- Investment warning bar -->
     <div class="ft-warning-bar">
       <span>Investment products</span><span class="ft-pipe">|</span>
       <span>Not FDIC insured</span><span class="ft-pipe">|</span>
       <span>No bank guarantee</span><span class="ft-pipe">|</span>
       <span>May lose value</span>
     </div>
-
-    <!-- Full disclosures -->
     <div class="ft-disclosures">
       <div class="ft-disc-title">Important Disclosures</div>
       <p>Investing involves risk, including loss of principal. Please consider, among other important factors, your investment objectives, risk tolerance and El Menudo Cuenta's pricing before investing. Investment advisory services offered by El Menudo Cuenta, LLC (EMC), an SEC-registered investment advisor. Brokerage services are provided to clients of EMC by Interactive Brokers, LLC., an SEC-registered broker-dealer and member FINRA/SIPC.</p>
@@ -940,32 +924,29 @@ footer{background:var(--pd);padding:48px 5vw 40px}
       <p class="ft-disc-more">For additional important risks, disclosures, and information, please visit <a href="https://www.elmenudocuenta.com/legal/" target="_blank">https://www.elmenudocuenta.com/legal/</a></p>
       <p class="ft-disc-copy">© 2026 El Menudo Cuenta, LLC.</p>
     </div>
-
   </div>
 </footer>
 
 <script>
-/* Phone mini line chart */
+/* Phone mini chart */
 (function(){
   var pts=[2150,2180,2220,2260,2300,2350,2390,2430,2470,2510,2490,2430,2410,2425,2430];
-  var ctx=document.getElementById('ph-line-chart').getContext('2d');
-  new Chart(ctx,{type:'line',data:{labels:Array(pts.length).fill(''),datasets:[{data:pts,borderColor:'#FFC300',backgroundColor:'transparent',tension:.3,borderWidth:2,pointRadius:3,pointBackgroundColor:'#FFC300',pointBorderColor:'#44008F'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}});
+  new Chart(document.getElementById('ph-line-chart').getContext('2d'),{type:'line',data:{labels:Array(pts.length).fill(''),datasets:[{data:pts,borderColor:'#FFC300',backgroundColor:'transparent',tension:.3,borderWidth:2,pointRadius:3,pointBackgroundColor:'#FFC300',pointBorderColor:'#44008F'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}}}});
 })();
 
 /* Main portfolio chart */
 (function(){
   var pts=[2150,2170,2165,2195,2215,2230,2205,2265,2305,2285,2345,2395,2435,2475,2510,2530,2520,2490,2440,2420,2400,2385,2405,2425,2415,2430];
-  var ctx=document.getElementById('portChart').getContext('2d');
-  new Chart(ctx,{type:'line',data:{labels:Array(pts.length).fill(''),datasets:[{data:pts,borderColor:'#FFC300',backgroundColor:'transparent',tension:.3,borderWidth:2,pointRadius:3,pointBackgroundColor:'#FFC300',pointBorderColor:'#44008F',pointHoverRadius:5}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(255,255,255,.95)',titleColor:'#2D005F',bodyColor:'#44008F',callbacks:{label:function(c){return'$'+c.raw.toLocaleString()}}}},scales:{x:{grid:{color:'rgba(255,255,255,.12)'},ticks:{color:'rgba(255,255,255,.4)',font:{family:'Quicksand',size:9},maxTicksLimit:7,callback:function(_,i){var L=['30 Oct','12 Nov','23 Nov','15 Dic','8 Ene','21 Ene','3 Feb','16 Feb','12 Mar','7 Abr','20 Abr','1 May'];return L[Math.floor(i*L.length/pts.length)]||''}}},y:{grid:{color:'rgba(255,255,255,.12)'},ticks:{color:'rgba(255,255,255,.4)',font:{family:'Quicksand',size:9},callback:function(v){return(v/1000).toFixed(1)+'k'}}}}}});
+  var L=['30 Oct','12 Nov','23 Nov','15 Dic','8 Ene','21 Ene','3 Feb','16 Feb','12 Mar','7 Abr','20 Abr','1 May'];
+  new Chart(document.getElementById('portChart').getContext('2d'),{type:'line',data:{labels:Array(pts.length).fill(''),datasets:[{data:pts,borderColor:'#FFC300',backgroundColor:'transparent',tension:.3,borderWidth:2,pointRadius:3,pointBackgroundColor:'#FFC300',pointBorderColor:'#44008F',pointHoverRadius:5}]},options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(255,255,255,.95)',titleColor:'#2D005F',bodyColor:'#44008F',callbacks:{label:function(c){return'$'+c.raw.toLocaleString()}}}},scales:{x:{grid:{color:'rgba(255,255,255,.12)'},ticks:{color:'rgba(255,255,255,.4)',font:{family:'Quicksand',size:9},maxTicksLimit:7,callback:function(_,i){return L[Math.floor(i*L.length/pts.length)]||''}}},y:{grid:{color:'rgba(255,255,255,.12)'},ticks:{color:'rgba(255,255,255,.4)',font:{family:'Quicksand',size:9},callback:function(v){return(v/1000).toFixed(1)+'k'}}}}}});
 })();
 
 /* Donut */
 (function(){
-  var ctx=document.getElementById('donutChart').getContext('2d');
-  new Chart(ctx,{type:'doughnut',data:{datasets:[{data:[5,65,20,10],backgroundColor:['#E84040','#44008F','#FFC300','#C8B4DC'],borderWidth:0,hoverOffset:4}]},options:{responsive:true,cutout:'60%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return['Efectivos','Acciones','Renta fija','Alternativos'][c.dataIndex]+': '+c.parsed+'%'}}}}}});
+  new Chart(document.getElementById('donutChart').getContext('2d'),{type:'doughnut',data:{datasets:[{data:[5,65,20,10],backgroundColor:['#E84040','#44008F','#FFC300','#C8B4DC'],borderWidth:0,hoverOffset:4}]},options:{responsive:true,cutout:'60%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return['Efectivos','Acciones','Renta fija','Alternativos'][c.dataIndex]+': '+c.parsed+'%'}}}}}});
 })();
 
-/* Calc */
+/* Calculator */
 var cc;
 function fmt(n){return'$'+Math.round(n).toLocaleString('en-US')}
 function uc(){
