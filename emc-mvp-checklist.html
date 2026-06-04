@@ -1,10 +1,10 @@
-<!-- Save as emc-testing-checklist.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>EMC Testing Center</title>
+
 <style>
 :root{
   --primary:#3b008f;
@@ -14,13 +14,16 @@
   --border:#e5e7eb;
   --text:#222;
 }
+
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Arial, Helvetica, sans-serif;
   background:var(--bg);
   color:var(--text);
 }
+
 header{
   padding:28px;
   background:#fff;
@@ -29,14 +32,21 @@ header{
   top:0;
   z-index:10;
 }
+
 h1{margin:0;color:var(--primary)}
-.subtitle{margin:6px 0 20px;color:#666}
+
+.subtitle{
+  margin:6px 0 20px;
+  color:#666;
+}
+
 .stats{
   display:flex;
   gap:14px;
   flex-wrap:wrap;
   margin-bottom:18px;
 }
+
 .card{
   background:#fff;
   border:1px solid var(--border);
@@ -45,14 +55,42 @@ h1{margin:0;color:var(--primary)}
   min-width:150px;
   box-shadow:0 4px 10px rgba(0,0,0,.04);
 }
-.card span{display:block;color:#666;font-size:13px}
-.card strong{font-size:26px;color:var(--primary)}
+
+.card span{
+  display:block;
+  color:#666;
+  font-size:13px;
+}
+
+.card strong{
+  font-size:26px;
+  color:var(--primary);
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.actions button{
+  background:var(--primary);
+  color:white;
+  border:none;
+  border-radius:10px;
+  padding:10px 16px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
 .tabs{
   display:flex;
   gap:8px;
   overflow-x:auto;
   padding-bottom:4px;
 }
+
 .tab{
   border:none;
   background:#eee8fa;
@@ -63,11 +101,14 @@ h1{margin:0;color:var(--primary)}
   white-space:nowrap;
   font-weight:bold;
 }
+
 .tab.active{
   background:var(--primary);
   color:#fff;
 }
+
 main{padding:28px}
+
 .section{
   display:none;
   background:var(--card);
@@ -75,7 +116,9 @@ main{padding:28px}
   padding:24px;
   box-shadow:0 4px 14px rgba(0,0,0,.06);
 }
+
 .section.active{display:block}
+
 .section-header{
   display:flex;
   justify-content:space-between;
@@ -85,10 +128,12 @@ main{padding:28px}
   padding-bottom:14px;
   margin-bottom:16px;
 }
+
 .section-header h2{
   margin:0;
   color:var(--primary);
 }
+
 .add-btn{
   border:none;
   background:var(--secondary);
@@ -98,37 +143,47 @@ main{padding:28px}
   cursor:pointer;
   font-weight:bold;
 }
-.header-row,.row{
+
+.header-row,
+.row{
   display:grid;
   grid-template-columns:50px 1fr 170px 1.3fr 70px;
   gap:12px;
   align-items:center;
 }
+
 .header-row{
   font-weight:bold;
   color:var(--primary);
   padding:10px 0;
 }
+
 .row{
   border-bottom:1px solid #f0f0f0;
   padding:10px 0;
 }
+
 .row:last-child{border-bottom:none}
+
 input[type="checkbox"]{
   width:20px;
   height:20px;
 }
+
 .feature.done{
   text-decoration:line-through;
   opacity:.5;
 }
-select,input[type="text"]{
+
+select,
+input[type="text"]{
   width:100%;
   padding:10px;
   border:1px solid var(--border);
   border-radius:8px;
   font-size:14px;
 }
+
 .delete-btn{
   border:none;
   background:#fee2e2;
@@ -137,10 +192,13 @@ select,input[type="text"]{
   padding:8px;
   cursor:pointer;
 }
+
 @media(max-width:850px){
   header{position:relative}
   main{padding:16px}
+
   .header-row{display:none}
+
   .row{
     grid-template-columns:40px 1fr;
     background:#fafafa;
@@ -148,12 +206,16 @@ select,input[type="text"]{
     padding:14px;
     margin-bottom:10px;
   }
-  .row select,.row input[type="text"],.row .delete-btn{
+
+  .row select,
+  .row input[type="text"],
+  .row .delete-btn{
     grid-column:2;
   }
 }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -161,9 +223,26 @@ select,input[type="text"]{
   <p class="subtitle">Master checklist to validate all critical flows before external user testing.</p>
 
   <div class="stats">
-    <div class="card"><span>Total Tasks</span><strong id="totalTasks">0</strong></div>
-    <div class="card"><span>Completed</span><strong id="completedTasks">0</strong></div>
-    <div class="card"><span>Progress</span><strong id="progressPercent">0%</strong></div>
+    <div class="card">
+      <span>Total Tasks</span>
+      <strong id="totalTasks">0</strong>
+    </div>
+
+    <div class="card">
+      <span>Completed</span>
+      <strong id="completedTasks">0</strong>
+    </div>
+
+    <div class="card">
+      <span>Progress</span>
+      <strong id="progressPercent">0%</strong>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button onclick="exportProgress()">Export Progress</button>
+    <button onclick="document.getElementById('importFile').click()">Import Progress</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importProgress(event)">
   </div>
 
   <div class="tabs" id="tabs"></div>
@@ -175,55 +254,151 @@ select,input[type="text"]{
 const defaultFlows = [
   {
     title:"Registration",
-    items:["Create Account","Verify Email","Create Password","Login","Password Recovery"]
+    items:[
+      "Create Account",
+      "Verify Email",
+      "Create Password",
+      "Login",
+      "Password Recovery"
+    ]
   },
   {
     title:"Subscription",
-    items:["Select Plan","Apply BETATEST Code","Process Payment","Activate Membership","Update Subscription","Cancel Subscription"]
+    items:[
+      "Select Plan",
+      "Apply BETATEST Code",
+      "Process Payment",
+      "Activate Membership",
+      "Update Subscription",
+      "Cancel Subscription"
+    ]
   },
   {
     title:"Accounts",
-    items:["Complete Application","Identity Verification","Document Upload","Application Corrections","Account Approval","Account Status Tracking","Open Investment Account","Open Traditional IRA","Open Roth IRA","Open Additional Account","Close Account"]
+    items:[
+      "Complete Application",
+      "Identity Verification",
+      "Document Upload",
+      "Application Corrections",
+      "Account Approval",
+      "Account Status Tracking",
+      "Open Investment Account",
+      "Open Traditional IRA",
+      "Open Roth IRA",
+      "Open Additional Account",
+      "Close Account"
+    ]
   },
   {
     title:"Portfolio",
-    items:["Complete Risk Questionnaire","Receive Recommendation","Select Portfolio","Confirm Portfolio","View Portfolio Details","Change Portfolio"]
+    items:[
+      "Complete Risk Questionnaire",
+      "Receive Recommendation",
+      "Select Portfolio",
+      "Confirm Portfolio",
+      "View Portfolio Details",
+      "Change Portfolio"
+    ]
   },
   {
     title:"Banking",
-    items:["Connect Bank Account","Verify Micro Deposits","Bank Connection Confirmation","Change Bank Account","Remove Bank Account"]
+    items:[
+      "Connect Bank Account",
+      "Verify Micro Deposits",
+      "Bank Connection Confirmation",
+      "Change Bank Account",
+      "Remove Bank Account"
+    ]
   },
   {
     title:"Funding",
-    items:["Request Deposit","Deposit Status Updates","IBKR Deposit Confirmation","Funds Available","Cash Reflected in Dashboard","Investment Executed","Request Withdrawal","Withdrawal Status Updates","Withdrawal Completed"]
+    items:[
+      "Request Deposit",
+      "Deposit Status Updates",
+      "IBKR Deposit Confirmation",
+      "Funds Available",
+      "Cash Reflected in Dashboard",
+      "Investment Executed",
+      "Request Withdrawal",
+      "Withdrawal Status Updates",
+      "Withdrawal Completed"
+    ]
   },
   {
     title:"Dashboard",
-    items:["Account Value","Cash Balance","Portfolio Holdings","Performance Tracking","Deposit Status","Withdrawal Status"]
+    items:[
+      "Account Value",
+      "Cash Balance",
+      "Portfolio Holdings",
+      "Performance Tracking",
+      "Deposit Status",
+      "Withdrawal Status"
+    ]
   },
   {
     title:"Beneficiaries",
-    items:["Add Beneficiary","Edit Beneficiary","Delete Beneficiary","Beneficiary Visible in Dashboard"]
+    items:[
+      "Add Beneficiary",
+      "Edit Beneficiary",
+      "Delete Beneficiary",
+      "Beneficiary Visible in Dashboard"
+    ]
   },
   {
     title:"Education",
-    items:["Access Educational Content","Premium Access Validation","Video Playback","Category Navigation"]
+    items:[
+      "Access Educational Content",
+      "Premium Access Validation",
+      "Video Playback",
+      "Category Navigation"
+    ]
   },
   {
     title:"Profile",
-    items:["Update Personal Information","Update Address","Update Phone Number","Update Email","Change Password"]
+    items:[
+      "Update Personal Information",
+      "Update Address",
+      "Update Phone Number",
+      "Update Email",
+      "Change Password"
+    ]
   },
   {
     title:"Support",
-    items:["WhatsApp Support","Support Email","Contact Form","Support Notifications","Cancel Account Form","Internal Cancellation Notification"]
+    items:[
+      "WhatsApp Support",
+      "Support Email",
+      "Contact Form",
+      "Support Notifications",
+      "Cancel Account Form",
+      "Internal Cancellation Notification"
+    ]
   },
   {
     title:"FAQ & Legal",
-    items:["FAQ Links","Privacy Policy","Terms of Service","Legal Disclosures","All Links Working","Content Updated"]
+    items:[
+      "FAQ Links",
+      "Privacy Policy",
+      "Terms of Service",
+      "Legal Disclosures",
+      "All Links Working",
+      "Content Updated"
+    ]
   },
   {
     title:"Notifications",
-    items:["Registration Confirmation","Account Approved","Bank Connected","Deposit Requested","Deposit Received","Funds Invested","Withdrawal Requested","Withdrawal Completed","Portfolio Changed","Account Closed"]
+    items:[
+      "Registration Confirmation",
+      "Account Approved",
+      "Bank Connected",
+      "Deposit Requested",
+      "Deposit Received",
+      "Funds Invested",
+      "Withdrawal Requested",
+      "Withdrawal Completed",
+      "Portfolio Changed",
+      "Account Closed"
+    ]
   }
 ];
 
@@ -249,11 +424,13 @@ function render(){
     const tab = document.createElement("button");
     tab.className = "tab" + (flowIndex === activeIndex ? " active" : "");
     tab.textContent = flow.title;
+
     tab.onclick = ()=>{
       activeIndex = flowIndex;
       localStorage.setItem("activeTab", activeIndex);
       render();
     };
+
     tabs.appendChild(tab);
 
     const section = document.createElement("section");
@@ -276,6 +453,7 @@ function render(){
 
     flow.items.forEach((item,itemIndex)=>{
       const key = taskKey(flowIndex,itemIndex);
+
       const saved = JSON.parse(localStorage.getItem(key)) || {
         checked:false,
         status:"Not Started",
@@ -288,12 +466,14 @@ function render(){
       row.innerHTML = `
         <input type="checkbox" ${saved.checked ? "checked" : ""}>
         <div class="feature ${saved.checked ? "done" : ""}">${item}</div>
+
         <select>
           <option ${saved.status==="Not Started" ? "selected" : ""}>Not Started</option>
           <option ${saved.status==="Testing" ? "selected" : ""}>Testing</option>
           <option ${saved.status==="Done" ? "selected" : ""}>Done</option>
         </select>
-        <input type="text" placeholder="Owner / Notes" value="${saved.notes}">
+
+        <input type="text" placeholder="Owner / Notes" value="${saved.notes || ""}">
         <button class="delete-btn" onclick="deleteTask(${flowIndex},${itemIndex})">✕</button>
       `;
 
@@ -303,6 +483,20 @@ function render(){
       const notes = row.querySelector("input[type='text']");
 
       function saveTask(){
+        if(status.value === "Done"){
+          checkbox.checked = true;
+          feature.classList.add("done");
+        }
+
+        if(checkbox.checked && status.value !== "Done"){
+          status.value = "Done";
+        }
+
+        if(!checkbox.checked && status.value === "Done"){
+          status.value = "Not Started";
+          feature.classList.remove("done");
+        }
+
         localStorage.setItem(key, JSON.stringify({
           checked:checkbox.checked,
           status:status.value,
@@ -310,16 +504,6 @@ function render(){
         }));
 
         feature.classList.toggle("done", checkbox.checked);
-
-        if(status.value === "Done" && !checkbox.checked){
-          checkbox.checked = true;
-          feature.classList.add("done");
-          localStorage.setItem(key, JSON.stringify({
-            checked:true,
-            status:status.value,
-            notes:notes.value
-          }));
-        }
 
         updateStats();
       }
@@ -339,6 +523,7 @@ function render(){
 
 function addTask(flowIndex){
   const taskName = prompt("Enter new task:");
+
   if(!taskName || !taskName.trim()) return;
 
   flows[flowIndex].items.push(taskName.trim());
@@ -362,13 +547,73 @@ function updateStats(){
   flows.forEach((flow,flowIndex)=>{
     flow.items.forEach((_,itemIndex)=>{
       const saved = JSON.parse(localStorage.getItem(taskKey(flowIndex,itemIndex)));
-      if(saved && (saved.checked || saved.status === "Done")) completed++;
+
+      if(saved && (saved.checked || saved.status === "Done")){
+        completed++;
+      }
     });
   });
 
   document.getElementById("totalTasks").textContent = total;
   document.getElementById("completedTasks").textContent = completed;
-  document.getElementById("progressPercent").textContent = total ? Math.round((completed/total)*100) + "%" : "0%";
+  document.getElementById("progressPercent").textContent =
+    total ? Math.round((completed/total)*100) + "%" : "0%";
+}
+
+function exportProgress(){
+  const progress = {};
+
+  Object.keys(localStorage).forEach(key=>{
+    if(
+      key.startsWith("emc-task-") ||
+      key === "emcFlows" ||
+      key === "activeTab"
+    ){
+      progress[key] = localStorage.getItem(key);
+    }
+  });
+
+  const blob = new Blob(
+    [JSON.stringify(progress,null,2)],
+    {type:"application/json"}
+  );
+
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download =
+    "EMC-Testing-Progress-" +
+    new Date().toISOString().split("T")[0] +
+    ".json";
+
+  link.click();
+
+  URL.revokeObjectURL(link.href);
+}
+
+function importProgress(event){
+  const file = event.target.files[0];
+
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+    try{
+      const data = JSON.parse(e.target.result);
+
+      Object.keys(data).forEach(key=>{
+        localStorage.setItem(key,data[key]);
+      });
+
+      alert("Progress imported successfully.");
+      location.reload();
+
+    }catch(error){
+      alert("Invalid progress file.");
+    }
+  };
+
+  reader.readAsText(file);
 }
 
 render();
