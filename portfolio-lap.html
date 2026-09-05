@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio Lab Prototype</title>
+  <style>
+    :root{
+      --emc-purple:#44008f;
+      --emc-purple-2:#6d22c7;
+      --emc-yellow:#ffc300;
+      --ink:#17141f;
+      --muted:#6e6879;
+      --line:#e8e3ee;
+      --soft:#f7f4fa;
+      --white:#ffffff;
+      --green:#1c8d62;
+      --red:#c84949;
+      --shadow:0 14px 40px rgba(68,0,143,.09);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      color:var(--ink);
+      background:#fff;
+      line-height:1.5;
+    }
+    h1,h2,h3,h4,p{margin-top:0}
+    button{font:inherit}
+    .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+    .hero{
+      min-height:82vh;
+      display:flex;
+      align-items:center;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(255,195,0,.16), transparent 26%),
+        linear-gradient(135deg, #fff 0%, #fbf9fd 58%, #f5eefb 100%);
+      border-bottom:1px solid var(--line);
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:60px;
+      align-items:center;
+      padding:80px 0;
+    }
+    .eyebrow{
+      font-size:13px;
+      font-weight:800;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:var(--emc-purple);
+      margin-bottom:14px;
+    }
+    h1{
+      font-size:clamp(42px,7vw,82px);
+      line-height:.95;
+      letter-spacing:-.045em;
+      margin-bottom:24px;
+    }
+    .hero p{
+      max-width:720px;
+      font-size:20px;
+      color:var(--muted);
+    }
+    .hero strong{color:var(--ink)}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+    .btn{
+      border:none;
+      border-radius:999px;
+      padding:14px 22px;
+      cursor:pointer;
+      font-weight:800;
+      transition:.2s ease;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .btn-primary{background:var(--emc-purple);color:white}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(68,0,143,.18)}
+    .btn-secondary{background:white;border:1px solid var(--line);color:var(--ink)}
+    .btn-secondary:hover{border-color:#cbb8dc}
+
+    .hero-card{
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:28px;
+      box-shadow:var(--shadow);
+    }
+    .hero-card .mini-title{font-size:14px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+    .risk-line{display:flex;align-items:center;gap:8px;margin:18px 0 26px}
+    .risk-dot{width:14px;height:14px;border-radius:50%;background:#ddd}
+    .risk-dot.on{background:var(--emc-purple)}
+    .portfolio-preview{display:grid;gap:12px}
+    .asset-row{display:grid;grid-template-columns:130px 1fr 48px;gap:12px;align-items:center;font-size:14px}
+    .bar{height:10px;border-radius:999px;background:#eee;overflow:hidden}
+    .bar > span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--emc-purple),var(--emc-purple-2))}
+
+    section{padding:88px 0}
+    .section-head{max-width:760px;margin-bottom:34px}
+    .section-head h2{font-size:clamp(34px,5vw,56px);line-height:1.02;letter-spacing:-.035em;margin-bottom:14px}
+    .section-head p{font-size:18px;color:var(--muted)}
+
+    .risk-scale{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:18px;
+      margin:18px 0 28px;
+      color:var(--muted);
+      font-weight:700;
+      font-size:14px;
+    }
+    .scale-line{flex:1;height:6px;border-radius:99px;background:linear-gradient(90deg,#ddd6e5 0%, var(--emc-purple) 100%)}
+
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+    .card{
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:22px;
+      background:#fff;
+      transition:.2s ease;
+      cursor:pointer;
+      min-height:260px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+    .card.active{border:2px solid var(--emc-purple);box-shadow:var(--shadow)}
+    .card .num{font-size:12px;font-weight:800;letter-spacing:.12em;color:var(--emc-purple)}
+    .card h3{font-size:26px;margin:10px 0 8px}
+    .card p{color:var(--muted);font-size:15px}
+    .badge{display:inline-flex;align-items:center;gap:7px;padding:7px 11px;border-radius:999px;background:var(--soft);font-size:12px;font-weight:800;width:max-content}
+    .card-link{font-weight:800;color:var(--emc-purple)}
+
+    .detail-shell{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:26px;
+      align-items:stretch;
+    }
+    .detail-panel,.sim-panel,.compare-panel,.lesson-panel{
+      border:1px solid var(--line);
+      border-radius:26px;
+      background:white;
+      padding:28px;
+      box-shadow:var(--shadow);
+    }
+    .detail-panel h3{font-size:38px;letter-spacing:-.03em;margin-bottom:8px}
+    .detail-panel .subtitle{font-size:18px;color:var(--muted);margin-bottom:24px}
+    .metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+    .metric{padding:15px;border-radius:16px;background:var(--soft)}
+    .metric span{display:block;color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+    .metric strong{display:block;margin-top:6px;font-size:17px}
+
+    .allocation-list{display:grid;gap:13px;margin-top:20px}
+    .allocation-row{display:grid;grid-template-columns:125px 1fr 52px;gap:12px;align-items:center;font-size:14px}
+
+    .sim-panel{
+      background:linear-gradient(145deg,#210046,#44008f);
+      color:white;
+      border:none;
+    }
+    .sim-panel .muted{color:rgba(255,255,255,.7)}
+    .sim-number{font-size:54px;line-height:1;margin:12px 0 8px;letter-spacing:-.045em}
+    .gain{color:#7ef1bf;font-weight:800}
+    .chart{
+      height:210px;
+      margin-top:24px;
+      border-radius:20px;
+      background:
+        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px),
+        rgba(255,255,255,.04);
+      background-size:100% 52px, 90px 100%, auto;
+      position:relative;
+      overflow:hidden;
+    }
+    .chart svg{width:100%;height:100%;position:absolute;inset:0}
+    .chart path{fill:none;stroke:#ffc300;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+    .sim-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+    .sim-stat{background:rgba(255,255,255,.08);padding:14px;border-radius:14px}
+    .sim-stat span{font-size:11px;color:rgba(255,255,255,.66);text-transform:uppercase}
+    .sim-stat strong{display:block;margin-top:4px}
+
+    .compare{background:var(--soft)}
+    .compare-table{width:100%;border-collapse:collapse;margin-top:12px}
+    .compare-table th,.compare-table td{padding:15px 12px;border-bottom:1px solid #ded7e5;text-align:left}
+    .compare-table th{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    .compare-table tr.selected{background:white;font-weight:800}
+    .compare-table .pos{color:var(--green)}
+    .compare-table .neg{color:var(--red)}
+
+    .lesson-panel{margin-top:22px;background:#fff9df;border-color:#f2df8e;box-shadow:none}
+    .lesson-panel h3{font-size:30px;margin-bottom:8px}
+    .lesson-panel p{font-size:18px;color:#5d5330;margin-bottom:0}
+
+    .reaction-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:22px}
+    .reaction{
+      text-align:left;
+      background:white;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:18px;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .reaction:hover{border-color:var(--emc-purple);transform:translateY(-2px)}
+    .reaction.selected{background:#f2e9fb;border-color:var(--emc-purple)}
+
+    .cta{
+      background:var(--ink);
+      color:white;
+      text-align:center;
+    }
+    .cta .section-head{margin:0 auto 28px}
+    .cta .section-head p{color:#c9c4d0}
+    .cta .btn-primary{background:var(--emc-yellow);color:#1e1800}
+
+    .disclaimer{
+      padding:28px 0 50px;
+      color:#81798d;
+      font-size:12px;
+      text-align:center;
+    }
+
+    @media (max-width: 900px){
+      .hero-grid,.detail-shell{grid-template-columns:1fr}
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .hero{min-height:auto}
+      .hero-grid{padding:64px 0}
+    }
+    @media (max-width: 620px){
+      .wrap{padding:0 16px}
+      section{padding:62px 0}
+      .cards{grid-template-columns:1fr}
+      .metric-grid,.sim-stats,.reaction-grid{grid-template-columns:1fr}
+      .asset-row,.allocation-row{grid-template-columns:100px 1fr 44px}
+      .compare-table{font-size:13px}
+      .compare-table th,.compare-table td{padding:11px 7px}
+      h1{font-size:48px}
+      .sim-number{font-size:44px}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow">El Menudo Cuenta · Portfolio Lab</div>
+        <h1>Piensa en portafolios.<br>No en inversiones aisladas.</h1>
+        <p>Explora seis estrategias con distintos niveles de riesgo, asigna <strong>$10,000 virtuales</strong> y observa cómo se comportan con el mercado real.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#portfolios">Explorar portafolios</a>
+          <a class="btn btn-secondary" href="#compare">Ver comparación</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="mini-title">Ejemplo · Portfolio 03</div>
+        <h3 style="font-size:32px;margin:8px 0 0">Moderado</h3>
+        <div class="risk-line">
+          <span class="risk-dot on"></span><span class="risk-dot on"></span><span class="risk-dot on"></span>
+          <span class="risk-dot"></span><span class="risk-dot"></span><span class="risk-dot"></span>
+          <strong style="margin-left:6px">Riesgo medio</strong>
+        </div>
+        <div class="portfolio-preview">
+          <div class="asset-row"><span>Equity</span><div class="bar"><span style="width:50%"></span></div><strong>50%</strong></div>
+          <div class="asset-row"><span>Fixed Income</span><div class="bar"><span style="width:35%"></span></div><strong>35%</strong></div>
+          <div class="asset-row"><span>Alternatives</span><div class="bar"><span style="width:10%"></span></div><strong>10%</strong></div>
+          <div class="asset-row"><span>Cash</span><div class="bar"><span style="width:5%"></span></div><strong>5%</strong></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="portfolios">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">01 · Elige tu nivel de riesgo</div>
+        <h2>Seis estrategias. Una decisión: cuánto riesgo estás dispuesto a asumir.</h2>
+        <p>No escoges acciones, ETFs o bonos individuales. Escoges una estrategia y aprendes cómo se comporta.</p>
+      </div>
+
+      <div class="risk-scale"><span>Menor riesgo</span><div class="scale-line"></div><span>Mayor riesgo</span></div>
+
+      <div class="cards" id="portfolioCards"></div>
+    </div>
+  </section>
+
+  <section style="background:#fbfafc">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">02 · Entiende qué hay dentro</div>
+        <h2 id="detailTitle">Moderado</h2>
+        <p id="detailLead">Equilibra crecimiento y estabilidad.</p>
+      </div>
+
+      <div class="detail-shell">
+        <div class="detail-panel">
+          <div class="badge" id="riskBadge">● ● ● ○ ○ ○ &nbsp; Riesgo medio</div>
+          <h3 id="detailName">Portfolio 03 · Moderado</h3>
+          <p class="subtitle" id="detailDescription">Busca crecimiento de largo plazo manteniendo una parte del portafolio en activos de menor volatilidad.</p>
+
+          <div class="metric-grid">
+            <div class="metric"><span>Perfil</span><strong id="profileMetric">Moderado</strong></div>
+            <div class="metric"><span>Horizonte</span><strong id="horizonMetric">Mediano / largo</strong></div>
+            <div class="metric"><span>Objetivo</span><strong id="goalMetric">Balance</strong></div>
+          </div>
+
+          <h4>Asignación</h4>
+          <div class="allocation-list" id="allocationList"></div>
+        </div>
+
+        <div class="sim-panel">
+          <div class="eyebrow" style="color:#d8b5ff">03 · Ponlo a prueba</div>
+          <p class="muted" style="margin-bottom:4px">Inversión virtual inicial</p>
+          <div style="font-size:24px;font-weight:800">$10,000</div>
+          <p class="muted" style="margin:22px 0 0">Valor actual simulado</p>
+          <div class="sim-number" id="simValue">$10,438.27</div>
+          <div class="gain" id="simGain">+$438.27 · +4.38%</div>
+
+          <div class="chart">
+            <svg viewBox="0 0 800 230" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M0,175 C90,165 120,180 180,140 S300,155 360,110 S500,120 560,80 S690,95 800,45" />
+            </svg>
+          </div>
+
+          <div class="sim-stats">
+            <div class="sim-stat"><span>Hoy</span><strong>+0.42%</strong></div>
+            <div class="sim-stat"><span>1 mes</span><strong>+1.82%</strong></div>
+            <div class="sim-stat"><span>Desde inicio</span><strong id="sinceStart">+4.38%</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="compare" class="compare">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">04 · Compáralos</div>
+        <h2>Mismos $10,000. Diferentes decisiones.</h2>
+        <p>No mires solamente cuál ganó más. Mira cuánto riesgo tuviste que soportar para obtener ese resultado.</p>
+      </div>
+
+      <div class="compare-panel">
+        <div style="overflow-x:auto">
+          <table class="compare-table">
+            <thead>
+              <tr><th>Estrategia</th><th>Valor hoy</th><th>Retorno</th><th>Mayor caída</th></tr>
+            </thead>
+            <tbody id="compareBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="lesson-panel">
+        <h3>¿Cuál fue mejor?</h3>
+        <p><strong>Esa no es necesariamente la pregunta correcta.</strong> Una estrategia puede haber producido mayor rendimiento y también haberte expuesto a una caída mucho mayor. La pregunta es: <strong>¿qué nivel de fluctuación habrías podido soportar sin abandonar tu estrategia?</strong></p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">05 · Pon a prueba tu tolerancia</div>
+        <h2>Tu portafolio cayó -7.8%. ¿Qué harías?</h2>
+        <p>Tu reacción frente a una pérdida puede decir más sobre tu verdadera tolerancia al riesgo que una respuesta teórica.</p>
+      </div>
+      <div class="reaction-grid">
+        <button class="reaction">A. Vendería. No quiero perder más.</button>
+        <button class="reaction">B. Reduciría mi nivel de riesgo.</button>
+        <button class="reaction">C. Mantendría mi estrategia.</button>
+        <button class="reaction">D. Invertiría más.</button>
+      </div>
+      <div id="reactionMessage" class="lesson-panel" style="display:none"></div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="eyebrow" style="color:#d9b4ff">06 · Del laboratorio a la inversión real</div>
+        <h2>Aquí experimentaste con dinero virtual.</h2>
+        <p>En El Menudo Cuenta defines tu perfil, estableces una estrategia, inviertes sistemáticamente y mantienes tu portafolio con una estructura diseñada para largo plazo.</p>
+      </div>
+      <a class="btn btn-primary" href="#">Conoce El Menudo Cuenta</a>
+    </div>
+  </section>
+
+  <div class="wrap disclaimer">
+    Portfolio Lab es una herramienta educativa y de simulación. Los resultados mostrados en este prototipo son ilustrativos y no constituyen una recomendación de inversión ni garantizan resultados futuros.
+  </div>
+
+<script>
+  const portfolios = [
+    {id:1,name:'Preservación',risk:'Muy bajo',dots:1,profile:'Muy conservador',horizon:'Corto / mediano',goal:'Preservación',desc:'Prioriza estabilidad y preservación del capital con mínima exposición a fluctuaciones.',allocation:{Equity:10,'Fixed Income':55,Alternatives:5,Cash:30},value:10105,ret:1.05,dd:-0.7},
+    {id:2,name:'Conservador',risk:'Bajo',dots:2,profile:'Conservador',horizon:'Mediano',goal:'Estabilidad',desc:'Busca generar rendimiento limitando las fluctuaciones mediante una mayor participación de activos defensivos.',allocation:{Equity:25,'Fixed Income':55,Alternatives:10,Cash:10},value:10221,ret:2.21,dd:-1.9},
+    {id:3,name:'Moderado',risk:'Medio',dots:3,profile:'Moderado',horizon:'Mediano / largo',goal:'Balance',desc:'Busca crecimiento de largo plazo manteniendo una parte del portafolio en activos de menor volatilidad.',allocation:{Equity:50,'Fixed Income':35,Alternatives:10,Cash:5},value:10438.27,ret:4.38,dd:-4.2},
+    {id:4,name:'Crecimiento',risk:'Medio–alto',dots:4,profile:'Moderado-agresivo',horizon:'Largo',goal:'Crecimiento',desc:'Acepta mayores fluctuaciones para aumentar la participación en activos orientados al crecimiento.',allocation:{Equity:65,'Fixed Income':20,Alternatives:10,Cash:5},value:10527,ret:5.27,dd:-6.7},
+    {id:5,name:'Crecimiento Plus',risk:'Alto',dots:5,profile:'Agresivo',horizon:'Largo',goal:'Crecimiento fuerte',desc:'Prioriza apreciación de capital de largo plazo y tolera periodos de volatilidad considerable.',allocation:{Equity:75,'Fixed Income':10,Alternatives:15,Cash:0},value:10614,ret:6.14,dd:-9.1},
+    {id:6,name:'Máximo Crecimiento',risk:'Muy alto',dots:6,profile:'Muy agresivo',horizon:'Muy largo',goal:'Máximo crecimiento',desc:'Busca máxima exposición al crecimiento aceptando fluctuaciones y pérdidas temporales significativas.',allocation:{Equity:85,'Fixed Income':0,Alternatives:15,Cash:0},value:10702,ret:7.02,dd:-12.8}
+  ];
+
+  let selectedId = 3;
+  const cards = document.getElementById('portfolioCards');
+  const compareBody = document.getElementById('compareBody');
+
+  function dots(n){return Array.from({length:6},(_,i)=> i<n?'●':'○').join(' ')}
+
+  function renderCards(){
+    cards.innerHTML = portfolios.map(p=>`
+      <article class="card ${p.id===selectedId?'active':''}" onclick="selectPortfolio(${p.id})">
+        <div>
+          <div class="num">PORTFOLIO ${String(p.id).padStart(2,'0')}</div>
+          <h3>${p.name}</h3>
+          <div class="badge">${dots(p.dots)} &nbsp; ${p.risk}</div>
+          <p style="margin-top:16px">${p.desc}</p>
+        </div>
+        <div class="card-link">Ver portafolio →</div>
+      </article>
+    `).join('');
+  }
+
+  function renderCompare(){
+    compareBody.innerHTML = portfolios.map(p=>`
+      <tr class="${p.id===selectedId?'selected':''}">
+        <td>${p.id===selectedId?'← ':''}${p.name}</td>
+        <td>$${Number(p.value).toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:2})}</td>
+        <td class="pos">+${p.ret.toFixed(2)}%</td>
+        <td class="neg">${p.dd.toFixed(1)}%</td>
+      </tr>
+    `).join('');
+  }
+
+  function selectPortfolio(id){
+    selectedId=id;
+    const p=portfolios.find(x=>x.id===id);
+    document.getElementById('detailTitle').textContent=p.name;
+    document.getElementById('detailLead').textContent=p.desc;
+    document.getElementById('detailName').textContent=`Portfolio ${String(p.id).padStart(2,'0')} · ${p.name}`;
+    document.getElementById('detailDescription').textContent=p.desc;
+    document.getElementById('riskBadge').textContent=`${dots(p.dots)}   ${p.risk}`;
+    document.getElementById('profileMetric').textContent=p.profile;
+    document.getElementById('horizonMetric').textContent=p.horizon;
+    document.getElementById('goalMetric').textContent=p.goal;
+    document.getElementById('simValue').textContent='$'+Number(p.value).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+    const gain=p.value-10000;
+    document.getElementById('simGain').textContent=`+$${gain.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})} · +${p.ret.toFixed(2)}%`;
+    document.getElementById('sinceStart').textContent=`+${p.ret.toFixed(2)}%`;
+    document.getElementById('allocationList').innerHTML=Object.entries(p.allocation).map(([k,v])=>`
+      <div class="allocation-row"><span>${k}</span><div class="bar"><span style="width:${v}%"></span></div><strong>${v}%</strong></div>
+    `).join('');
+    renderCards();renderCompare();
+  }
+
+  document.querySelectorAll('.reaction').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.reaction').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      const box=document.getElementById('reactionMessage');
+      box.style.display='block';
+      box.innerHTML='<h3>La reacción importa.</h3><p>La tolerancia al riesgo no es solamente cuánto quieres ganar. También es cuánto puedes ver caer tu portafolio sin abandonar el plan en el peor momento.</p>';
+    });
+  });
+
+  renderCards();
+  selectPortfolio(3);
+</script>
+</body>
+</html>
