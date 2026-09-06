@@ -219,7 +219,7 @@
       <input id="amountInput" type="number" class="input" value="10000" min="1" />
       <div class="actions"><button class="btn primary" onclick="goPortfolio()">Escoger portafolio →</button></div>
     </div>
-    <div class="card"><div class="label">Xavier Account</div><p class="sub" style="line-height:1.6">Una cuenta virtual para practicar el flujo de EMC: escoger un objetivo, seleccionar un portafolio, aportar más, programar recurrencias y cambiar de estrategia.</p></div>
+    <div class="card"><div class="label">Sample Account</div><p class="sub" style="line-height:1.6">Una cuenta virtual para practicar el flujo de EMC: escoger un objetivo, seleccionar un portafolio, aportar más, programar recurrencias y cambiar de estrategia.</p></div>
   </div>
 </section>
 
@@ -283,7 +283,7 @@ function renderAccounts(){
  const btn=document.getElementById('homeCreateBtn');
  if(!accounts.length){
    btn.style.display='inline-flex';
-   el.innerHTML=`<article class="account-card empty" onclick="startCreate()"><div><div class="plus">＋</div><strong>Crear Xavier Account</strong><span class="muted">Empieza tu simulación con Inversiones o Retiro.</span></div></article>`;
+   el.innerHTML=`<article class="account-card empty" onclick="startCreate()"><div><div class="plus">＋</div><strong>Crear Sample Account</strong><span class="muted">Empieza tu simulación con Inversiones o Retiro.</span></div></article>`;
    return;
  }
  btn.style.display='none';
