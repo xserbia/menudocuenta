@@ -128,6 +128,54 @@
 }
 </style>
 
+
+<style>
+/* v12 — cuentas lado a lado en desktop */
+#accountList,
+#accountsList,
+#accountsGrid,
+.accounts,
+.accounts-list,
+.accounts-grid,
+.account-grid,
+.cards,
+.cards-grid {
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:24px !important;
+  width:100% !important;
+  max-width:none !important;
+  align-items:stretch !important;
+}
+#accountList > .account-card,
+#accountsList > .account-card,
+#accountsGrid > .account-card,
+.accounts > .account-card,
+.accounts-list > .account-card,
+.accounts-grid > .account-card,
+.account-grid > .account-card,
+.cards > .account-card,
+.cards-grid > .account-card {
+  width:100% !important;
+  max-width:none !important;
+  min-width:0 !important;
+  margin:0 !important;
+}
+@media (max-width: 760px){
+  #accountList,
+  #accountsList,
+  #accountsGrid,
+  .accounts,
+  .accounts-list,
+  .accounts-grid,
+  .account-grid,
+  .cards,
+  .cards-grid {
+    grid-template-columns:1fr !important;
+  }
+}
+</style>
+
 </head>
 <body>
 
