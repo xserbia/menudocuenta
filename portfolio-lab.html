@@ -34,7 +34,7 @@
 </style>
 
 <style>
-/* v9: cuentas horizontales + historial preparado para API */
+/* v10: cuentas horizontales + historial de simulación educativa */
 #accountsGrid,
 .accounts-grid,
 .account-grid {
@@ -120,8 +120,38 @@
 }
 </style>
 
+
+<style>
+.perf.negative{
+  background:#fff0f0 !important;
+  color:#c92a2a !important;
+}
+</style>
+
 </head>
 <body>
+
+<div class="simulator-notice" role="note">
+  <strong>Simulación educativa.</strong> Los valores y rendimientos mostrados son ilustrativos y no representan resultados reales de mercado.
+</div>
+<style>
+.simulator-notice{
+  max-width:1180px;
+  margin:14px auto 0;
+  padding:10px 16px;
+  border:1px solid #ebe7f1;
+  border-radius:12px;
+  background:#faf9fc;
+  color:#6d6678;
+  font-size:12px;
+  line-height:1.45;
+}
+.simulator-notice strong{color:#4b4260}
+@media(max-width:760px){
+  .simulator-notice{margin:10px 14px 0}
+}
+</style>
+
 <header class="topbar"><div class="topbar-inner"><div class="brand">EMC <span>Portfolio</span> Lab</div><nav class="nav"><button class="active" onclick="showHome()">Mi cuenta</button></nav><div class="edu">Simulación educativa</div></div></header>
 <main class="shell">
 <section id="home" class="panel active">
@@ -157,7 +187,7 @@
   <button class="back" onclick="showHome()">← Volver a tu cuenta</button>
   <div class="title-row"><div><h2 id="detailName"></h2><p id="detailMeta" class="sub"></p></div></div>
   <div class="grid2">
-    <div class="metric-card"><div class="metric-head"><h3>Evolución del portafolio</h3><span class="badge">Datos vía API</span></div><div class="metric-body"><div class="muted">Valor virtual actual</div><div id="detailValue" class="value"></div><div id="detailPerf" style="color:var(--green);font-weight:850"></div><div class="chart"><svg viewBox="0 0 600 190" preserveAspectRatio="none"><path d="M0,150 C55,140 85,160 130,122 S210,133 255,100 S330,112 385,83 S455,94 505,58 S560,64 600,32"/></svg></div></div></div>
+    <div class="metric-card"><div class="metric-head"><h3>Evolución simulada</h3><span class="badge">Datos ilustrativos</span></div><div class="metric-body"><div class="muted">Valor virtual actual</div><div id="detailValue" class="value"></div><div id="detailPerf" style="color:var(--green);font-weight:850"></div><div class="chart"><svg viewBox="0 0 600 190" preserveAspectRatio="none"><path d="M0,150 C55,140 85,160 130,122 S210,133 255,100 S330,112 385,83 S455,94 505,58 S560,64 600,32"/></svg></div></div></div>
     <div class="card"><div class="label">Portafolio actual</div><h3 id="detailPortfolio" style="font-size:25px;margin:4px 0 8px"></h3><div id="detailDonut" class="donut-wrap"></div><div id="detailSummary" style="margin-top:12px"></div><div id="detailPerformance" class="performance-grid"></div><div id="detailComponents" class="detail-components"></div><div class="quick-actions"><button class="quick" onclick="openDeposit()"><strong>＋ Depositar más</strong><small>Añade fondos virtuales a esta cuenta.</small></button><button class="quick" onclick="openRecurring()"><strong>↻ Recurrencia</strong><small>Programa aportes periódicos.</small></button><button class="quick" onclick="openChangePortfolio()"><strong>⇄ Cambiar portafolio</strong><small>Selecciona otra estrategia para esta cuenta.</small></button></div><div id="recurringStatus"></div></div>
   </div>
 </section>
@@ -191,7 +221,7 @@ window.portfolios=portfolios=[
 let selectedGoal='Invertir', selectedPortfolio=null, activeAccountId=null, changeSelection=null;
 window.accounts=accounts=[
  {id:101,name:'Inversiones',goal:'Invertir',amount:15000,portfolioId:3,returnPct:3.17,recurring:{amount:250,frequency:'Mensual'}},
- {id:102,name:'Retiro',goal:'Retiro',amount:10000,portfolioId:4,returnPct:5.27,recurring:null}
+ {id:102,name:'Retiro',goal:'Retiro',amount:10000,portfolioId:4,returnPct:-2.14,recurring:null}
 ];
 function currency(v){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(v)}
 function showPanel(id){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');scrollTo({top:0,behavior:'smooth'})}
@@ -209,7 +239,7 @@ function renderAccounts(){
    return;
  }
  btn.style.display='none';
- el.innerHTML=accounts.map(a=>{const p=portfolios.find(x=>x.id===a.portfolioId),val=a.amount*(1+a.returnPct/100);return `<article class="account-card ${a.goal==='Retiro'?'retirement':''}"><div class="account-top"><div class="type"><div class="icon">${a.goal==='Retiro'?'★':'▥'}</div>${a.goal==='Invertir'?'INVERSIONES':'RETIRO'}</div><button class="arrow" onclick="openAccount(${a.id})">→</button></div><h3>${a.name}</h3><div class="status">● Activa</div><div class="amount">${currency(val)}</div><span class="perf">↗ +${a.returnPct.toFixed(2)}%</span><div class="foot">${p.name}${a.recurring?` · ${currency(a.recurring.amount)} ${a.recurring.frequency.toLowerCase()}`:''}</div></article>`}).join('');
+ el.innerHTML=accounts.map(a=>{const p=portfolios.find(x=>x.id===a.portfolioId),val=a.amount*(1+a.returnPct/100);return `<article class="account-card ${a.goal==='Retiro'?'retirement':''}"><div class="account-top"><div class="type"><div class="icon">${a.goal==='Retiro'?'★':'▥'}</div>${a.goal==='Invertir'?'INVERSIONES':'RETIRO'}</div><button class="arrow" onclick="openAccount(${a.id})">→</button></div><h3>${a.name}</h3><div class="status">● Activa</div><div class="amount">${currency(val)}</div><span class="perf ${a.returnPct<0?'negative':''}">${a.returnPct<0?'↘':'↗'} ${a.returnPct>=0?'+':''}${a.returnPct.toFixed(2)}%</span><div class="foot">${p.name}${a.recurring?` · ${currency(a.recurring.amount)} ${a.recurring.frequency.toLowerCase()}`:''}</div></article>`}).join('');
 }
 function goPortfolio(){renderPortfolios();showPanel('portfolioPanel')}
 function renderPortfolios(){document.getElementById('portfolioGrid').innerHTML=portfolios.map(p=>`<div class="portfolio ${selectedPortfolio?.id===p.id?'selected':''}" onclick="selectPortfolio(${p.id})"><div class="kicker">PORTAFOLIO 0${p.id}</div><h4>${p.name}</h4><p>${p.objective}</p><div class="riskdots">${[1,2,3,4,5].map(n=>`<i class="${n<=p.id?'on':''}"></i>`).join('')}</div></div>`).join('')}
@@ -217,7 +247,7 @@ function donutHTML(p){let start=0;const parts=p.alloc.map((v,i)=>{const s=start,
 function holdingsHTML(p){return p.alloc.map((v,i)=>{const cls=assetLabels[i],list=p.holdings[cls]||[];return `<div class="asset"><div class="asset-head"><span>${cls}</span><strong>${v}%</strong></div><div class="tickers">${list.length?list.map(t=>`<span class="ticker" title="${(instruments[cls].find(x=>x[0]===t)||['',''])[1]}">${t}</span>`).join(''):'<span class="muted" style="font-size:10px">Sin asignación</span>'}</div></div>`}).join('')}
 function selectPortfolio(id){selectedPortfolio=portfolios.find(p=>p.id===id);renderPortfolios();const p=selectedPortfolio;const d=document.getElementById('portfolioDetail');d.style.display='block';d.innerHTML=`<div class="portfolio-detail"><div>${donutHTML(p)}</div><div><div class="label">Objetivo</div><div style="font-weight:800;margin-bottom:7px">${p.objective}</div><div class="muted" style="font-size:13px;line-height:1.5;margin-bottom:13px">${p.definition}</div><div class="inventory">${holdingsHTML(p)}</div></div></div>`;document.getElementById('createAccountBtn').disabled=false}
 function createAccount(){if(!selectedPortfolio||accounts.length>=3)return;const amount=Math.max(1,+document.getElementById('amountInput').value||10000);const ret=[1.05,2.21,4.38,5.27,6.14][selectedPortfolio.id-1];const id=Date.now();accounts.push({id,name:selectedGoal==='Invertir'?'Inversiones':'Retiro',goal:selectedGoal,amount,portfolioId:selectedPortfolio.id,returnPct:ret,recurring:null});openAccount(id)}
-function openAccount(id){activeAccountId=id;const a=accounts.find(x=>x.id===id),p=portfolios.find(x=>x.id===a.portfolioId),val=a.amount*(1+a.returnPct/100);document.getElementById('detailName').textContent=a.name;document.getElementById('detailMeta').textContent=`${a.goal==='Invertir'?'Inversiones':'Retiro'} · cuenta virtual activa`;document.getElementById('detailValue').textContent=currency(val);document.getElementById('detailPerf').textContent=`+${currency(val-a.amount)} · +${a.returnPct.toFixed(2)}%`;document.getElementById('detailPortfolio').textContent=p.name;document.getElementById('detailDonut').innerHTML=donutHTML(p);document.getElementById('detailSummary').innerHTML=`<div class="summary-row"><span>Objetivo</span><strong>${a.goal}</strong></div><div class="summary-row"><span>Riesgo</span><strong>${p.risk}</strong></div><div class="summary-row"><span>Capital aportado</span><strong>${currency(a.amount)}</strong></div>`;const max=[2.2,4.6,7.4,9.6,12.1][p.id-1],min=[-0.5,-2.0,-4.3,-6.7,-10.2][p.id-1];document.getElementById('detailPerformance').innerHTML=`<div class="performance-box positive"><span>Rendimiento</span><strong>+${a.returnPct.toFixed(2)}%</strong></div><div class="performance-box positive"><span>Máximo</span><strong>+${max.toFixed(1)}%</strong></div><div class="performance-box negative"><span>Mínimo</span><strong>${min.toFixed(1)}%</strong></div>`;document.getElementById('detailComponents').innerHTML=`<h4>Componentes</h4><div class="component-list">${p.alloc.map((v,i)=>{const cls=assetLabels[i],list=p.holdings[cls]||[];return `<div class="component-row"><div class="component-main"><div class="component-name"><i class="asset-dot" style="background:${colors[i]}"></i>${cls}</div><strong>${v}%</strong></div><div class="component-tickers">${list.length?list.map(t=>`<span class="ticker">${t}</span>`).join(''):'<span class="muted" style="font-size:10px">Sin asignación</span>'}</div></div>`}).join('')}</div>`;document.getElementById('recurringStatus').innerHTML=a.recurring?`<span class="recurring-pill">↻ ${currency(a.recurring.amount)} · ${a.recurring.frequency}</span>`:'';showPanel('detailPanel')}
+function openAccount(id){activeAccountId=id;const a=accounts.find(x=>x.id===id),p=portfolios.find(x=>x.id===a.portfolioId),val=a.amount*(1+a.returnPct/100);document.getElementById('detailName').textContent=a.name;document.getElementById('detailMeta').textContent=`${a.goal==='Invertir'?'Inversiones':'Retiro'} · cuenta virtual activa`;document.getElementById('detailValue').textContent=currency(val);document.getElementById('detailPerf').textContent=`+${currency(val-a.amount)} · ${a.returnPct>=0?'+':''}${a.returnPct.toFixed(2)}%`;document.getElementById('detailPortfolio').textContent=p.name;document.getElementById('detailDonut').innerHTML=donutHTML(p);document.getElementById('detailSummary').innerHTML=`<div class="summary-row"><span>Objetivo</span><strong>${a.goal}</strong></div><div class="summary-row"><span>Riesgo</span><strong>${p.risk}</strong></div><div class="summary-row"><span>Capital aportado</span><strong>${currency(a.amount)}</strong></div>`;const max=[2.2,4.6,7.4,9.6,12.1][p.id-1],min=[-0.5,-2.0,-4.3,-6.7,-10.2][p.id-1];document.getElementById('detailPerformance').innerHTML=`<div class="performance-box positive"><span>Rendimiento</span><strong>${a.returnPct>=0?'+':''}${a.returnPct.toFixed(2)}%</strong></div><div class="performance-box positive"><span>Máximo</span><strong>+${max.toFixed(1)}%</strong></div><div class="performance-box negative"><span>Mínimo</span><strong>${min.toFixed(1)}%</strong></div>`;document.getElementById('detailComponents').innerHTML=`<h4>Componentes</h4><div class="component-list">${p.alloc.map((v,i)=>{const cls=assetLabels[i],list=p.holdings[cls]||[];return `<div class="component-row"><div class="component-main"><div class="component-name"><i class="asset-dot" style="background:${colors[i]}"></i>${cls}</div><strong>${v}%</strong></div><div class="component-tickers">${list.length?list.map(t=>`<span class="ticker">${t}</span>`).join(''):'<span class="muted" style="font-size:10px">Sin asignación</span>'}</div></div>`}).join('')}</div>`;document.getElementById('recurringStatus').innerHTML=a.recurring?`<span class="recurring-pill">↻ ${currency(a.recurring.amount)} · ${a.recurring.frequency}</span>`:'';showPanel('detailPanel')}
 function openModal(id){document.getElementById(id).classList.add('open')}function closeModal(id){document.getElementById(id).classList.remove('open')}
 function openDeposit(){document.getElementById('depositAmount').value=500;openModal('depositModal')}
 function applyDeposit(){const v=+document.getElementById('depositAmount').value;if(v>0){const a=accounts.find(x=>x.id===activeAccountId);a.amount+=v;closeModal('depositModal');openAccount(a.id)}}
@@ -233,7 +263,7 @@ renderAccounts();
 
 <script>
 (function(){
-  // API-ready configuration. Replace these values when a live market-data API is selected.
+  // Simulación local: no realiza llamadas a APIs externas.
   window.PORTFOLIO_LAB_API = window.PORTFOLIO_LAB_API || {
     enabled: false,
     baseUrl: "",
@@ -270,27 +300,7 @@ renderAccounts();
   }
 
   async function fetchPortfolioHistory(account, days){
-    const cfg = window.PORTFOLIO_LAB_API;
-    if(!cfg.enabled || !cfg.baseUrl){
-      return {source:"demo", values:fallbackHistory(account, days)};
-    }
-    try{
-      const qs = new URLSearchParams({
-        accountId:String(account.id),
-        portfolioId:String(account.portfolioId),
-        days:String(days)
-      });
-      const res = await fetch(cfg.baseUrl + cfg.historyPath + "?" + qs.toString(), {
-        headers: cfg.apiKey ? {"Authorization":"Bearer " + cfg.apiKey} : {}
-      });
-      if(!res.ok) throw new Error("API " + res.status);
-      const data = await res.json();
-      const values = Array.isArray(data.values) ? data.values.map(Number).filter(Number.isFinite) : [];
-      if(values.length < 2) throw new Error("Serie incompleta");
-      return {source:"api", values};
-    }catch(err){
-      return {source:"demo", values:fallbackHistory(account, days)};
-    }
+    return {source:"demo", values:fallbackHistory(account, days)};
   }
 
   function drawHistorySvg(values){
@@ -321,7 +331,7 @@ renderAccounts();
     const account = (window.accounts || []).find(a=>a.id===accountId);
     const host = document.getElementById("apiHistory");
     if(!account || !host) return;
-    host.innerHTML = '<div style="padding:18px;color:#746c82">Cargando evolución…</div>';
+    host.innerHTML = '<div style="padding:18px;color:#746c82">Cargando simulación…</div>';
     const result = await fetchPortfolioHistory(account, days);
     const vals = result.values;
     const first=vals[0], last=vals[vals.length-1], ret=first ? ((last/first)-1)*100 : 0;
@@ -329,8 +339,8 @@ renderAccounts();
     host.innerHTML = `
       <div class="api-history-card">
         <div class="api-history-head">
-          <div><h3>Evolución del portafolio</h3><div class="sub">Valor de esta cuenta a través del tiempo</div></div>
-          <div class="api-status"><span class="api-dot"></span>${result.source==="api"?"Datos vía API":"Vista demo · API preparada"}</div>
+          <div><h3>Evolución simulada</h3><div class="sub">Ejemplo de cómo podría evolucionar esta cuenta</div></div>
+          <div class="api-status"><span class="api-dot"></span>${result.source==="api"?"Datos ilustrativos":"Simulación educativa"}</div>
         </div>
         <div class="history-range">
           <button type="button" data-days="30">1M</button>
@@ -361,6 +371,28 @@ renderAccounts();
       const r = originalOpen(id);
       setTimeout(()=>window.renderPortfolioHistory && window.renderPortfolioHistory(id,90),0);
       return r;
+    };
+  }
+})();
+</script>
+
+
+<script>
+(function(){
+  const priorOpen = window.openAccount;
+  if(typeof priorOpen === "function"){
+    window.openAccount = function(id){
+      const result = priorOpen(id);
+      const a = (window.accounts || []).find(x => x.id === id);
+      if(a && a.returnPct < 0){
+        document.querySelectorAll('.perf, [id*="return"], [id*="Return"], [class*="performance"]').forEach(el=>{
+          if((el.textContent||'').includes('-2.14')){
+            el.style.color='#c92a2a';
+            if(el.classList.contains('perf')) el.style.background='#fff0f0';
+          }
+        });
+      }
+      return result;
     };
   }
 })();
