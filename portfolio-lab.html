@@ -32,6 +32,94 @@
 @media(max-width:900px){.accounts,.portfolios{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.portfolio-detail{grid-template-columns:1fr}.performance-grid{grid-template-columns:1fr 1fr 1fr}.topbar-inner{gap:12px}.edu{display:none}.quick-actions{grid-template-columns:1fr}}
 @media(max-width:620px){.performance-grid{grid-template-columns:1fr}.donut-stage{width:220px;height:220px}.donut{width:180px;height:180px}.donut:after{inset:44px}.donut-label{font-size:12px}.topbar-inner{height:auto;min-height:66px;padding:10px 14px;flex-wrap:wrap}.brand{font-size:18px}.nav{order:3;width:100%;overflow:auto}.nav button{white-space:nowrap}.shell{padding:20px 14px 45px}.hero{padding:22px;min-height:130px}.hero h1{font-size:29px}.hero:after{right:-50px}.toolbar{align-items:stretch;flex-direction:column}.tabs{overflow:auto}.create{width:100%}.accounts,.portfolios,.goal-row,.inventory{grid-template-columns:1fr}.account-card{min-height:220px}.title-row{flex-direction:column}.title-row h2{font-size:28px}.card{padding:17px}.value{font-size:40px}.quick-actions{grid-template-columns:1fr}.actions .btn{width:100%}}
 </style>
+
+<style>
+/* v9: cuentas horizontales + historial preparado para API */
+#accountsGrid,
+.accounts-grid,
+.account-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 22px !important;
+  align-items: stretch;
+}
+#accountsGrid .account-card,
+.accounts-grid .account-card,
+.account-grid .account-card {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0;
+}
+@media (max-width: 760px) {
+  #accountsGrid,
+  .accounts-grid,
+  .account-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+.api-history-card {
+  margin-top: 22px;
+  border: 1px solid #e6e3ef;
+  background: #fff;
+  border-radius: 22px;
+  padding: 22px;
+}
+.api-history-head {
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+.api-history-head h3 {
+  margin:0 0 4px;
+  color:#40108f;
+}
+.api-status {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 10px;
+  border-radius:999px;
+  background:#edf9f2;
+  color:#087f5b;
+  font-size:12px;
+  font-weight:800;
+}
+.api-dot {
+  width:8px;height:8px;border-radius:50%;background:currentColor;
+}
+.history-range {
+  display:flex; gap:8px; flex-wrap:wrap; margin:12px 0 18px;
+}
+.history-range button {
+  border:1px solid #e4dfef; background:#fff; color:#5d5570;
+  border-radius:999px; padding:8px 12px; font-weight:800; cursor:pointer;
+}
+.history-range button.active {
+  background:#f1eafa; color:#40108f; border-color:#d9c7f4;
+}
+.history-chart-wrap {
+  width:100%; overflow:hidden;
+}
+.history-chart {
+  width:100%; height:auto; display:block;
+}
+.history-meta {
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:12px; margin-top:16px;
+}
+.history-meta > div {
+  background:#f8f8fb; border-radius:14px; padding:12px;
+}
+.history-meta span { display:block; color:#7a728c; font-size:12px; margin-bottom:4px; }
+.history-meta strong { font-size:16px; color:#181729; }
+@media(max-width:620px){
+  .history-meta { grid-template-columns:1fr; }
+}
+</style>
+
 </head>
 <body>
 <header class="topbar"><div class="topbar-inner"><div class="brand">EMC <span>Portfolio</span> Lab</div><nav class="nav"><button class="active" onclick="showHome()">Mi cuenta</button></nav><div class="edu">Simulación educativa</div></div></header>
@@ -75,6 +163,7 @@
 </section>
 </main>
 
+<div id="apiHistory"></div>
 <div id="depositModal" class="modal"><div class="modal-card"><div class="modal-top"><h3>Depositar más</h3><button class="close" onclick="closeModal('depositModal')">×</button></div><div class="stack"><div><div class="label">Monto</div><input id="depositAmount" type="number" class="input" value="500" min="1"></div><button class="btn primary" onclick="applyDeposit()">Añadir depósito</button></div></div></div>
 <div id="recurringModal" class="modal"><div class="modal-card"><div class="modal-top"><h3>Configurar recurrencia</h3><button class="close" onclick="closeModal('recurringModal')">×</button></div><div class="stack"><div><div class="label">Monto</div><input id="recurringAmount" type="number" class="input" value="100" min="1"></div><div><div class="label">Frecuencia</div><select id="recurringFrequency" class="input"><option>Semanal</option><option>Quincenal</option><option selected>Mensual</option></select></div><button class="btn primary" onclick="applyRecurring()">Guardar recurrencia</button><button class="btn secondary" onclick="removeRecurring()">Eliminar recurrencia</button></div></div></div>
 <div id="changeModal" class="modal"><div class="modal-card"><div class="modal-top"><h3>Cambiar portafolio</h3><button class="close" onclick="closeModal('changeModal')">×</button></div><div id="changePortfolioGrid" class="portfolios" style="grid-template-columns:1fr 1fr"></div><div id="changePreview" style="margin-top:14px"></div><div class="actions"><button id="applyPortfolioBtn" class="btn primary" disabled onclick="applyPortfolioChange()">Usar este portafolio</button></div></div></div>
@@ -92,7 +181,7 @@ const instruments={
  'Alternatives':[
   ['GLD','SPDR Gold Shares'],['VNQ','Vanguard Real Estate ETF'],['PDBC','Invesco Optimum Yield Diversified Commodity Strategy ETF'],['IGF','iShares Global Infrastructure ETF']]
 };
-const portfolios=[
+window.portfolios=portfolios=[
 {id:1,name:'Cash Yield',risk:'Muy bajo',objective:'Busca rendimiento sobre efectivo con baja volatilidad.',definition:'Portafolio educativo enfocado principalmente en instrumentos de corto plazo y liquidez.',alloc:[70,25,0,5],holdings:{'Cash':['SGOV','BIL','SHV','MINT'],'Fixed Income':['AGG','BND'],'Equity':[],'Alternatives':['GLD']}},
 {id:2,name:'Income',risk:'Bajo',objective:'Busca generar ingreso y preservar estabilidad.',definition:'Da mayor peso a renta fija, con exposición limitada a crecimiento y diversificadores.',alloc:[15,60,15,10],holdings:{'Cash':['SGOV','MINT'],'Fixed Income':['AGG','BND','TIP','HYG'],'Equity':['VTI','SPY'],'Alternatives':['GLD','VNQ']}},
 {id:3,name:'Moderado',risk:'Medio',objective:'Equilibra crecimiento y estabilidad.',definition:'Combina renta fija, acciones y diversificadores en una mezcla balanceada.',alloc:[5,35,50,10],holdings:{'Cash':['SGOV'],'Fixed Income':['AGG','TIP','HYG'],'Equity':['VTI','SPY','VWO'],'Alternatives':['GLD','VNQ']}},
@@ -100,7 +189,7 @@ const portfolios=[
 {id:5,name:'Agresivo',risk:'Alto',objective:'Prioriza crecimiento de largo plazo.',definition:'Portafolio educativo con alta exposición a acciones y mayor tolerancia a fluctuaciones.',alloc:[0,10,80,10],holdings:{'Cash':[],'Fixed Income':['AGG','HYG'],'Equity':['VTI','SPY','QQQ','VWO'],'Alternatives':['GLD','VNQ','PDBC','IGF']}}
 ]
 let selectedGoal='Invertir', selectedPortfolio=null, activeAccountId=null, changeSelection=null;
-let accounts=[
+window.accounts=accounts=[
  {id:101,name:'Inversiones',goal:'Invertir',amount:15000,portfolioId:3,returnPct:3.17,recurring:{amount:250,frequency:'Mensual'}},
  {id:102,name:'Retiro',goal:'Retiro',amount:10000,portfolioId:4,returnPct:5.27,recurring:null}
 ];
@@ -141,5 +230,141 @@ function previewChange(id){changeSelection=portfolios.find(p=>p.id===id);renderC
 function applyPortfolioChange(){const a=accounts.find(x=>x.id===activeAccountId);a.portfolioId=changeSelection.id;a.returnPct=[1.05,2.21,4.38,5.27,6.14][changeSelection.id-1];closeModal('changeModal');openAccount(a.id)}
 renderAccounts();
 </script>
+
+<script>
+(function(){
+  // API-ready configuration. Replace these values when a live market-data API is selected.
+  window.PORTFOLIO_LAB_API = window.PORTFOLIO_LAB_API || {
+    enabled: false,
+    baseUrl: "",
+    apiKey: "",
+    historyPath: "/history"
+  };
+
+  const classTickers = {
+    cash: ["SGOV","BIL","SHV","MINT"],
+    fixed: ["AGG","BND","TIP","HYG"],
+    equity: ["VTI","SPY","QQQ","VWO"],
+    alt: ["GLD","VNQ","PDBC","IGF"]
+  };
+
+  function seededNoise(seed){
+    let x = Math.sin(seed * 12.9898) * 43758.5453;
+    return x - Math.floor(x);
+  }
+
+  function fallbackHistory(account, days){
+    const p = (window.portfolios || []).find(x => x.id === account.portfolioId) || {};
+    const base = Math.max(0, Number(account.amount) || 0);
+    const targetReturn = (Number(account.returnPct)||0)/100;
+    const pts = [];
+    let value = base;
+    const vol = account.goal === "Retiro" ? 0.004 : 0.006;
+    for(let i=0;i<days;i++){
+      const drift = targetReturn / Math.max(days,1);
+      const n = (seededNoise(i + account.id*7)-0.5)*2;
+      value = Math.max(0, value * (1 + drift + n*vol));
+      pts.push(value);
+    }
+    return pts;
+  }
+
+  async function fetchPortfolioHistory(account, days){
+    const cfg = window.PORTFOLIO_LAB_API;
+    if(!cfg.enabled || !cfg.baseUrl){
+      return {source:"demo", values:fallbackHistory(account, days)};
+    }
+    try{
+      const qs = new URLSearchParams({
+        accountId:String(account.id),
+        portfolioId:String(account.portfolioId),
+        days:String(days)
+      });
+      const res = await fetch(cfg.baseUrl + cfg.historyPath + "?" + qs.toString(), {
+        headers: cfg.apiKey ? {"Authorization":"Bearer " + cfg.apiKey} : {}
+      });
+      if(!res.ok) throw new Error("API " + res.status);
+      const data = await res.json();
+      const values = Array.isArray(data.values) ? data.values.map(Number).filter(Number.isFinite) : [];
+      if(values.length < 2) throw new Error("Serie incompleta");
+      return {source:"api", values};
+    }catch(err){
+      return {source:"demo", values:fallbackHistory(account, days)};
+    }
+  }
+
+  function drawHistorySvg(values){
+    const w=760,h=230,pad=18;
+    const min=Math.min(...values),max=Math.max(...values);
+    const span=Math.max(max-min,1);
+    const pts=values.map((v,i)=>{
+      const x=pad+(i/(values.length-1||1))*(w-pad*2);
+      const y=h-pad-((v-min)/span)*(h-pad*2);
+      return [x,y];
+    });
+    const path=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
+    const last=pts[pts.length-1];
+    return `<svg class="history-chart" viewBox="0 0 ${w} ${h}" role="img" aria-label="Evolución del valor del portafolio">
+      <defs><linearGradient id="plArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a19b7" stop-opacity=".18"/><stop offset="1" stop-color="#6a19b7" stop-opacity="0"/></linearGradient></defs>
+      <path d="${path} L ${last[0]} ${h-pad} L ${pts[0][0]} ${h-pad} Z" fill="url(#plArea)"></path>
+      <path d="${path}" fill="none" stroke="#5a11a8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx="${last[0]}" cy="${last[1]}" r="5.5" fill="#5a11a8"></circle>
+    </svg>`;
+  }
+
+  function money(n){
+    try{return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD"}).format(n)}
+    catch(e){return "$"+Number(n).toFixed(2)}
+  }
+
+  window.renderPortfolioHistory = async function(accountId, days=90){
+    const account = (window.accounts || []).find(a=>a.id===accountId);
+    const host = document.getElementById("apiHistory");
+    if(!account || !host) return;
+    host.innerHTML = '<div style="padding:18px;color:#746c82">Cargando evolución…</div>';
+    const result = await fetchPortfolioHistory(account, days);
+    const vals = result.values;
+    const first=vals[0], last=vals[vals.length-1], ret=first ? ((last/first)-1)*100 : 0;
+    const mx=Math.max(...vals), mn=Math.min(...vals);
+    host.innerHTML = `
+      <div class="api-history-card">
+        <div class="api-history-head">
+          <div><h3>Evolución del portafolio</h3><div class="sub">Valor de esta cuenta a través del tiempo</div></div>
+          <div class="api-status"><span class="api-dot"></span>${result.source==="api"?"Datos vía API":"Vista demo · API preparada"}</div>
+        </div>
+        <div class="history-range">
+          <button type="button" data-days="30">1M</button>
+          <button type="button" data-days="90" class="active">3M</button>
+          <button type="button" data-days="180">6M</button>
+          <button type="button" data-days="365">1A</button>
+        </div>
+        <div class="history-chart-wrap">${drawHistorySvg(vals)}</div>
+        <div class="history-meta">
+          <div><span>Rendimiento</span><strong>${ret>=0?"+":""}${ret.toFixed(2)}%</strong></div>
+          <div><span>Máximo</span><strong>${money(mx)}</strong></div>
+          <div><span>Mínimo</span><strong>${money(mn)}</strong></div>
+        </div>
+      </div>`;
+    host.querySelectorAll("[data-days]").forEach(btn=>{
+      if(Number(btn.dataset.days)===days) btn.classList.add("active"); else btn.classList.remove("active");
+      btn.addEventListener("click",()=>window.renderPortfolioHistory(accountId,Number(btn.dataset.days)));
+    });
+  };
+})();
+</script>
+
+<script>
+(function(){
+  const originalOpen = window.openAccount;
+  if(typeof originalOpen === "function"){
+    window.openAccount = function(id){
+      const r = originalOpen(id);
+      setTimeout(()=>window.renderPortfolioHistory && window.renderPortfolioHistory(id,90),0);
+      return r;
+    };
+  }
+})();
+</script>
+
 </body>
 </html>
