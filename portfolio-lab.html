@@ -1,109 +1,27 @@
-<!doctype html>
-<html lang="es">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Portfolio Lab — Mini experiencia EMC</title>
-<style>
-:root{
-  --purple:#4c0099;--purple2:#6b20c8;--magenta:#be2a91;--yellow:#ffc400;
-  --ink:#192033;--muted:#6e7483;--line:#e8e6ef;--soft:#f5f6fa;--lav:#f2eef9;
-  --green:#12a66a;--white:#fff;--shadow:0 10px 26px rgba(40,22,78,.08);
-}
-*{box-sizing:border-box}html,body{margin:0}body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f6f7fb;color:var(--ink)}button,input{font:inherit}button{cursor:pointer}
-.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.topbar-inner{max-width:1240px;margin:auto;height:72px;padding:0 22px;display:flex;align-items:center;gap:26px}.brand{font-weight:900;color:var(--purple);font-size:20px;letter-spacing:-.03em}.brand span{color:var(--yellow)}
-.nav{display:flex;gap:6px;flex:1}.nav button{border:0;background:transparent;padding:10px 14px;border-radius:12px;font-weight:800;color:#5c6270}.nav button.active{background:#f1ebfb;color:var(--purple)}.edu{font-size:12px;font-weight:800;background:#f5effb;color:var(--purple);padding:9px 12px;border-radius:999px}
-.shell{max-width:1240px;margin:auto;padding:34px 22px 70px}.hero{background:linear-gradient(120deg,#430087,#5b05ad 62%,#6f23c3);color:#fff;border-radius:24px;padding:28px 30px;display:flex;justify-content:space-between;align-items:center;min-height:150px;box-shadow:var(--shadow);overflow:hidden;position:relative}.hero:after{content:"";position:absolute;width:210px;height:210px;border:18px solid rgba(255,255,255,.16);border-radius:50%;right:34px;top:-44px}.hero h1{font-size:36px;line-height:1.05;margin:4px 0 8px;letter-spacing:-.03em}.hero p{margin:0;color:rgba(255,255,255,.84)}
-.toolbar{margin:24px 0 18px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:8px 10px;display:flex;gap:8px;align-items:center}.tabs{display:flex;gap:4px;flex:1}.tab{border:0;background:transparent;padding:10px 18px;border-radius:12px;color:var(--purple);font-weight:850}.tab.active{background:var(--yellow);color:#241600}.create{border:0;background:linear-gradient(90deg,var(--magenta),#9f2bbd);color:#fff;font-weight:850;padding:11px 16px;border-radius:12px}
-.accounts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.account-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow);position:relative;min-height:245px}.account-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;border-radius:20px 0 0 20px;background:#7c4ac6}.account-card.retirement:before{background:var(--yellow)}.account-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}.type{display:flex;gap:10px;align-items:center;font-size:12px;font-weight:850;letter-spacing:.04em;color:#707686;text-transform:uppercase}.icon{width:38px;height:38px;border-radius:11px;background:#efe7fb;color:var(--purple);display:grid;place-items:center;font-weight:900}.arrow{width:40px;height:40px;border-radius:50%;border:0;background:#f4f4f7;color:#89909d;font-size:22px}.account-card h3{font-size:22px;margin:13px 0 5px}.status{font-size:13px;color:var(--green);font-weight:700}.amount{font-size:39px;font-weight:800;letter-spacing:-.04em;margin:22px 0 6px}.perf{display:inline-block;font-size:12px;background:#e9faf2;color:#087d52;font-weight:850;padding:6px 9px;border-radius:999px}.foot{border-top:1px solid #ececf0;margin-top:18px;padding-top:14px;color:#777e8c;font-size:12px}
-.empty{border:1.5px dashed #cfc8dc;display:flex;align-items:center;justify-content:center;text-align:center;box-shadow:none}.empty:before{display:none}.empty strong{display:block;font-size:18px;color:var(--purple);margin:8px 0 4px}.plus{font-size:34px;color:var(--magenta)}
-.panel{display:none}.panel.active{display:block}.back{border:0;background:transparent;color:var(--purple);font-weight:850;padding:0;margin-bottom:14px}.title-row{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:18px}.title-row h2{font-size:34px;margin:0 0 4px}.sub{color:var(--muted);margin:0}.grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}.label{font-size:12px;font-weight:850;margin-bottom:8px}.input{width:100%;border:1px solid #ddd9e6;border-radius:13px;padding:14px 15px;font-size:16px;outline:none}.input:focus{border-color:var(--purple);box-shadow:0 0 0 4px rgba(76,0,153,.08)}
-.goal-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.goal{border:1px solid var(--line);border-radius:15px;padding:16px;background:#fff;text-align:left}.goal.active{border:2px solid var(--purple);background:#fbf9ff}.goal strong{display:block}.goal small{color:var(--muted)}
-.actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}.btn{border:0;border-radius:12px;padding:12px 17px;font-weight:850}.primary{background:var(--purple);color:#fff}.secondary{background:#f1eef6;color:var(--purple)}
-.portfolios{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.portfolio{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px;min-height:150px}.portfolio.selected{border:2px solid var(--purple);background:#fbf9ff}.portfolio .kicker{font-size:10px;font-weight:900;letter-spacing:.11em;color:var(--purple)}.portfolio h4{font-size:18px;margin:7px 0 5px}.portfolio p{font-size:12px;color:var(--muted);line-height:1.4;margin:0 0 10px}.riskdots{display:flex;gap:4px}.riskdots i{width:7px;height:7px;border-radius:50%;background:#ddd8e6}.riskdots i.on{background:var(--purple)}
-.portfolio-detail{margin-top:16px;display:grid;grid-template-columns:190px 1fr;gap:22px;align-items:center}.donut{width:160px;height:160px;border-radius:50%;position:relative;margin:auto}.donut:after{content:"";position:absolute;inset:38px;background:#fff;border-radius:50%}.donut-center{position:absolute;inset:0;z-index:2;display:grid;place-content:center;text-align:center}.donut-center strong{font-size:18px}.donut-center small{font-size:10px;color:var(--muted)}.inventory{display:grid;grid-template-columns:1fr 1fr;gap:8px}.asset{background:#f7f7fa;border-radius:11px;padding:9px 10px;font-size:12px;display:flex;justify-content:space-between;gap:10px}.asset span{color:var(--muted)}
-.metric-card{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}.metric-head{padding:18px 20px;background:#f3eef9;display:flex;justify-content:space-between;align-items:center}.metric-head h3{margin:0;color:var(--purple)}.badge{background:#dff8ed;color:#087c53;border-radius:12px;padding:8px 10px;font-weight:850;font-size:12px}.metric-body{padding:22px}.value{font-size:48px;font-weight:800;letter-spacing:-.04em}.muted{color:var(--muted)}.chart{margin-top:18px;height:190px;background:linear-gradient(rgba(76,0,153,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(76,0,153,.07) 1px,transparent 1px);background-size:100% 48px,80px 100%;border-radius:16px;position:relative;overflow:hidden}.chart svg{width:100%;height:100%}.chart path{fill:none;stroke:var(--yellow);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}.summary-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee}.summary-row:last-child{border-bottom:0}.summary-row span{color:var(--muted)}
-@media(max-width:900px){.accounts,.portfolios{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.portfolio-detail{grid-template-columns:1fr}.topbar-inner{gap:12px}.edu{display:none}}
-@media(max-width:620px){.topbar-inner{height:auto;min-height:66px;padding:10px 14px;flex-wrap:wrap}.brand{font-size:18px}.nav{order:3;width:100%;overflow:auto}.nav button{white-space:nowrap}.shell{padding:20px 14px 45px}.hero{padding:22px;min-height:130px}.hero h1{font-size:29px}.hero:after{right:-50px}.toolbar{align-items:stretch;flex-direction:column}.tabs{overflow:auto}.create{width:100%}.accounts,.portfolios,.goal-row,.inventory{grid-template-columns:1fr}.account-card{min-height:220px}.title-row h2{font-size:28px}.card{padding:17px}.value{font-size:40px}}
-</style>
-</head>
-<body>
-<header class="topbar"><div class="topbar-inner"><div class="brand">EMC <span>Portfolio</span> Lab</div><nav class="nav"><button class="active" onclick="showHome()">Mis cuentas</button><button onclick="alert('Sección educativa')">Aprender</button><button onclick="alert('Sección de actividad')">Actividad</button></nav><div class="edu">Simulación educativa</div></div></header>
-<main class="shell">
-<section id="home" class="panel active">
-  <div class="hero"><div><div style="font-size:15px">Hola</div><h1>Tu laboratorio de portafolios</h1><p>Crea cuentas virtuales, escoge una estrategia y observa su comportamiento.</p></div></div>
-  <div class="toolbar"><div class="tabs"><button class="tab active" data-filter="all">Todas</button><button class="tab" data-filter="Invertir">Inversiones</button><button class="tab" data-filter="Retiro">Retiro</button></div><button class="create" onclick="startCreate()">＋ Crear cuenta</button></div>
-  <div id="accounts" class="accounts"></div>
-</section>
+ok quita aprender y actividad...permite que la persona pueda cmbiar de porafolio en la cuenta abierta. que pueda depositar mas y hacer recurencias y usa esta lista de instrumentos Cash
 
-<section id="createPanel" class="panel">
-  <button class="back" onclick="showHome()">← Volver a tus cuentas</button>
-  <div class="title-row"><div><h2>Crear una cuenta</h2><p class="sub">Una experiencia corta, como configurarías una cuenta en EMC.</p></div></div>
-  <div class="grid2">
-    <div class="card">
-      <div class="label">¿Cómo quieres llamar a esta cuenta?</div>
-      <input id="nameInput" class="input" value="Mi nueva cuenta" />
-      <div class="label" style="margin-top:18px">Objetivo</div>
-      <div class="goal-row"><button class="goal active" data-goal="Invertir"><strong>Invertir</strong><small>Construir capital.</small></button><button class="goal" data-goal="Retiro"><strong>Retiro</strong><small>Invertir a largo plazo.</small></button></div>
-      <div class="label" style="margin-top:18px">Inversión virtual inicial</div>
-      <input id="amountInput" type="number" class="input" value="10000" min="0" />
-      <div class="actions"><button class="btn primary" onclick="goPortfolio()">Escoger portafolio →</button></div>
-    </div>
-    <div class="card"><div class="label">Cómo funciona</div><p class="sub" style="line-height:1.6">Creas una cuenta virtual, seleccionas uno de seis portafolios educativos y el valor se actualiza con precios de mercado vía API.</p><div style="margin-top:16px;padding:14px;border-radius:14px;background:#f7f3fb;color:var(--purple);font-weight:750;font-size:13px">Sin seleccionar acciones individuales. La decisión central es el portafolio.</div></div>
-  </div>
-</section>
+SGOV — iShares 0-3 Month Treasury Bond ETF
+BIL — SPDR Bloomberg 1-3 Month T-Bill ETF
+SHV — iShares Short Treasury Bond ETF
+MINT — PIMCO Enhanced Short Maturity Active ETF
 
-<section id="portfolioPanel" class="panel">
-  <button class="back" onclick="showPanel('createPanel')">← Atrás</button>
-  <div class="title-row"><div><h2>Escoge tu portafolio</h2><p class="sub">Toca uno para ver objetivo, definición y composición.</p></div></div>
-  <div class="portfolios" id="portfolioGrid"></div>
-  <div id="portfolioDetail" class="card" style="display:none;margin-top:16px"></div>
-  <div class="actions"><button id="createAccountBtn" class="btn primary" disabled onclick="createAccount()">Comenzar a invertir →</button></div>
-</section>
+Fixed Income
 
-<section id="detailPanel" class="panel">
-  <button class="back" onclick="showHome()">← Volver a tus cuentas</button>
-  <div class="title-row"><div><h2 id="detailName"></h2><p id="detailMeta" class="sub"></p></div><button class="create" onclick="startCreate()">＋ Crear otra cuenta</button></div>
-  <div class="grid2">
-    <div class="metric-card"><div class="metric-head"><h3>Evolución del portafolio</h3><span class="badge">Datos vía API</span></div><div class="metric-body"><div class="muted">Valor virtual actual</div><div id="detailValue" class="value"></div><div id="detailPerf" style="color:var(--green);font-weight:850"></div><div class="chart"><svg viewBox="0 0 600 190" preserveAspectRatio="none"><path d="M0,150 C55,140 85,160 130,122 S210,133 255,100 S330,112 385,83 S455,94 505,58 S560,64 600,32"/></svg></div></div></div>
-    <div class="card"><div class="label">Portafolio</div><h3 id="detailPortfolio" style="font-size:25px;margin:4px 0 8px"></h3><div id="detailDonut"></div><div id="detailSummary" style="margin-top:12px"></div></div>
-  </div>
-</section>
-</main>
-<script>
-const colors=['#c62c8f','#ffc400','#4c0099','#7c4ac6'];
-const assetLabels=['Cash','Fixed Income','Equity','Alternatives'];
-const portfolios=[
-{id:1,name:'Preservación',risk:'Muy bajo',objective:'Prioriza estabilidad y preservación de capital.',definition:'Diseñado para una experiencia defensiva con baja exposición a crecimiento.',alloc:[45,45,5,5],inventory:['Reserva','Bonos corto plazo','Mercado amplio','Diversificador']},
-{id:2,name:'Conservador',risk:'Bajo',objective:'Busca rendimiento con fluctuaciones moderadas.',definition:'Mayor peso en renta fija y una porción menor en activos de crecimiento.',alloc:[20,55,20,5],inventory:['Reserva','Bonos diversificados','Mercado amplio','Diversificador']},
-{id:3,name:'Moderado',risk:'Medio',objective:'Equilibra crecimiento y estabilidad.',definition:'Combina activos defensivos y de crecimiento con un perfil balanceado.',alloc:[5,35,50,10],inventory:['Liquidez','Bonos diversificados','Acciones globales','Diversificador']},
-{id:4,name:'Crecimiento',risk:'Medio-alto',objective:'Prioriza crecimiento de largo plazo.',definition:'Mayor exposición a acciones, manteniendo componentes defensivos.',alloc:[5,20,65,10],inventory:['Liquidez','Bonos','Acciones globales','Diversificador']},
-{id:5,name:'Crecimiento Plus',risk:'Alto',objective:'Busca mayor apreciación de capital.',definition:'Orientado al crecimiento con fluctuaciones más amplias.',alloc:[2,13,75,10],inventory:['Liquidez mínima','Bonos','Acciones globales','Diversificador']},
-{id:6,name:'Máximo Crecimiento',risk:'Muy alto',objective:'Maximiza exposición al crecimiento.',definition:'Para horizontes largos y alta tolerancia a fluctuaciones.',alloc:[0,5,85,10],inventory:['Sin asignación','Bonos mínimos','Acciones globales','Diversificador']}
-];
-let selectedGoal='Invertir', selectedPortfolio=null, filter='all';
-let accounts=[
-{id:101,name:'Mi futuro',goal:'Retiro',amount:15000,portfolioId:3,returnPct:3.17},
-{id:102,name:'Crecimiento largo plazo',goal:'Invertir',amount:10000,portfolioId:4,returnPct:6.93}
-];
-function currency(v){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(v)}
-function showPanel(id){document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');scrollTo({top:0,behavior:'smooth'})}
-function showHome(){renderAccounts();showPanel('home')}
-function startCreate(){selectedGoal='Invertir';selectedPortfolio=null;document.getElementById('nameInput').value='Mi nueva cuenta';document.getElementById('amountInput').value=10000;document.querySelectorAll('.goal').forEach(g=>g.classList.toggle('active',g.dataset.goal==='Invertir'));showPanel('createPanel')}
-document.querySelectorAll('.goal').forEach(g=>g.onclick=()=>{selectedGoal=g.dataset.goal;document.querySelectorAll('.goal').forEach(x=>x.classList.toggle('active',x===g))});
-document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{filter=t.dataset.filter;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===t));renderAccounts()});
-function renderAccounts(){
- const visible=accounts.filter(a=>filter==='all'||a.goal===filter);const el=document.getElementById('accounts');
- el.innerHTML=visible.map(a=>{const p=portfolios.find(x=>x.id===a.portfolioId);const val=a.amount*(1+a.returnPct/100);return `<article class="account-card ${a.goal==='Retiro'?'retirement':''}"><div class="account-top"><div class="type"><div class="icon">${a.goal==='Retiro'?'★':'▥'}</div>${a.goal}</div><button class="arrow" onclick="openAccount(${a.id})">→</button></div><h3>${a.name}</h3><div class="status">● Activa</div><div class="amount">${currency(val)}</div><span class="perf">↗ +${a.returnPct.toFixed(2)}%</span><div class="foot">${p.name} · actualización simulada vía API</div></article>`}).join('')+`<article class="account-card empty" onclick="startCreate()"><div><div class="plus">＋</div><strong>Crear otra cuenta</strong><span class="muted">Prueba otro objetivo o portafolio.</span></div></article>`;
-}
-function goPortfolio(){renderPortfolios();showPanel('portfolioPanel')}
-function renderPortfolios(){document.getElementById('portfolioGrid').innerHTML=portfolios.map(p=>`<div class="portfolio ${selectedPortfolio?.id===p.id?'selected':''}" onclick="selectPortfolio(${p.id})"><div class="kicker">PORTAFOLIO 0${p.id}</div><h4>${p.name}</h4><p>${p.objective}</p><div class="riskdots">${[1,2,3,4,5,6].map(n=>`<i class="${n<=p.id?'on':''}"></i>`).join('')}</div></div>`).join('')}
-function donutHTML(p){let start=0;const parts=p.alloc.map((v,i)=>{const s=start,e=start+v;start=e;return `${colors[i]} ${s}% ${e}%`});return `<div class="donut" style="background:conic-gradient(${parts.join(',')})"><div class="donut-center"><strong>${p.name}</strong><small>${p.risk}</small></div></div>`}
-function selectPortfolio(id){selectedPortfolio=portfolios.find(p=>p.id===id);renderPortfolios();const p=selectedPortfolio;const d=document.getElementById('portfolioDetail');d.style.display='block';d.innerHTML=`<div class="portfolio-detail"><div>${donutHTML(p)}</div><div><div class="label">Objetivo</div><div style="font-weight:800;margin-bottom:7px">${p.objective}</div><div class="muted" style="font-size:13px;line-height:1.5;margin-bottom:13px">${p.definition}</div><div class="inventory">${p.alloc.map((v,i)=>`<div class="asset"><span>${assetLabels[i]} · ${v}%</span><strong>${p.inventory[i]}</strong></div>`).join('')}</div></div></div>`;document.getElementById('createAccountBtn').disabled=false}
-function createAccount(){if(!selectedPortfolio)return;const name=document.getElementById('nameInput').value.trim()||'Mi cuenta';const amount=+document.getElementById('amountInput').value||10000;const ret=[1.05,2.21,4.38,5.27,6.14,7.02][selectedPortfolio.id-1];const id=Date.now();accounts.push({id,name,goal:selectedGoal,amount,portfolioId:selectedPortfolio.id,returnPct:ret});openAccount(id)}
-function openAccount(id){const a=accounts.find(x=>x.id===id),p=portfolios.find(x=>x.id===a.portfolioId),val=a.amount*(1+a.returnPct/100);document.getElementById('detailName').textContent=a.name;document.getElementById('detailMeta').textContent=`${a.goal} · cuenta virtual activa`;document.getElementById('detailValue').textContent=currency(val);document.getElementById('detailPerf').textContent=`+${currency(val-a.amount)} · +${a.returnPct.toFixed(2)}%`;document.getElementById('detailPortfolio').textContent=p.name;document.getElementById('detailDonut').innerHTML=donutHTML(p);document.getElementById('detailSummary').innerHTML=`<div class="summary-row"><span>Objetivo</span><strong>${a.goal}</strong></div><div class="summary-row"><span>Riesgo</span><strong>${p.risk}</strong></div><div class="summary-row"><span>Inicial</span><strong>${currency(a.amount)}</strong></div><div class="summary-row"><span>Distribución</span><strong>${p.alloc.join(' / ')}%</strong></div>`;showPanel('detailPanel')}
-renderAccounts();
-</script>
-</body>
-</html>
+AGG — iShares Core U.S. Aggregate Bond ETF
+BND — Vanguard Total Bond Market ETF
+TIP — iShares TIPS Bond ETF
+HYG — iShares iBoxx $ High Yield Corporate Bond ETF
+
+Equity
+
+VTI — Vanguard Total Stock Market ETF
+SPY — SPDR S&P 500 ETF Trust
+QQQ — Invesco QQQ Trust
+VWO — Vanguard FTSE Emerging Markets ETF
+
+Alternatives
+
+GLD — SPDR Gold Shares
+VNQ — Vanguard Real Estate ETF
+PDBC — Invesco Optimum Yield Diversified Commodity Strategy ETF
+IGF — iShares Global Infrastructure ETF
