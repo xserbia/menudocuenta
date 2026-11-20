@@ -118,7 +118,8 @@ showProjection();
 
 {
   const founder = document.querySelector(".founder");
-  const trigger = document.querySelector("[data-founder-video]");
+  const triggers = [...document.querySelectorAll("[data-founder-video]")];
+  let activeTrigger;
   const preview = founder.querySelector(".founder-preview");
   const dialog = document.querySelector("#founder-video");
   const player = dialog.querySelector(".founder-player");
@@ -159,25 +160,31 @@ showProjection();
     }, 220);
   }
 
-  for (const target of [founder, trigger]) {
+  for (const target of [founder, ...triggers]) {
     target.addEventListener("pointerenter", schedulePreview);
     target.addEventListener("pointerleave", stopPreview);
   }
   canPreview.addEventListener("change", stopPreview);
 
   if (typeof dialog.showModal === "function") {
-    trigger.setAttribute("aria-haspopup", "dialog");
-    trigger.setAttribute("aria-controls", dialog.id);
-    trigger.addEventListener("click", (event) => {
-      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      event.preventDefault();
-      stopPreview();
-      dialog.showModal();
-      player.replaceChildren(makePlayer(false));
-    });
+    for (const trigger of triggers) {
+      trigger.setAttribute("aria-haspopup", "dialog");
+      trigger.setAttribute("aria-controls", dialog.id);
+      trigger.addEventListener("click", (event) => {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        stopPreview();
+        activeTrigger = trigger;
+        dialog.showModal();
+        player.replaceChildren(makePlayer(false));
+      });
+    }
     dialog.addEventListener("close", () => {
       player.replaceChildren();
-      trigger.focus({ preventScroll: true });
+      const focusTarget = activeTrigger?.getClientRects().length
+        ? activeTrigger
+        : triggers.find((trigger) => trigger.getClientRects().length);
+      focusTarget?.focus({ preventScroll: true });
     });
   }
 }
