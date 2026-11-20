@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Nunito:wght@700;800;900&display=swap">
   <link rel="stylesheet" href="./styles.css">
   <script src="./home.js" defer></script>
+  <link rel="stylesheet" href="./chat.css">
+  <script src="./chat.js" defer></script>
 </head>
 <body id="inicio">
   <a class="skip-link" href="#contenido">Ir al contenido</a>
@@ -226,5 +228,30 @@
       <p class="center">© 2026 El Menudo Cuenta, LLC.</p>
     </section>
   </footer>
+  <div class="emc-chat" data-emc-chat hidden>
+    <button class="chat-launcher" type="button" aria-haspopup="dialog" aria-controls="emc-chat-panel">
+      <span class="chat-icon" aria-hidden="true"><i></i><i></i><i></i></span> Pregúntale a EMC
+    </button>
+    <dialog class="chat-panel" id="emc-chat-panel" aria-labelledby="chat-title">
+      <header class="chat-header">
+        <div><h2 id="chat-title">Pregúntale a EMC</h2><p>Ayuda automatizada en español</p></div>
+        <button class="chat-close" type="button" aria-label="Cerrar chat" autofocus>×</button>
+      </header>
+      <div class="chat-thread" role="log" aria-label="Conversación" aria-live="polite">
+        <p class="chat-answer">Hola. ¿Qué quieres saber sobre El Menudo Cuenta?</p>
+      </div>
+      <div class="chat-topics" aria-label="Preguntas sugeridas">
+        <button type="button" data-topic="start">¿Con cuánto empiezo?</button>
+        <button type="button" data-topic="plans">Ver membresías</button>
+        <button type="button" data-topic="support">Contactar a soporte</button>
+      </div>
+      <form class="chat-form">
+        <label class="chat-sr" for="chat-question">Escribe tu pregunta</label>
+        <input id="chat-question" name="question" type="text" placeholder="Escribe tu pregunta" maxlength="300" autocomplete="off" required>
+        <button type="submit">Enviar</button>
+      </form>
+      <p class="chat-note">Información general. Para consultas sobre tu cuenta, <a href="https://wa.me/message/P5RVRV7B3XENP1">contacta a soporte</a>.</p>
+    </dialog>
+  </div>
 </body>
 </html>
