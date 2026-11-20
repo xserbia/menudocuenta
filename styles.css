@@ -212,8 +212,9 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
 .footer-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
 .footer-row p { margin-top: .4rem; font-size: .85rem; }
 .socials { display: flex; flex-wrap: wrap; gap: .45rem; }
-.socials a { display: grid; place-items: center; width: 2.65rem; height: 2.65rem; border-radius: 50%; color: #fff; background: #360576; text-decoration: none; font: 900 1.1rem/1 var(--heading); }
-.socials a:hover { background: #25044f; }
+.socials a { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; }
+.socials img { width: 100%; height: auto; }
+.socials a:hover img { filter: brightness(1.2); }
 .footer-legal { padding-block: 1.3rem; background: #250545; color: #fff; }
 .legal-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; font-size: .87rem; }
 .legal-row a { text-decoration: none; }
