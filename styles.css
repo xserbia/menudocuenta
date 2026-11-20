@@ -134,7 +134,20 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
 .investor span { display: grid; place-items: center; width: 3.4rem; height: 3.4rem; border-radius: 50%; background: #efe6fa; font-size: 1.45rem; }
 .disclosure-note { max-width: 95ch; margin: 1.3rem auto 0; color: var(--muted); text-align: center; font-size: .91rem; }
 .videos { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 3vw, 2.75rem); }
-.videos iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; background: #eee9f7; }
+.videos iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: clamp(1rem, 2vw, 1.5rem);
+  background: var(--lilac);
+  box-shadow: 0 0 0 1px var(--line), 0 .5rem 1.2rem #29134a20;
+}
+.videos iframe:focus-visible { outline: 2px solid var(--purple); outline-offset: 4px; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .videos iframe { transition: box-shadow .18s ease; }
+  .videos iframe:hover { box-shadow: 0 0 0 1px #bd9edf, 0 .75rem 1.65rem #29134a32; }
+}
 .videos h3 { margin-top: .8rem; color: #39323f; font-size: clamp(1rem, 1.5vw, 1.2rem); }
 .videos p { margin-top: .35rem; color: var(--pink); letter-spacing: .11em; font-weight: 500; }
 .calc-grid { display: grid; grid-template-columns: minmax(0, .77fr) minmax(0, 1.23fr); gap: 1.35rem; max-width: 72rem; margin-inline: auto; align-items: stretch; }
