@@ -65,15 +65,29 @@
         <figure class="founder">
           <img src="https://static.wixstatic.com/media/f40967_21f26f2ce47848ac9e35b8fd23d42dd9~mv2.png" alt="Xavier Serbia" width="465" height="531" loading="lazy">
           <figcaption><strong>Xavier</strong>Cofundador de El Menudo Cuenta</figcaption>
+          <div class="founder-preview" aria-hidden="true" hidden></div>
         </figure>
         <div class="mission-copy">
           <p class="eyebrow">Por qué existimos</p>
           <h2 id="mission-title">Hecho por hispanos, para hispanos.</h2>
           <p>Durante mucho tiempo, invertir ha parecido algo reservado para unos pocos. Por eso creamos El Menudo Cuenta <strong>para acercar las inversiones a nuestra comunidad hispana, hablarte en tu idioma y ayudarte a construir tu futuro financiero, empezando con lo que tienes.</strong></p>
-          <a class="button inverse" href="https://www.elmenudocuenta.com/_files/ugd/f40967_b1090606d6704ffeafe510537cb2a2dd.pdf">Conoce nuestra filosofía de inversiones</a>
+          <div class="mission-actions">
+            <a class="button inverse" href="https://www.elmenudocuenta.com/_files/ugd/f40967_b1090606d6704ffeafe510537cb2a2dd.pdf">Conoce nuestra filosofía de inversiones</a>
+            <a class="button founder-video-button" href="#video-ahorro" data-founder-video>
+              <span aria-hidden="true">▶</span> Ver video
+            </a>
+          </div>
         </div>
       </div>
     </section>
+
+    <dialog class="founder-dialog" id="founder-video" aria-labelledby="founder-video-title">
+      <div class="founder-dialog-header">
+        <h2 id="founder-video-title">¿Ahorro ahora o lo dejo para después?</h2>
+        <form method="dialog"><button type="submit" aria-label="Cerrar video" autofocus>×</button></form>
+      </div>
+      <div class="founder-player"></div>
+    </dialog>
 
     <section class="process section" id="como-funciona" aria-labelledby="process-title">
       <div class="wrap">
@@ -141,7 +155,7 @@
           <a class="button outline" href="https://www.elmenudocuenta.com/aprende">Ver más contenido</a>
         </div>
         <div class="videos">
-          <article>
+          <article id="video-ahorro">
             <iframe src="https://player.vimeo.com/video/942375369?title=0" title="¿Ahorro ahora o lo dejo para después?" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
             <h3>¿Ahorro ahora o lo dejo para después?</h3><p>3:18</p>
           </article>

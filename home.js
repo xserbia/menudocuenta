@@ -115,3 +115,69 @@ form.addEventListener("submit", (event) => {
   showProjection();
 });
 showProjection();
+
+{
+  const founder = document.querySelector(".founder");
+  const trigger = document.querySelector("[data-founder-video]");
+  const preview = founder.querySelector(".founder-preview");
+  const dialog = document.querySelector("#founder-video");
+  const player = dialog.querySelector(".founder-player");
+  const source = document.querySelector("#video-ahorro iframe");
+  const canPreview = window.matchMedia("(min-width: 46.01rem) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+  let previewTimer;
+
+  function stopPreview() {
+    window.clearTimeout(previewTimer);
+    preview.hidden = true;
+    preview.replaceChildren();
+  }
+
+  function makePlayer(isPreview) {
+    const url = new URL(source.src);
+    url.searchParams.set("autoplay", "1");
+    if (isPreview) {
+      url.searchParams.set("muted", "1");
+      url.searchParams.set("controls", "0");
+      url.searchParams.set("loop", "1");
+      url.searchParams.set("autopause", "0");
+    }
+    const frame = document.createElement("iframe");
+    frame.src = url.href;
+    frame.title = source.title;
+    frame.allow = isPreview ? "autoplay" : "autoplay; fullscreen; picture-in-picture";
+    frame.allowFullscreen = !isPreview;
+    if (isPreview) frame.tabIndex = -1;
+    return frame;
+  }
+
+  function schedulePreview(event) {
+    if (event.pointerType !== "mouse" || !canPreview.matches || dialog.open) return;
+    window.clearTimeout(previewTimer);
+    previewTimer = window.setTimeout(() => {
+      preview.replaceChildren(makePlayer(true));
+      preview.hidden = false;
+    }, 220);
+  }
+
+  for (const target of [founder, trigger]) {
+    target.addEventListener("pointerenter", schedulePreview);
+    target.addEventListener("pointerleave", stopPreview);
+  }
+  canPreview.addEventListener("change", stopPreview);
+
+  if (typeof dialog.showModal === "function") {
+    trigger.setAttribute("aria-haspopup", "dialog");
+    trigger.setAttribute("aria-controls", dialog.id);
+    trigger.addEventListener("click", (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      stopPreview();
+      dialog.showModal();
+      player.replaceChildren(makePlayer(false));
+    });
+    dialog.addEventListener("close", () => {
+      player.replaceChildren();
+      trigger.focus({ preventScroll: true });
+    });
+  }
+}

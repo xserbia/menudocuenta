@@ -77,6 +77,29 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
 .mission .eyebrow { color: var(--yellow); font-weight: 400; font-size: clamp(1rem, 1.7vw, 1.35rem); }
 .mission h2 { max-width: 18ch; font-size: clamp(2.5rem, 4.4vw, 4.4rem); }
 .mission-copy > p:not(.eyebrow) { max-width: 52ch; margin-block: 1.45rem 2rem; font-size: clamp(1.06rem, 1.55vw, 1.42rem); }
+.mission-actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
+.founder-video-button { background: #fff; color: var(--deep); }
+.founder-video-button:hover { background: var(--lilac); }
+.founder-video-button span { font-size: .78em; }
+.founder-preview {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  inset-inline: 0;
+  transform: translateY(-50%);
+  overflow: hidden;
+  border-radius: .85rem;
+  box-shadow: 0 .75rem 2rem #16042b66;
+  background: #17072d;
+  pointer-events: none;
+}
+.founder-preview iframe, .founder-player iframe { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 0; }
+.founder-dialog { width: min(48rem, calc(100% - 2rem)); max-width: none; padding: 0; overflow: auto; border: 0; border-radius: 1rem; background: #17072d; color: #fff; }
+.founder-dialog::backdrop { background: #160c25bd; }
+.founder-dialog-header { display: flex; align-items: center; justify-content: space-between; gap: .65rem; padding: .55rem .7rem .55rem 1rem; }
+.founder-dialog-header h2 { font-size: clamp(1rem, 3vw, 1.45rem); }
+.founder-dialog-header button { width: 2.75rem; height: 2.75rem; border: 0; border-radius: 50%; background: transparent; color: inherit; font-size: 1.7rem; cursor: pointer; }
+.founder-dialog-header button:hover { background: #ffffff24; }
 .section { padding-block: clamp(2.6rem, 4.3vw, 4.6rem); }
 .section-heading { margin-bottom: clamp(1.7rem, 3.3vw, 3rem); }
 .section-heading p:not(.eyebrow) { margin-top: .7rem; color: var(--muted); font-size: clamp(1rem, 1.5vw, 1.3rem); }
