@@ -95,6 +95,16 @@
 .plan-table tbody th { font-weight: 500; }
 .membership-faq { background: var(--lilac); }
 .membership-more { text-align: center; color: var(--deep); }
+@media (width > 40rem) {
+  @supports (grid-template-rows: subgrid) {
+    .plan-grid { row-gap: 0; }
+    .plan-card {
+      display: grid;
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+    }
+  }
+}
 @media (max-width: 40rem) {
   .plan-grid { grid-template-columns: minmax(0, 1fr); }
   .plan-table { font-size: .9rem; }
