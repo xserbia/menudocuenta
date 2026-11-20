@@ -24,7 +24,7 @@
     custody: ["El Menudo Cuenta administra la estrategia. Interactive Brokers LLC, miembro de FINRA/SIPC, actúa como corredor y custodio. Las inversiones pueden perder valor.", ["Ver información legal", site + "/legal"]],
     recurring: ["Puedes programar aportaciones recurrentes. La app ofrece aportaciones desde $5 por día, semana o mes.", ["Ver cómo funcionan los aportes", app + "/faq/mc-inversiones"]],
     portfolio: ["El Menudo Cuenta propone un portafolio según los objetivos, el plazo y la tolerancia al riesgo que indicas en la app.", ["Cómo funciona EMC", site + "/que-hace-emc"]],
-    education: ["En Aprende encontrarás videos y cursos en español sobre ahorro e inversión.", ["Ir a Aprende", site + "/aprende"]],
+    education: ["En Aprende encontrarás videos y cursos en español sobre ahorro e inversión.", ["Ir a Aprende", "./aprende.html"]],
     risks: ["Invertir implica riesgos, incluida la posible pérdida del capital invertido. Los productos de inversión no están asegurados por la FDIC y no tienen garantía bancaria.", ["Ver información legal", site + "/legal"]],
     personalized: ["Puedo orientarte sobre el servicio y sus recursos educativos. Si ya tienes cuenta, usa la app para revisar tu perfil y la estrategia que EMC te propone.", ["Ir a la app", app + "/users/log_in"]],
     unknown: ["No encontré una respuesta a esa pregunta. Puedes consultar las preguntas frecuentes o usar el enlace a soporte debajo del chat.", ["Ver preguntas frecuentes", site + "/faq"]]
