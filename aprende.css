@@ -16,12 +16,26 @@
 .learn-videos .section-heading h2, .learn-topics h2, .learn-premium h2 { color: var(--deep); }
 .learn-topics { background: var(--lilac); }
 .learn-topics-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
-.learn-topics article { padding: clamp(1rem, 2.5vw, 1.45rem); border: 1px solid var(--line); border-radius: 1rem; background: #fff; }
-.learn-topics h3 { margin-bottom: .45rem; color: var(--purple); font-size: 1.4rem; }
-.learn-topics article p, .learn-premium p { color: var(--muted); }
-.learn-premium h2 { font-size: clamp(1.95rem, 3.5vw, 2.9rem); }
-.learn-premium p { margin-top: .6rem; }
-.learn-premium-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.2rem; }
+.learn-topics article { display: grid; justify-items: center; align-content: start; padding: clamp(1rem, 2.5vw, 1.65rem); border: 1px solid var(--line); border-radius: 1.2rem; background: #fff; text-align: center; }
+.learn-topic-icon {
+  display: grid;
+  place-items: center;
+  width: clamp(4.4rem, 8vw, 7.5rem);
+  aspect-ratio: 1;
+  margin-bottom: .9rem;
+  border-radius: 23%;
+  color: #fff;
+  background: var(--deep);
+}
+.learn-topic-icon svg { display: block; width: 57%; height: 57%; }
+.learn-topics article:last-child .learn-topic-icon { background: var(--yellow); color: var(--deep); }
+.learn-topics h3 { margin-bottom: .45rem; color: var(--purple); font-size: clamp(1.2rem, 2vw, 1.65rem); }
+.learn-topics article p { max-width: 23ch; color: var(--muted); }
+.learn-premium { background: var(--deep); color: #fff; }
+.learn-premium h2 { max-width: 17ch; color: var(--yellow); font-size: clamp(1.95rem, 3.5vw, 3.1rem); }
+.learn-premium p { max-width: 37ch; margin-block: .65rem 1.25rem; }
+.learn-premium-inner { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); align-items: center; gap: clamp(1rem, 5vw, 4rem); }
+.learn-premium-image { justify-self: center; width: auto; max-height: 23rem; object-fit: contain; }
 @media (max-width: 46rem) {
   .learn-hero-grid { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
   .learn-intro { text-align: center; }
@@ -29,4 +43,9 @@
   .learn-hero .learn-actions { justify-content: center; }
   .learn-hero-image { max-height: 16rem; }
   .learn-topics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
+  .learn-topics article p { font-size: .93rem; }
+  .learn-premium-inner { grid-template-columns: minmax(0, 1fr); text-align: center; }
+  .learn-premium h2, .learn-premium p { margin-inline: auto; }
+  .learn-premium .learn-actions { justify-content: center; }
+  .learn-premium-image { grid-row: 2; max-height: 16rem; }
 }
