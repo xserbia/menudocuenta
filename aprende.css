@@ -36,10 +36,12 @@
 .learn-premium-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.2rem; }
 @media (max-width: 46rem) {
   .learn-hero-grid { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; }
-  .learn-intro { text-align: center; }
-  .learn-intro h1, .learn-intro p { margin-inline: auto; }
-  .learn-hero .learn-actions { justify-content: center; }
-  .learn-hero-image { max-height: 16rem; }
+  .learn-intro { display: contents; }
+  .learn-intro h1 { grid-row: 1; margin-inline: auto; text-align: center; }
+  .learn-intro p, .learn-premium-app { display: none; }
+  .learn-hero-image { grid-row: 2; max-height: 16rem; }
+  .learn-hero .learn-actions { grid-row: 3; }
+  .learn-actions, .learn-premium-inner { justify-content: center; text-align: center; }
   .learn-topics-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .7rem; }
   .learn-topics article p { font-size: .93rem; }
 }

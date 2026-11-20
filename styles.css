@@ -246,8 +246,21 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
   }
   body:has(.header .menu.open) { overflow: hidden; }
   .menu.open .nav, .menu.open .nav-actions { display: grid; gap: 0; justify-content: stretch; }
-  .menu.open .nav a, .menu.open .nav-actions a { min-height: 2.95rem; padding-block: .55rem; color: var(--ink); font: 800 1.13rem/1.5 var(--heading); }
-  .menu.open .nav-actions { border-top: 1px solid var(--line); margin-top: .55rem; padding-top: .55rem; }
+  .menu.open .nav a, .menu.open .nav-actions a:not(.nav-register) { min-height: 2.95rem; padding-block: .55rem; color: var(--ink); font: 800 1.13rem/1.5 var(--heading); }
+  .menu.open .nav-actions { border-top: 1px solid var(--line); margin-top: .55rem; padding-top: 1rem; }
+  .nav-actions .nav-register {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 2.95rem;
+    padding: .55rem 1.45rem;
+    border-radius: 999px;
+    background: var(--yellow);
+    color: var(--ink);
+    font: 900 1.1rem/1.25 var(--heading);
+  }
+  .menu.open .nav-actions .nav-register { justify-self: center; width: min(100%, 24rem); }
+  .nav-actions .nav-register:hover { background: #ffda4d; color: var(--ink); text-decoration: none; }
 }
 @media (max-width: 46rem) {
   .wrap { width: calc(100% - 2rem); }
@@ -262,6 +275,7 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
   .mission-grid { grid-template-areas: "heading" "portrait" "copy"; grid-template-rows: auto auto auto; gap: 1.15rem; padding-block: 1.8rem 2.2rem; }
   .mission-heading, .mission-copy { padding: 0; }
   .mission-copy > p:not(.eyebrow) { margin-block: 0 1.05rem; }
+  .mission-actions { justify-content: center; }
   .founder { width: min(100%, 22rem); justify-self: center; }
   .founder img { margin-top: 0; }
   .founder figcaption {
@@ -286,7 +300,12 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
   .roles { grid-template-columns: minmax(0, 1fr); }
   .investor { grid-row: 1; }
   .videos, .legal-row { grid-template-columns: 1fr; }
-  .footer-row { flex-direction: column; align-items: flex-start; }
+  #aprende .section-heading { justify-content: center; text-align: center; }
+  .video-meta { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: .65rem; margin-top: .8rem; }
+  .video-meta h3, .video-meta p { margin-top: 0; }
+  .video-meta p { white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .footer-row { flex-direction: column; text-align: center; }
+  .footer-row .socials { justify-content: center; }
 }
 
 .hero-copy { margin-bottom: .35rem; }
