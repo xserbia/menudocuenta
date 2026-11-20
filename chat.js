@@ -15,6 +15,8 @@
 
   const answers = {
     start: ["Puedes empezar a invertir con tan solo $5. Se aplican tarifas de suscripción según la membresía que elijas.", ["Cómo empezar", app + "/faq/mc-inversiones"]],
+    investing: ["MC Inversiones es una cuenta individual para invertir en un portafolio según tu objetivo, plazo y tolerancia al riesgo.", ["Conoce MC Inversiones", app + "/faq/mc-inversiones"]],
+    retirement: ["MC Futuro ofrece cuentas individuales para el retiro, entre ellas la IRA Tradicional y la Roth IRA.", ["Conoce MC Futuro", app + "/faq/mc-retirement"]],
     plans: ["Puedes comparar las membresías y consultar sus tarifas vigentes en la página de planes.", ["Ver membresías", site + "/planes"]],
     support: ["Para consultas sobre tu cuenta, depósitos o acceso, escribe al equipo de soporte por el canal oficial.", supportLink],
     register: ["Puedes crear una cuenta desde la app de El Menudo Cuenta.", ["Registrarme", app + "/register"]],
@@ -29,12 +31,14 @@
   };
 
   const intents = [
-    [/\b(?:saldo|deposito|retiro|problema|contrasena|error|reclamo|ayuda|soporte|whatsapp)\b|no puedo|no me deja|no llega/, "support"],
+    [/\b(?:saldo|deposito|retirar|retiros|problema|contrasena|error|reclamo|soporte|whatsapp)\b|no puedo|no me deja|no llega|retiro (?:pendiente|rechazado|fallido)|(?:mi|el|un) retiro (?:de dinero|de fondos|no)|cuando (?:llega|recibo) mi retiro/, "support"],
     [/me recomiendas|deberia (?:invertir|comprar|vender)|que (?:accion|etf|portafolio) (?:compro|elijo|me conviene)|cuanto (?:debo|deberia) invertir/, "personalized"],
     [/\b(?:fdic|riesgos?|perder|perdida|garantia)\b/, "risks"],
     [/\b(?:custodio|custodia|ibkr|broker|corredor|banco)\b|interactive brokers|seguro.*dinero|dinero.*seguro/, "custody"],
     [/\b(?:pagos?|costos?|cuesta|precios?|tarifas?|comisiones?|membresias?|planes?|suscripciones?)\b/, "plans"],
     [/\b(?:recurrente|recurrentes|frecuencia|periodic[oa]s?)\b|aport(?:e|es|aciones?) automati/, "recurring"],
+    [/\b(?:ira|roth|jubilacion|retiro|mc futuro)\b/, "retirement"],
+    [/\bmc inversiones\b|cuenta (?:individual|de inversiones|de inversion)/, "investing"],
     [/\b(?:minimo|empezar|comenzar)\b|\b5 dolares\b|\$\s*5/, "start"],
     [/\b(?:ingresar|entrar|login)\b|inici(?:ar|o) sesion/, "login"],
     [/\b(?:registrarme|registro|registrar|registro)\b|(?:crear|abrir) (?:una |mi )?cuenta/, "register"],
