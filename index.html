@@ -16,7 +16,10 @@
   <header class="header">
     <div class="wrap header-inner">
       <a class="brand" href="#inicio" aria-label="El Menudo Cuenta, inicio"><img src="./images/emc-logo.webp" alt="" width="540" height="99"></a>
-      <button class="menu-toggle" type="button" aria-controls="menu-principal" aria-expanded="false" hidden>Menú <span aria-hidden="true">☰</span></button>
+      <a class="button solid mobile-login" href="https://app.elmenudocuenta.com/users/log_in">Ingresar</a>
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-controls="menu-principal" aria-expanded="false" hidden>
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
       <div class="menu" id="menu-principal">
         <nav class="nav" aria-label="Navegación principal">
           <a href="#inicio" aria-current="page">Inicio</a>
@@ -37,18 +40,20 @@
   <main id="contenido">
     <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero-grid">
-        <div>
+        <div class="hero-intro">
           <p class="hero-label">Robo-advisor en español para los hispanos</p>
           <h1 id="hero-title">Una moneda no es una moneda, es un inicio.</h1>
+        </div>
+        <figure class="hero-figure">
+          <img src="https://static.wixstatic.com/media/f40967_fd7f81e5fa574f459cd5f36763a33ecf~mv2.png" alt="Vista ilustrativa de la app El Menudo Cuenta con cuentas de inversión y retiro" width="1024" height="1536" fetchpriority="high">
+        </figure>
+        <div class="hero-details">
           <p class="hero-copy">Invertir no es solo para millonarios. Es para nosotros. Tú defines tu meta. Nosotros administramos tu portafolio. Rebalanceo, reinversión de dividendos y seguimiento automático, todo en español.</p>
           <div class="hero-actions">
             <a class="button pink" href="https://app.elmenudocuenta.com/register">Empieza hoy</a>
             <a class="button outline" href="https://www.elmenudocuenta.com/planes">Ver planes</a>
           </div>
         </div>
-        <figure class="hero-figure">
-          <img src="https://static.wixstatic.com/media/f40967_fd7f81e5fa574f459cd5f36763a33ecf~mv2.png" alt="Vista ilustrativa de la app El Menudo Cuenta con cuentas de inversión y retiro" width="1024" height="1536" fetchpriority="high">
-        </figure>
       </div>
     </section>
 
