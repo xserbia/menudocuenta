@@ -3,102 +3,223 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>El Menudo Cuenta | Empieza a invertir con $5</title>
-  <meta name="description" content="Empieza a invertir con tan solo $5 y avanza hacia tus metas con El Menudo Cuenta. Se aplican tarifas de suscripción.">
+  <title>Inicio | El Menudo Cuenta</title>
+  <meta name="description" content="El Menudo Cuenta. Robo-advisor en español para los hispanos.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Nunito:wght@700;800;900&display=swap">
   <link rel="stylesheet" href="./styles.css">
+  <script src="./home.js" defer></script>
 </head>
-<body>
+<body id="inicio">
   <a class="skip-link" href="#contenido">Ir al contenido</a>
-  <header class="header" id="inicio">
+  <header class="header">
     <div class="wrap header-inner">
-      <a class="brand" href="#inicio" aria-label="El Menudo Cuenta, inicio">
-        <img src="./images/emc-logo.webp" alt="" width="540" height="99">
-      </a>
-      <nav class="nav" aria-label="Navegación principal">
-        <a href="#como-funciona">Cómo funciona</a>
-        <a href="https://www.elmenudocuenta.com/planes">Planes</a>
-        <a href="#preguntas">Preguntas</a>
-      </nav>
-      <a class="button button-outline" href="https://app.elmenudocuenta.com/users/log_in">Ingresar</a>
+      <a class="brand" href="#inicio" aria-label="El Menudo Cuenta, inicio"><img src="./images/emc-logo.webp" alt="" width="540" height="99"></a>
+      <button class="menu-toggle" type="button" aria-controls="menu-principal" aria-expanded="false" hidden>Menú <span aria-hidden="true">☰</span></button>
+      <div class="menu" id="menu-principal">
+        <nav class="nav" aria-label="Navegación principal">
+          <a href="#inicio" aria-current="page">Inicio</a>
+          <a href="https://www.elmenudocuenta.com/planes">Membresía</a>
+          <a href="https://www.elmenudocuenta.com/aprende">Aprende</a>
+          <a href="https://www.elmenudocuenta.com/que-hace-emc">Cómo funciona</a>
+          <a href="https://www.elmenudocuenta.com/faq">FAQ</a>
+          <a href="https://www.elmenudocuenta.com/legal">Legal</a>
+        </nav>
+        <div class="nav-actions">
+          <a href="https://app.elmenudocuenta.com/register">Regístrate</a>
+          <a class="button solid" href="https://app.elmenudocuenta.com/users/log_in">Ingresar</a>
+        </div>
+      </div>
     </div>
   </header>
 
   <main id="contenido">
-    <section class="hero" aria-labelledby="titulo">
+    <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <h1 id="titulo">Cada moneda <span>es un inicio.</span></h1>
-          <p class="hero-description">Empieza a invertir con tan solo <strong>$5</strong>. Elige una meta y avanza a tu ritmo con El Menudo Cuenta.</p>
-          <a class="button button-primary" href="https://app.elmenudocuenta.com/register">Empieza a invertir <span aria-hidden="true">↗</span></a>
-          <p class="hero-note">Se aplican tarifas de suscripción.</p>
+        <div>
+          <p class="hero-label">Robo-advisor en español para los hispanos</p>
+          <h1 id="hero-title">Una moneda no es una moneda, es un inicio.</h1>
+          <p class="hero-copy">Invertir no es solo para millonarios. Es para nosotros. Tú defines tu meta. Nosotros administramos tu portafolio. Rebalanceo, reinversión de dividendos y seguimiento automático, todo en español.</p>
+          <div class="hero-actions">
+            <a class="button pink" href="https://app.elmenudocuenta.com/register">Empieza hoy</a>
+            <a class="button outline" href="https://www.elmenudocuenta.com/planes">Ver planes</a>
+          </div>
         </div>
-        <figure class="hero-visual">
-          <img src="./images/app-hero.webp" alt="Ejemplo de la app El Menudo Cuenta con sus cuentas de inversión y retiro" width="787" height="1080" fetchpriority="high">
-          <figcaption>Imagen ilustrativa.</figcaption>
+        <figure class="hero-figure">
+          <img src="https://static.wixstatic.com/media/f40967_fd7f81e5fa574f459cd5f36763a33ecf~mv2.png" alt="Vista ilustrativa de la app El Menudo Cuenta con cuentas de inversión y retiro" width="1024" height="1536" fetchpriority="high">
         </figure>
       </div>
     </section>
 
-    <aside class="risk-strip" aria-label="Aviso sobre productos de inversión">
-      <div class="wrap risk-inner">
-        <span class="risk-label">Productos de inversión</span>
-        <ul>
-          <li>No están asegurados por la FDIC</li>
-          <li>No tienen garantía bancaria</li>
-          <li>Pueden perder valor</li>
-        </ul>
+    <section class="mission" aria-labelledby="mission-title">
+      <div class="wrap mission-grid">
+        <figure class="founder">
+          <img src="https://static.wixstatic.com/media/f40967_21f26f2ce47848ac9e35b8fd23d42dd9~mv2.png" alt="Xavier Serbia" width="465" height="531" loading="lazy">
+          <figcaption><strong>Xavier</strong>Cofundador de El Menudo Cuenta</figcaption>
+        </figure>
+        <div class="mission-copy">
+          <p class="eyebrow">Por qué existimos</p>
+          <h2 id="mission-title">Hecho por hispanos, para hispanos.</h2>
+          <p>Durante mucho tiempo, invertir ha parecido algo reservado para unos pocos. Por eso creamos El Menudo Cuenta <strong>para acercar las inversiones a nuestra comunidad hispana, hablarte en tu idioma y ayudarte a construir tu futuro financiero, empezando con lo que tienes.</strong></p>
+          <a class="button inverse" href="https://www.elmenudocuenta.com/_files/ugd/f40967_b1090606d6704ffeafe510537cb2a2dd.pdf">Conoce nuestra filosofía de inversiones</a>
+        </div>
       </div>
-    </aside>
-
-    <section class="section wrap" id="como-funciona" aria-labelledby="pasos-titulo">
-      <h2 id="pasos-titulo">Cómo funciona</h2>
-      <ol class="steps">
-        <li><h3>Crea tu cuenta</h3><p>Regístrate en El Menudo Cuenta y elige tu plan.</p></li>
-        <li><h3>Define tu meta</h3><p>Cuéntanos qué quieres lograr y qué nivel de riesgo estás dispuesto a asumir.</p></li>
-        <li><h3>Empieza con $5</h3><p>Haz tu primera aportación o programa aportaciones recurrentes.</p></li>
-      </ol>
-      <a class="text-link" href="https://www.elmenudocuenta.com/que-hace-emc">Conoce cómo funciona EMC <span aria-hidden="true">↗</span></a>
     </section>
 
-    <section class="questions" id="preguntas" aria-labelledby="preguntas-titulo">
-      <div class="wrap section questions-grid">
-        <div>
-          <h2 id="preguntas-titulo">Preguntas frecuentes</h2>
-          <a class="text-link" href="https://www.elmenudocuenta.com/faq">Ver todas las preguntas <span aria-hidden="true">↗</span></a>
+    <section class="process section" id="como-funciona" aria-labelledby="process-title">
+      <div class="wrap">
+        <div class="section-heading center">
+          <h2 id="process-title">¿Qué hace El Menudo Cuenta por tus inversiones?</h2>
+          <p>Tú defines el objetivo y el perfil. <strong>EMC administra la estrategia.</strong> Recorre los pasos para ver cómo funciona.</p>
         </div>
+        <div class="process-grid">
+          <div class="step-list step-list-start" role="group" aria-label="Pasos 1 a 4">
+            <button type="button" data-step="1" aria-pressed="true" aria-controls="step-panel"><span>1</span>Conoce tu perfil de riesgo</button>
+            <button type="button" data-step="2" aria-pressed="false" aria-controls="step-panel"><span>2</span>Asigna un portafolio</button>
+            <button type="button" data-step="3" aria-pressed="false" aria-controls="step-panel"><span>3</span>Invierte automáticamente</button>
+            <button type="button" data-step="4" aria-pressed="false" aria-controls="step-panel"><span>4</span>Monitorea el portafolio</button>
+          </div>
+          <article class="step-panel" id="step-panel" aria-live="polite">
+            <div class="step-mark"><img src="./images/Logos%20MC%20-Pink%20RGB-11.png" alt="" width="4487" height="3513" loading="lazy"></div>
+            <p class="eyebrow">El Menudo Cuenta</p>
+            <h3 id="step-title">Tu perfil define el punto de partida</h3>
+            <p id="step-description">Antes de invertir, EMC necesita entender para qué estás invirtiendo, por cuánto tiempo y cuánto riesgo estás dispuesto a asumir.</p>
+            <div class="step-note"><h4 id="step-note-title">Paso 1 · Perfil de riesgo</h4><p id="step-note-text">El objetivo no es predecir el mercado. Es comenzar con una estrategia alineada con tu situación y tus objetivos financieros.</p></div>
+            <div class="step-dots" aria-hidden="true"><i class="active"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </article>
+          <div class="step-list step-list-end" role="group" aria-label="Pasos 5 a 7">
+            <button type="button" data-step="5" aria-pressed="false" aria-controls="step-panel"><span>5</span>Rebalancea automáticamente</button>
+            <button type="button" data-step="6" aria-pressed="false" aria-controls="step-panel"><span>6</span>Reinvierte dividendos</button>
+            <button type="button" data-step="7" aria-pressed="false" aria-controls="step-panel"><span>7</span>Da seguimiento desde tu cuenta</button>
+          </div>
+        </div>
+        <div class="roles">
+          <article><h3>EMC administra la estrategia</h3><p>Define la estrategia, la implementa, monitorea y ajusta el portafolio de acuerdo con el modelo seleccionado.</p></article>
+          <p class="investor"><span aria-hidden="true">👤</span>Inversionista</p>
+          <article><h3>Interactive Brokers (IBKR)</h3><p>Actúa como broker y custodio. Ejecuta las operaciones y mantiene los activos de la cuenta.</p></article>
+        </div>
+        <p class="disclosure-note">Experiencia educativa. La información mostrada es ilustrativa y no constituye una recomendación de inversión.</p>
+      </div>
+    </section>
+
+    <section class="section" id="aprende" aria-labelledby="learn-title">
+      <div class="wrap">
+        <div class="section-heading split">
+          <div><p class="eyebrow">Aprende</p><h2 id="learn-title">Aprende, en español</h2><p>Videos y cursos cortos para invertir con criterio, desde lo más básico.</p></div>
+          <a class="button outline" href="https://www.elmenudocuenta.com/aprende">Ver más contenido</a>
+        </div>
+        <div class="videos">
+          <article>
+            <iframe src="https://player.vimeo.com/video/942375369?title=0" title="¿Ahorro ahora o lo dejo para después?" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <h3>¿Ahorro ahora o lo dejo para después?</h3><p>3:18</p>
+          </article>
+          <article>
+            <iframe src="https://player.vimeo.com/video/940875574?title=0" title="¿Qué podemos aprender de las crisis?" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <h3>¿Qué podemos aprender de las crisis?</h3><p>5:39</p>
+          </article>
+          <article>
+            <iframe src="https://player.vimeo.com/video/942407166?title=0" title="Portafolio de inversiones: 1era parte" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <h3>Portafolio de inversiones: 1era parte</h3><p>4:00</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="calculator section" id="calculadora" aria-labelledby="calculator-title">
+      <div class="wrap">
+        <div class="section-heading center">
+          <h2 id="calculator-title">El poder del interés compuesto</h2>
+          <p>Con esta calculadora podrás ver cómo el interés compuesto puede hacer crecer tu dinero a través del tiempo.</p>
+        </div>
+        <div class="calc-grid">
+          <form class="calc-form" id="compound-form">
+            <p class="eyebrow">Personaliza tu escenario</p><h3>¿Cómo podría crecer tu dinero?</h3>
+            <label>Monto inicial ($)<input name="initial" type="number" min="0" max="1000000000" step="0.01" value="100" required></label>
+            <label>Aporte periódico ($)<input name="contribution" type="number" min="0" max="1000000000" step="0.01" value="50" required></label>
+            <fieldset>
+              <legend>Frecuencia del aporte</legend>
+              <div class="periods">
+                <label><input type="radio" name="frequency" value="365">Diario</label>
+                <label><input type="radio" name="frequency" value="52">Semanal</label>
+                <label><input type="radio" name="frequency" value="12" checked>Mensual</label>
+                <label><input type="radio" name="frequency" value="1">Anual</label>
+              </div>
+            </fieldset>
+            <label>Tiempo en años<input name="years" type="number" min="1" max="50" step="1" value="20" required></label>
+            <label>Tasa de retorno anual (%)<input name="rate" type="number" min="-99" max="100" step="0.01" value="8" required></label>
+            <button class="button solid" type="submit">Recalcular proyección</button>
+          </form>
+          <div class="calc-result" aria-labelledby="balance-label">
+            <div aria-live="polite">
+              <p class="balance-label" id="balance-label">✦ Posible balance final</p><p class="balance" id="balance">$29,943.70</p>
+              <div class="totals"><p>Tus aportes<strong id="contributions">$12,100.00</strong></p><p>Crecimiento estimado<strong id="growth">$17,843.70</strong></p></div>
+            </div>
+            <div class="chart" id="compound-chart" role="group" aria-label="Saldo y aportes por año"></div>
+            <p class="chart-note" id="chart-note">Selecciona una barra para ver el desglose anual.</p>
+          </div>
+        </div>
+        <p class="disclosure-note">La calculadora muestra una proyección ilustrativa según el depósito inicial, las aportaciones, el plazo y la tasa que indiques. Los resultados no predicen el rendimiento de ninguna cartera de El Menudo Cuenta ni consideran factores económicos o de mercado.</p>
+      </div>
+    </section>
+
+    <section class="questions section" id="preguntas" aria-labelledby="faq-title">
+      <div class="wrap center">
+        <h2 id="faq-title">Preguntas Frecuentes</h2>
         <div class="faq-list">
-          <details>
-            <summary>¿Cuánto necesito para empezar a invertir?</summary>
-            <p>Puedes comenzar a invertir con $5. Se aplican tarifas de suscripción según el plan que elijas.</p>
-          </details>
-          <details>
-            <summary>¿Puedo programar aportaciones automáticas?</summary>
-            <p>Sí. Puedes configurar aportaciones recurrentes desde $5 por día, semana o mes.</p>
-          </details>
-          <details>
-            <summary>¿Dónde puedo consultar los planes?</summary>
-            <p>Puedes consultar las opciones y tarifas en la <a href="https://www.elmenudocuenta.com/planes">página de planes</a>.</p>
-          </details>
+          <details name="faq"><summary>¿Qué es El Menudo Cuenta?</summary><p>Es un servicio de asesoría de inversiones automatizada en español. Te ayuda a invertir según tus objetivos, horizonte de tiempo y tolerancia al riesgo.</p></details>
+          <details name="faq"><summary>¿Necesito experiencia para comenzar?</summary><p>No. La app te guía para definir tus metas y tu perfil de riesgo. También puedes consultar los recursos educativos en español.</p></details>
+          <details name="faq"><summary>¿Quién administra mis inversiones?</summary><p>El Menudo Cuenta administra la estrategia de inversión. Interactive Brokers LLC actúa como corredor y custodio, ejecuta las operaciones y mantiene los activos de tu cuenta.</p></details>
+          <details name="faq"><summary>¿Cuánto cuesta utilizar El Menudo Cuenta?</summary><p>Se aplican tarifas de suscripción según el plan que elijas. Consulta las opciones vigentes en <a href="https://www.elmenudocuenta.com/planes">Membresía</a>.</p></details>
+          <details name="faq"><summary>¿Mi dinero está seguro con El Menudo Cuenta?</summary><p>Interactive Brokers LLC, miembro de FINRA/SIPC, custodia los activos de tu cuenta. Las inversiones pueden perder valor y pueden implicar la pérdida del capital invertido.</p></details>
         </div>
+        <a class="button inverse faq-all" href="https://www.elmenudocuenta.com/faq">Ver todas las preguntas <span aria-hidden="true">↗</span></a>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-top">
-        <a class="brand" href="#inicio" aria-label="El Menudo Cuenta, inicio">
-          <img src="./images/emc-logo.webp" alt="" width="540" height="99" loading="lazy">
-        </a>
-        <a class="text-link" href="https://www.elmenudocuenta.com/legal">La letra pequeña <span aria-hidden="true">↗</span></a>
+  <footer>
+    <div class="footer-brand">
+      <div class="wrap footer-row">
+        <div>
+          <a class="brand" href="#inicio" aria-label="El Menudo Cuenta, inicio"><img src="https://static.wixstatic.com/media/f40967_101705cf6d064b42b8f63c5a4bc2c124~mv2.png" alt="" width="218" height="40" loading="lazy"></a>
+          <p>Una moneda no es una moneda, es un inicio.</p>
+        </div>
+        <nav class="socials" aria-label="Redes sociales">
+          <a href="https://www.facebook.com/profile.php?id=61551454593641" aria-label="Facebook"><span aria-hidden="true">f</span></a>
+          <a href="https://www.instagram.com/elmenudocuenta/" aria-label="Instagram"><span aria-hidden="true">◎</span></a>
+          <a href="https://x.com/elmenudocuenta" aria-label="X"><span aria-hidden="true">𝕏</span></a>
+          <a href="https://www.tiktok.com/@elmenudocuenta" aria-label="TikTok"><span aria-hidden="true">♪</span></a>
+          <a href="https://www.youtube.com/@elmenudocuenta" aria-label="YouTube"><span aria-hidden="true">▶</span></a>
+        </nav>
       </div>
-      <p>Invertir implica riesgos, incluida la posible pérdida del capital invertido. Antes de invertir, considera tus objetivos de inversión, tu tolerancia al riesgo y las tarifas de El Menudo Cuenta.</p>
-      <p>El Menudo Cuenta, LLC («El Menudo Cuenta») es un asesor de inversiones registrado ante la Comisión de Bolsa y Valores de Estados Unidos (SEC). Interactive Brokers LLC, miembro de FINRA/SIPC, presta los servicios de corretaje a los clientes de El Menudo Cuenta.</p>
-      <small>© 2026 El Menudo Cuenta, LLC</small>
     </div>
+    <div class="footer-legal">
+      <div class="wrap legal-row">
+        <a href="https://www.elmenudocuenta.com/legal">Términos y condiciones · Política de privacidad</a>
+        <span>© 2026 El Menudo Cuenta, LLC. All Rights Reserved</span>
+        <a href="https://www.elmenudocuenta.com/legal">Ver EMC Client Relationship Summary · Form ADV Part 2A Website Disclosure</a>
+      </div>
+    </div>
+    <section class="wrap disclosures" lang="en" aria-labelledby="disclosures-title">
+      <p class="center">Investment products | Not FDIC insured | No bank guarantee | May lose value</p>
+      <h2 class="center" id="disclosures-title">Important Disclosures</h2>
+      <p>Investing involves risk, including loss of principal. Please consider, among other important factors, your investment objectives, risk tolerance and El Menudo Cuenta’s pricing before investing. Investment advisory services offered by El Menudo Cuenta, LLC (EMC), an SEC-registered investment advisor. Brokerage services are provided to clients of EMC by Interactive Brokers, LLC., an SEC-registered broker-dealer and member FINRA/SIPC.</p>
+      <ul>
+        <li>A properly suggested portfolio recommendation is dependent upon current and accurate financial and risk profiles. Clients who have experienced changes to their goals, financial circumstances, or investment objectives, or who wish to modify their portfolio recommendation, should promptly update their information in the EMC app.</li>
+        <li>EMC Subscription Fees are assessed based on the tier of services in which you are enrolled. EMC does not charge transactional fees, commissions or fees based on assets.</li>
+        <li>The ETFs comprising the portfolios charge fees and expenses that will reduce a client’s return. Investors should consider the investment objectives, risks, charges and expenses of the funds carefully before investing. Investment policies, management fees and other information can be found in the individual ETF’s prospectus. Please read each prospectus carefully before investing.</li>
+        <li>Inversiones, an individual investment account which invests in a portfolio of ETFs (exchange traded funds), is recommended to clients based on their investment objectives, time horizon, and risk tolerance.</li>
+        <li>For Individual Retirement Account (either Traditional, or ROTH IRA), please consult your tax advisor with any questions.</li>
+        <li>It is not possible to invest directly in an index. Past performance is no guarantee of future results.</li>
+        <li>EMC reserves the right to restrict or revoke any and all offers at any time.</li>
+        <li>Compounding is the process in which an asset’s earning from either capital gains or interest are reinvested to generate additional earnings over time. It does not ensure positive performance, nor does it protect against loss. EMC clients may not experience compound returns and investment results will vary based on market volatility and fluctuating prices.</li>
+        <li>Diversification and asset allocation do not guarantee a profit, nor do they eliminate the risk of loss of principal.</li>
+        <li>The information contained on this website should not be considered an offer, solicitation of an offer or advice to buy or sell any security or investment product. The information should not be construed as tax or legal advice. Please consult your tax advisor with any questions.</li>
+      </ul>
+      <p>For additional important risks, disclosures, and information, please visit <a href="https://www.elmenudocuenta.com/legal/">elmenudocuenta.com/legal</a>.</p>
+      <p class="center">© 2026 El Menudo Cuenta, LLC.</p>
+    </section>
   </footer>
 </body>
 </html>
