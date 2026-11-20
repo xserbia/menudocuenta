@@ -1,0 +1,102 @@
+.membership-hero {
+  text-align: center;
+  padding-block: clamp(2.75rem, 6vw, 5.5rem) clamp(2rem, 4vw, 3.25rem);
+  background: radial-gradient(ellipse at 50% 12%, #fff 0, var(--lilac) 75%);
+}
+.membership-heading h1 {
+  color: var(--deep);
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  line-height: 1.04;
+  letter-spacing: -.035em;
+}
+.membership-heading > p {
+  max-width: 39rem;
+  margin: .9rem auto 1.55rem;
+  color: var(--muted);
+  font-size: clamp(1.06rem, 1.7vw, 1.25rem);
+}
+.membership-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.billing {
+  display: inline-flex;
+  gap: .2rem;
+  margin: 0 0 1.55rem;
+  padding: .3rem;
+  border: 1px solid var(--line);
+  border-radius: 99rem;
+  background: #fff;
+}
+.billing label { display: block; position: relative; cursor: pointer; }
+.billing input { position: absolute; width: 1px; height: 1px; margin: 0; clip-path: inset(50%); }
+.billing span { display: block; min-width: 6.15rem; padding: .5rem .75rem; border-radius: 99rem; color: var(--deep); }
+.billing input:checked + span { background: var(--purple); color: #fff; }
+.billing input:focus-visible + span { outline: 2px solid var(--purple); outline-offset: 3px; }
+.plan-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(.9rem, 2.5vw, 1.75rem);
+  max-width: 61rem;
+  margin-inline: auto;
+  text-align: left;
+}
+.plan-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 1.4rem;
+  background: #fff;
+  box-shadow: 0 .6rem 1.8rem #29134a0c;
+}
+.plan-intro {
+  padding: 1.35rem clamp(1.15rem, 4vw, 2rem);
+  color: #fff;
+  background: var(--deep);
+}
+.plan-premium .plan-intro { background: var(--yellow); color: var(--ink); }
+.plan-intro h2 { margin-bottom: .35rem; font-size: clamp(1.85rem, 3.5vw, 2.6rem); }
+.plan-intro p { font-size: 1rem; }
+.plan-body { padding: 1.35rem clamp(1.15rem, 4vw, 2rem) 1.65rem; }
+.plan-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem; color: var(--deep); }
+.plan-price strong { font: 900 clamp(2.65rem, 5.8vw, 4.1rem)/1 var(--heading); letter-spacing: -.04em; }
+.plan-price span { font-size: 1.02rem; }
+.plan-billing { margin-top: .35rem; color: var(--muted); }
+.plan-saving { display: inline-block; margin-top: .45rem; padding: .15rem .55rem; border-radius: 99rem; background: #f0e7fa; color: var(--deep); font-size: .91rem; }
+.plan-cta { width: 100%; margin-top: 1rem; }
+.plan-premium .plan-cta { background: var(--pink); }
+.plan-premium .plan-cta:hover { background: #8e226f; }
+.plan-features { display: grid; gap: .55rem; margin: 1.05rem 0 0; padding: 0; list-style: none; }
+.plan-features li { display: grid; grid-template-columns: 1.15rem 1fr; gap: .45rem; }
+.plan-features li::before { color: var(--purple); content: "✓" / ""; font-weight: 600; }
+.pricing-note { max-width: 43rem; margin: 1.25rem auto .7rem; color: var(--muted); font-size: .91rem; }
+.compare-jump { display: inline-flex; gap: .35rem; padding: .45rem; color: var(--deep); font-weight: 500; text-underline-offset: .2em; }
+.membership-compare { max-width: 61rem; }
+.membership-compare h2, .membership-faq h2 { color: var(--deep); text-align: center; }
+.plan-table {
+  width: 100%;
+  margin: 1.4rem auto 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  overflow: hidden;
+  text-align: center;
+}
+.plan-table thead { background: var(--lilac); }
+.plan-table th, .plan-table td { padding: .8rem clamp(.4rem, 2vw, 1rem); }
+.plan-table th:first-child { width: 52%; text-align: left; }
+.plan-table tbody th, .plan-table tbody td { border-top: 1px solid var(--line); }
+.plan-table tbody th { font-weight: 500; }
+.membership-faq { background: var(--lilac); }
+.membership-more { text-align: center; color: var(--deep); }
+@media (max-width: 40rem) {
+  .plan-grid { grid-template-columns: minmax(0, 1fr); }
+  .plan-table { font-size: .9rem; }
+  .plan-table th, .plan-table td { padding-block: .6rem; }
+}

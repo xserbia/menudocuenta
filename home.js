@@ -1,31 +1,5 @@
 "use strict";
 
-const menuToggle = document.querySelector(".menu-toggle");
-const menu = document.querySelector("#menu-principal");
-const mobileLayout = window.matchMedia("(max-width: 64rem)");
-const background = document.querySelectorAll("body > main, body > footer, body > .skip-link");
-
-function setMenuOpen(open) {
-  menuToggle.setAttribute("aria-expanded", String(open));
-  menuToggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
-  menu.classList.toggle("open", open);
-  background.forEach((element) => { element.inert = open; });
-}
-
-menuToggle.closest("header").dataset.interactive = "";
-menuToggle.hidden = false;
-menuToggle.addEventListener("click", () => setMenuOpen(!menu.classList.contains("open")));
-menuToggle.closest("header").addEventListener("click", (event) => {
-  if (event.target.closest("a") && menu.classList.contains("open")) setMenuOpen(false);
-});
-mobileLayout.addEventListener("change", () => setMenuOpen(false));
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && menu.classList.contains("open")) {
-    setMenuOpen(false);
-    menuToggle.focus();
-  }
-});
-
 const steps = [
   ["Tu perfil define el punto de partida", "Antes de invertir, EMC necesita entender para qué estás invirtiendo, por cuánto tiempo y cuánto riesgo estás dispuesto a asumir.", "Perfil de riesgo", "El objetivo no es predecir el mercado. Es comenzar con una estrategia alineada con tu situación y tus objetivos financieros."],
   ["Un portafolio acorde con tu perfil", "EMC recomienda un portafolio según tus objetivos, horizonte y tolerancia al riesgo.", "Asignación del portafolio", "El portafolio combina inversiones de acuerdo con el modelo seleccionado."],

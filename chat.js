@@ -17,7 +17,7 @@
     start: ["Puedes empezar a invertir con tan solo $5. Se aplican tarifas de suscripción según la membresía que elijas.", ["Cómo empezar", app + "/faq/mc-inversiones"]],
     investing: ["MC Inversiones es una cuenta individual para invertir en un portafolio según tu objetivo, plazo y tolerancia al riesgo.", ["Conoce MC Inversiones", app + "/faq/mc-inversiones"]],
     retirement: ["MC Futuro ofrece cuentas individuales para el retiro, entre ellas la IRA Tradicional y la Roth IRA.", ["Conoce MC Futuro", app + "/faq/mc-retirement"]],
-    plans: ["Puedes comparar las membresías y consultar sus tarifas vigentes en la página de planes.", ["Ver membresías", site + "/planes"]],
+    plans: ["Puedes comparar las membresías y consultar sus tarifas vigentes en la página de planes.", ["Ver membresías", "./membresia.html"]],
     support: ["Para consultas sobre tu cuenta, depósitos o acceso, escribe al equipo de soporte por el canal oficial.", supportLink],
     register: ["Puedes crear una cuenta desde la app de El Menudo Cuenta.", ["Registrarme", app + "/register"]],
     login: ["Puedes ingresar desde la app de El Menudo Cuenta. Si tienes problemas de acceso, usa el enlace a soporte debajo del chat.", ["Ingresar a mi cuenta", app + "/users/log_in"]],
