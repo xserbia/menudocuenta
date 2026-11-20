@@ -121,9 +121,10 @@ showProjection();
   const desktopTrigger = document.querySelector(".founder-video-control [data-founder-video]");
   let activeTrigger;
   const preview = document.querySelector(".founder-preview");
-  const dialog = document.querySelector("#founder-video");
-  const player = dialog.querySelector(".founder-player");
-  const source = document.querySelector("#video-ahorro iframe");
+  const dialog = document.querySelector("#video-dialog");
+  const dialogTitle = dialog.querySelector("#video-dialog-title");
+  const player = dialog.querySelector(".video-dialog-player");
+  const founderSource = document.querySelector("#video-ahorro iframe");
   const canPreview = window.matchMedia("(min-width: 46.01rem) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
   let previewTimer;
 
@@ -133,7 +134,7 @@ showProjection();
     preview.replaceChildren();
   }
 
-  function makePlayer(isPreview) {
+  function makePlayer(source, isPreview = false) {
     const url = new URL(source.src);
     url.searchParams.set("autoplay", "1");
     if (isPreview) {
@@ -155,7 +156,7 @@ showProjection();
     if (event.pointerType !== "mouse" || !canPreview.matches || dialog.open) return;
     window.clearTimeout(previewTimer);
     previewTimer = window.setTimeout(() => {
-      preview.replaceChildren(makePlayer(true));
+      preview.replaceChildren(makePlayer(founderSource, true));
       preview.hidden = false;
     }, 220);
   }
@@ -165,23 +166,50 @@ showProjection();
   canPreview.addEventListener("change", stopPreview);
 
   if (typeof dialog.showModal === "function") {
+    function openVideo(source, trigger) {
+      stopPreview();
+      activeTrigger = trigger;
+      dialogTitle.textContent = source.title;
+      dialog.showModal();
+      player.replaceChildren(makePlayer(source));
+    }
+
     for (const trigger of triggers) {
       trigger.setAttribute("aria-haspopup", "dialog");
       trigger.setAttribute("aria-controls", dialog.id);
       trigger.addEventListener("click", (event) => {
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
         event.preventDefault();
-        stopPreview();
-        activeTrigger = trigger;
-        dialog.showModal();
-        player.replaceChildren(makePlayer(false));
+        openVideo(founderSource, trigger);
       });
     }
+
+    const desktopVideos = window.matchMedia("(min-width: 46.01rem)");
+    for (const card of document.querySelectorAll(".video-card-player")) {
+      const frame = card.querySelector("iframe");
+      const trigger = card.querySelector(".video-card-open");
+      trigger.setAttribute("aria-haspopup", "dialog");
+      trigger.setAttribute("aria-controls", dialog.id);
+      trigger.addEventListener("click", () => openVideo(frame, trigger));
+
+      function updateVideoCard() {
+        const useDialog = desktopVideos.matches;
+        trigger.hidden = !useDialog;
+        frame.inert = useDialog;
+        if (useDialog) frame.setAttribute("tabindex", "-1");
+        else frame.removeAttribute("tabindex");
+      }
+
+      desktopVideos.addEventListener("change", updateVideoCard);
+      updateVideoCard();
+    }
+
     dialog.addEventListener("close", () => {
       player.replaceChildren();
       const focusTarget = activeTrigger?.getClientRects().length
         ? activeTrigger
-        : triggers.find((trigger) => trigger.getClientRects().length);
+        : activeTrigger?.parentElement.querySelector("iframe") ??
+          triggers.find((trigger) => trigger.getClientRects().length);
       focusTarget?.focus({ preventScroll: true });
     });
   }
