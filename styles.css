@@ -89,7 +89,8 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
 .mission .eyebrow { color: var(--yellow); font-weight: 400; font-size: clamp(1rem, 1.7vw, 1.35rem); }
 .mission h2 { max-width: 18ch; font-size: clamp(2.5rem, 4.4vw, 4.4rem); }
 .mission-copy > p:not(.eyebrow) { max-width: 52ch; margin-block: 1.45rem 2rem; font-size: clamp(1.06rem, 1.55vw, 1.42rem); }
-.founder-video-control { position: relative; }
+.founder figcaption .founder-video-button { display: none; }
+.founder-video-control { position: relative; display: inline-flex; }
 .mission-actions { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; }
 .founder-video-button { background: #fff; color: var(--deep); white-space: nowrap; }
 .founder-video-button:hover { background: var(--lilac); }
@@ -262,7 +263,8 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
     font-size: .85rem;
     line-height: 1.25;
   }
-  .founder figcaption .founder-video-button { min-height: 2.75rem; padding-inline: .8rem; font-size: .93rem; }
+  .founder-org, .mission-actions .founder-video-control { display: none; }
+  .founder figcaption .founder-video-button { display: inline-flex; min-height: 2.75rem; padding-inline: .8rem; font-size: .93rem; }
   .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
   .step-list { display: contents; }
   .step-panel { grid-column: 1 / -1; min-height: auto; grid-row: 5; }
