@@ -31,7 +31,7 @@
   };
 
   const intents = [
-    [/\b(?:saldo|deposito|retirar|retiros|problema|contrasena|error|reclamo|soporte|whatsapp)\b|no puedo|no me deja|no llega|retiro (?:pendiente|rechazado|fallido)|(?:mi|el|un) retiro (?:de dinero|de fondos|no)|cuando (?:llega|recibo) mi retiro/, "support"],
+    [/\b(?:saldo|deposito|retirar|retiros|problema|contrasena|error|reclamo|soporte|whatsapp)\b|no puedo|no me deja|no llega|retiro (?:esta |fue )?(?:pendiente|rechazado|fallido)|(?:mi|el|un) retiro (?:de dinero|de fondos|no)|(?:estado de|donde esta|cuando (?:llega|recibo)) mi retiro/, "support"],
     [/me recomiendas|deberia (?:invertir|comprar|vender)|que (?:accion|etf|portafolio) (?:compro|elijo|me conviene)|cuanto (?:debo|deberia) invertir/, "personalized"],
     [/\b(?:fdic|riesgos?|perder|perdida|garantia)\b/, "risks"],
     [/\b(?:custodio|custodia|ibkr|broker|corredor|banco)\b|interactive brokers|seguro.*dinero|dinero.*seguro/, "custody"],
