@@ -235,9 +235,12 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
     inset-inline: .35rem;
     bottom: 8%;
     padding: .55rem .6rem .55rem .8rem;
+    background: transparent;
     font-size: .85rem;
     line-height: 1.25;
   }
+  .founder-identity { text-shadow: 0 1px 4px #000, 0 1px 2px #000; }
+  .founder-org { display: none; }
   .founder figcaption .founder-video-button { display: inline-flex; min-height: 2.75rem; padding-inline: .8rem; white-space: nowrap; font-size: .93rem; }
   .mission-actions .founder-video-button { display: none; }
   .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
