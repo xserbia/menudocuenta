@@ -117,10 +117,8 @@ form.addEventListener("submit", (event) => {
 showProjection();
 
 {
-  const founder = document.querySelector(".founder");
-  const triggers = [...document.querySelectorAll("[data-founder-video]")];
-  let activeTrigger;
-  const preview = founder.querySelector(".founder-preview");
+  const trigger = document.querySelector("[data-founder-video]");
+  const preview = document.querySelector(".founder-preview");
   const dialog = document.querySelector("#founder-video");
   const player = dialog.querySelector(".founder-player");
   const source = document.querySelector("#video-ahorro iframe");
@@ -160,31 +158,23 @@ showProjection();
     }, 220);
   }
 
-  for (const target of [founder, ...triggers]) {
-    target.addEventListener("pointerenter", schedulePreview);
-    target.addEventListener("pointerleave", stopPreview);
-  }
+  trigger.addEventListener("pointerenter", schedulePreview);
+  trigger.addEventListener("pointerleave", stopPreview);
   canPreview.addEventListener("change", stopPreview);
 
   if (typeof dialog.showModal === "function") {
-    for (const trigger of triggers) {
-      trigger.setAttribute("aria-haspopup", "dialog");
-      trigger.setAttribute("aria-controls", dialog.id);
-      trigger.addEventListener("click", (event) => {
-        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-        event.preventDefault();
-        stopPreview();
-        activeTrigger = trigger;
-        dialog.showModal();
-        player.replaceChildren(makePlayer(false));
-      });
-    }
+    trigger.setAttribute("aria-haspopup", "dialog");
+    trigger.setAttribute("aria-controls", dialog.id);
+    trigger.addEventListener("click", (event) => {
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      stopPreview();
+      dialog.showModal();
+      player.replaceChildren(makePlayer(false));
+    });
     dialog.addEventListener("close", () => {
       player.replaceChildren();
-      const focusTarget = activeTrigger?.getClientRects().length
-        ? activeTrigger
-        : triggers.find((trigger) => trigger.getClientRects().length);
-      focusTarget?.focus({ preventScroll: true });
+      trigger.focus({ preventScroll: true });
     });
   }
 }
