@@ -24,19 +24,26 @@ html:has(.chat-panel[open]) { overflow: hidden; }
   font: 800 .9rem/1.2 var(--heading);
   cursor: pointer;
 }
-.chat-icon {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  padding: 4px;
-  border: 1.5px solid currentColor;
-  border-radius: 7px 7px 7px 2px;
+.chat-wordmark {
+  position: relative;
+  flex: none;
+  display: inline-block;
+  width: 2.4rem;
+  height: 1.55rem;
+  overflow: hidden;
 }
-.chat-icon i {
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: currentColor;
+.chat-wordmark img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3.2rem;
+  max-width: none;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+.chat-launcher .chat-wordmark {
+  border-radius: 999px;
+  background: #fff;
 }
 
 .chat-panel {
@@ -69,7 +76,13 @@ html:has(.chat-panel[open]) { overflow: hidden; }
   padding: max(.7rem, env(safe-area-inset-top)) var(--chat-inset-right) .7rem var(--chat-inset-left);
   border-bottom: 1px solid var(--line);
 }
-.chat-header h2 { font-size: 1.15rem; }
+.chat-header h2 {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: 1.15rem;
+}
+.chat-header .chat-wordmark img { width: 3.5rem; }
 .chat-close {
   display: grid;
   place-items: center;
