@@ -68,6 +68,9 @@
 
   const helpPage = "./ayuda.html";
   let helpRequest;
+  let pricingRequest;
+  const pricingPage = "./membresia.html";
+  const pricingLink = ["Comparar planes y precios", pricingPage];
 
   const app = "https://app.elmenudocuenta.com";
   const loginLink = ["Ingresar a la app", app + "/users/log_in"];
@@ -78,6 +81,8 @@
   const helpLink = (label, topic) => [label, "./ayuda.html?tema=" + topic + "#preguntas"];
 
   const answers = {
+    clarify: ["¿Qué quieres saber? Puedo ayudarte con membresías, apertura de cuenta o depósitos.", []],
+    help: ["Claro. ¿Necesitas ayuda con el acceso, tu cuenta o un depósito?", [["Abrir el Centro de Ayuda", helpPage], ...supportLinks]],
     support: ["El equipo de soporte puede ayudarte a revisar lo que ocurre con tu cuenta. Puedes escribirle por WhatsApp o correo.", supportLinks],
     account: ["Las consultas sobre saldos, solicitudes u operaciones específicas se revisan en la app o con soporte.", [loginLink, ...supportLinks]],
     phone: ["Durante el registro, confirma tu número ingresando el código que recibas en tu celular. Si no recibes el código, contacta a soporte.", [helpLink("Ver ayuda de acceso", "acceso"), ...supportLinks]],
@@ -99,6 +104,8 @@
   ];
 
   const faqIntents = [
+    [/\b(?:que (?:es|hace)|como (?:funciona|opera))\s+(?:el menudo cuenta|menudo cuenta|emc|mc)\b|^(?:el menudo cuenta|menudo cuenta)$/, "about"],
+    [/\b(?:ustedes|emc|el menudo cuenta)\b.{0,35}\b(?:invierten?|administran? (?:mi|el) (?:dinero|portafolio))\b|\binvierten? (?:por mi|mi dinero)\b/, "funds"],
     [/\b(?:fuera (?:de|del) (?:los )?(?:ee\s*\.?\s*uu|estados unidos|usa|pais)|en el extranjero|desde el extranjero|desde otro pais|sin (?:residencia|ciudadania))\b/, "availability"],
     [/\b(?:pued[eo]n?|podria|disponible|aceptan|registr\w*|abrir)\b.*\b(?:vivo|vive|resid\w*|estados unidos|ee\s*\.?\s*uu|usa|puerto rico)\b|\b(?:vivo|vive|resido|reside)\b.*\b(?:pued[eo]n?|podria|abrir|registr\w*)\b/, "availability"],
     [/\b(?:abrir (?:una |mi |la )?cuenta|registr\w*|disponible)\b.*\bdesde\b(?!\s+(?:la app|mi (?:telefono|celular)|el navegador|mi computadora)\b)/, "availability"],
@@ -144,6 +151,13 @@
     return new Set(words(value).filter((word) => !stopWords.has(word)).map((word) => synonyms.get(word) || word));
   }
 
+  function isPricingQuestion(phrase) {
+    const price = /\b(?:cuanto (?:me )?(?:cuesta|cuestan|sale|cobran|vale|valen)|precios?|costos?|tarifas?|mensualidad(?:es)?)\b/;
+    const plan = /\b(?:membresias?|suscripciones?|planes?|basico|premium|el menudo cuenta|emc)\b/;
+    return /^(?:y )?(?:cuanto (?:cuesta|cuestan|sale|cobran|vale|valen)|precios?|costos?|tarifas?|mensualidad(?:es)?)$/.test(phrase) ||
+      (price.test(phrase) && plan.test(phrase));
+  }
+
   function findQuestion(faq, question, topic) {
     const phrase = words(question).join(" ");
     const exact = faq.find((entry) => entry.phrase === phrase);
@@ -153,6 +167,9 @@
     if (direct) return direct;
 
     const terms = keywords(question);
+    for (const brandWord of ["menudo", "cuenta"]) {
+      if (phrase.includes("menudo cuenta")) terms.delete(brandWord);
+    }
     if (terms.size < 2) return undefined;
 
     const ranked = faq.flatMap((entry) => {
@@ -193,12 +210,43 @@
     }
   }
 
-  async function loadHelp() {
-    const response = await fetch(helpPage);
-    if (!response.ok) throw new Error("El Centro de Ayuda no está disponible");
+  async function loadPage(url) {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("No se pudo consultar " + url);
     const template = document.createElement("template");
     template.innerHTML = await response.text();
-    const entries = Array.from(template.content.querySelectorAll(".help-topic details[id]"), (detail) => {
+    return template.content;
+  }
+
+  async function loadPricing() {
+    const page = await loadPage(pricingPage);
+    const cards = Array.from(page.querySelectorAll(".plan-card[data-plan][data-monthly][data-annual]"));
+    const format = (cents) => "US$" + (Number(cents) / 100).toFixed(Number(cents) % 100 === 0 ? 0 : 2);
+    if (cards.length < 2 || cards.some(({ dataset }) =>
+      !dataset.plan || !/^\d+$/.test(dataset.monthly) || !/^\d+$/.test(dataset.annual))) {
+      throw new Error("La página no tiene precios completos");
+    }
+    return cards.map(({ dataset }) => dataset.plan + ": " + format(dataset.monthly) +
+      " al mes o " + format(dataset.annual) + " al año.");
+  }
+
+  async function answerPricing(question) {
+    const reply = appendQuestion(question, "Consultando los precios de membresía…", []);
+    clearInput();
+    pricingRequest ??= loadPricing();
+    try {
+      const plans = await pricingRequest;
+      writeReply(reply, plans.join(" "), [pricingLink]);
+    } catch {
+      pricingRequest = undefined;
+      writeReply(reply, "Puedes consultar los precios mensuales y anuales de los planes en Membresía.", [pricingLink]);
+    }
+    if (reply === thread.lastElementChild) scroll.scrollTop = scroll.scrollHeight;
+  }
+
+  async function loadHelp() {
+    const page = await loadPage(helpPage);
+    const entries = Array.from(page.querySelectorAll(".help-topic details[id]"), (detail) => {
       const title = detail.querySelector("summary").textContent.trim();
       const paragraphs = detail.querySelectorAll(".help-answer p");
       const indices = (detail.dataset.chatExcerpt || "1").split(",");
@@ -218,7 +266,7 @@
   }
 
   function followUp(topic) {
-    if (topic === "plans") return [["Comparar planes y precios", "./membresia.html"]];
+    if (topic === "plans") return [pricingLink];
     if (topic === "openAccount" || topic === "register") return [["Crear mi usuario", app + "/register"]];
     if (topic === "password") return [loginLink];
     if (topic === "depositRejected" || topic === "bankError" || topic === "username") return supportLinks;
@@ -289,7 +337,11 @@
   });
 
   panel.querySelectorAll("[data-topic]").forEach((button) => {
-    button.addEventListener("click", () => answerFromHelp(button.textContent.trim(), button.dataset.topic));
+    button.addEventListener("click", () => {
+      const question = button.textContent.trim();
+      if (button.dataset.topic === "plans") answerPricing(question);
+      else answerFromHelp(question, button.dataset.topic);
+    });
   });
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -304,6 +356,20 @@
     const action = actionIntents.find(([pattern]) => pattern.test(normalized))?.[1];
     if (action === "personalized" || action === "support") {
       appendQuestion(question, ...answers[action]);
+      clearInput();
+      return;
+    }
+
+    const phrase = words(question).join(" ");
+    if (isPricingQuestion(phrase)) {
+      answerPricing(question);
+      return;
+    }
+
+    const quickReply = /^(?:hola|buenas|buenos dias|y|y que mas|y entonces|que mas|y eso)$/.test(phrase) ? "clarify" :
+      /^(?:ayuda|necesito ayuda|quiero ayuda|me puedes ayudar|puedes ayudarme|ayudame)$/.test(phrase) ? "help" : undefined;
+    if (quickReply) {
+      appendQuestion(question, ...answers[quickReply]);
       clearInput();
       return;
     }
