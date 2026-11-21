@@ -4,6 +4,7 @@
   --chat-inset-right: max(1.25rem, env(safe-area-inset-right));
   --chat-bottom: max(.75rem, env(safe-area-inset-bottom));
 }
+.chat-desktop-actions { display: none; }
 html:has(.chat-panel[open]) { overflow: hidden; }
 
 .chat-launcher {
@@ -218,6 +219,52 @@ html:has(.chat-panel[open]) { overflow: hidden; }
 
 /* Desktop preview for testing the chat. */
 @media (min-width: 46.001rem) {
+  .chat-launcher { display: none; }
+  .chat-desktop-actions {
+    position: fixed;
+    right: max(1.25rem, env(safe-area-inset-right));
+    bottom: var(--chat-bottom);
+    z-index: 9;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .75rem;
+    width: min(44.75rem, calc(100% - 2.5rem));
+  }
+  .chat-desktop-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .8rem;
+    min-width: 0;
+    min-height: 4.75rem;
+    padding: .7rem .9rem;
+    border: 1px solid #ffffff52;
+    border-radius: 1.2rem;
+    background: var(--purple);
+    color: #fff;
+    box-shadow: 0 .35rem 1rem #27114038;
+    font: 800 .95rem/1.2 var(--heading);
+    text-align: left;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .chat-desktop-card:hover { background: var(--deep); }
+  .chat-desktop-label { flex: 1; }
+  .chat-desktop-label strong { display: block; font-size: 1.05rem; }
+  .chat-desktop-label small { display: block; margin-top: .2rem; font-size: .8rem; font-weight: 600; }
+  .chat-desktop-brand { width: min(52%, 10rem); height: auto; }
+  .chat-desktop-arrow, .chat-desktop-cta {
+    display: grid;
+    place-items: center;
+    flex: none;
+    min-height: 2.5rem;
+    border-radius: 999px;
+    background: var(--yellow);
+    color: var(--ink);
+  }
+  .chat-desktop-arrow { width: 2.5rem; font-size: 1.15rem; }
+  .chat-desktop-cta { padding: .5rem .85rem; white-space: nowrap; }
+
   .chat-panel {
     inset: 0;
     width: min(34rem, calc(100% - 2rem));

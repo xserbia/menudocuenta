@@ -14,6 +14,20 @@
 
   const chatBrand = `<span>Pregúntale a</span> <span class="chat-wordmark"><img src="./images/Logos%20MC%20-Pink%20RGB-59.png" alt="MC" width="4487" height="3513"></span>`;
   launcher.innerHTML = chatBrand;
+  panel.insertAdjacentHTML("beforebegin", `
+    <div class="chat-desktop-actions" role="group" aria-label="Ayuda y registro">
+      <button class="chat-desktop-card chat-desktop-question" type="button" aria-haspopup="dialog" aria-controls="${panel.id}">
+        <span class="chat-wordmark"><img src="./images/Logos%20MC%20-Pink%20RGB-59.png" alt="" width="4487" height="3513"></span>
+        <span class="chat-desktop-label"><strong>Pregúntale a Xavier</strong><small>Asistente automatizado</small></span>
+        <span class="chat-desktop-arrow" aria-hidden="true">↗</span>
+      </button>
+      <a class="chat-desktop-card chat-desktop-register" href="https://app.elmenudocuenta.com/register">
+        <img class="chat-desktop-brand" src="https://static.wixstatic.com/media/f40967_101705cf6d064b42b8f63c5a4bc2c124~mv2.png" alt="El Menudo Cuenta" width="218" height="40">
+        <span class="chat-desktop-cta">Empieza hoy</span>
+      </a>
+    </div>`);
+  const desktopQuestion = widget.querySelector(".chat-desktop-question");
+  let activeLauncher = launcher;
   panel.innerHTML = `
     <header class="chat-header">
       <h2 id="chat-title">${chatBrand}</h2>
@@ -308,14 +322,18 @@
     scroll.scrollTop = scroll.scrollHeight;
   }
 
-  launcher.addEventListener("click", () => {
+  function openChat(event) {
+    activeLauncher = event.currentTarget;
     notice.hidden = acknowledged;
     conversation.hidden = !acknowledged;
     panel.showModal();
     updateViewport();
     viewport?.addEventListener("resize", updateViewport);
     viewport?.addEventListener("scroll", updateViewport);
-  });
+  }
+
+  launcher.addEventListener("click", openChat);
+  desktopQuestion.addEventListener("click", openChat);
 
   panel.querySelector(".chat-continue").addEventListener("click", () => {
     acknowledged = true;
@@ -332,7 +350,9 @@
   panel.addEventListener("close", () => {
     viewport?.removeEventListener("resize", updateViewport);
     viewport?.removeEventListener("scroll", updateViewport);
-    launcher.focus();
+    const visibleLauncher = activeLauncher.getClientRects().length ? activeLauncher :
+      (activeLauncher === launcher ? desktopQuestion : launcher);
+    visibleLauncher.focus();
   });
   input.addEventListener("input", () => {
     send.disabled = !input.value.trim();
