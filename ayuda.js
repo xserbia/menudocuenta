@@ -66,6 +66,11 @@
     heading.focus();
   });
 
+  const requestedTopic = new URLSearchParams(window.location.search).get("tema");
+  if (topics.some(({ section }) => section.dataset.topic === requestedTopic)) {
+    topicSelect.value = requestedTopic;
+  }
+
   form.hidden = false;
   filter.hidden = false;
   updateResults();

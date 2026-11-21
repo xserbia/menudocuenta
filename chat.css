@@ -64,3 +64,11 @@
   .emc-chat { --chat-edge: max(.7rem, env(safe-area-inset-right)); }
   .chat-panel { width: calc(100% - var(--chat-edge) * 2); }
 }
+
+.chat-answer-actions { display: flex; flex-wrap: wrap; gap: .35rem .75rem; margin-top: .35rem; }
+.chat-answer-actions a { margin-top: 0; }
+.chat-note a { white-space: nowrap; color: var(--purple); }
+@media (max-width: 32rem) {
+  .chat-launcher { min-height: 2.75rem; padding-inline: .8rem; font-size: .9rem; }
+  .chat-panel { max-height: calc(100dvh - var(--chat-bottom) - .75rem); }
+}
