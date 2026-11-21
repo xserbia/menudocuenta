@@ -7,7 +7,6 @@
   if (typeof panel.showModal !== "function") return;
 
   const launcher = widget.querySelector(".chat-launcher");
-  const mobile = window.matchMedia("(max-width: 46rem)");
   const viewport = window.visualViewport;
   const noticeKey = "emc-chat-aviso-v1";
   const terms = "./images/legal-documents/EMC_Terminos_y_Condiciones_ES.pdf";
@@ -260,7 +259,6 @@
   }
 
   launcher.addEventListener("click", () => {
-    if (!mobile.matches) return;
     notice.hidden = acknowledged;
     conversation.hidden = !acknowledged;
     panel.showModal();
@@ -284,10 +282,7 @@
   panel.addEventListener("close", () => {
     viewport?.removeEventListener("resize", updateViewport);
     viewport?.removeEventListener("scroll", updateViewport);
-    if (mobile.matches) launcher.focus();
-  });
-  mobile.addEventListener("change", () => {
-    if (!mobile.matches && panel.open) panel.close();
+    launcher.focus();
   });
   input.addEventListener("input", () => {
     send.disabled = !input.value.trim();
