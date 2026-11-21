@@ -51,21 +51,21 @@
 }
 .journey-step h3 { color: var(--purple); font-size: clamp(1.13rem, 2.1vw, 1.45rem); }
 .journey-step p { margin-top: .55rem; color: var(--muted); font-size: .98rem; }
-/* Show the individual phone screens from the existing 1536 × 1024 artwork. */
 .journey-screen {
   width: min(100%, 11.5rem);
-  aspect-ratio: 232 / 335;
-  background: url("./images/infograficos/tu-camino-hacia-inversion.png") var(--screen-x) 72.13% / 662.069% auto no-repeat;
-}
-.journey-screen-live {
   overflow: hidden;
   border: clamp(2px, .35vw, 4px) solid #28242c;
   border-bottom: 0;
   border-radius: clamp(.75rem, 1.6vw, 1.5rem) clamp(.75rem, 1.6vw, 1.5rem) 0 0;
   background: #fff;
-  box-shadow: inset 0 0 0 1px #655d6a, 0 .3rem .75rem #25146817;
+  box-shadow: 0 .3rem .75rem #25146817;
 }
-.journey-screen-live img { width: 100%; height: auto; transform: translateY(-6.35%); }
+.journey-display { aspect-ratio: 232 / 335; overflow: hidden; }
+.journey-display img { width: 100%; height: auto; transform: translateY(-6.35%); }
+/* Use only the content inside the original phone for the illustrated steps. */
+.journey-display-art {
+  background: url("./images/infograficos/tu-camino-hacia-inversion.png") var(--screen-x) var(--screen-y) / 843.956% auto no-repeat;
+}
 .journey-actions {
   display: flex;
   flex-wrap: wrap;
