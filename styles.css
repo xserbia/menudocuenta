@@ -368,24 +368,34 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
 .process .emc-roles { margin: 0; padding: 12px 15px; border-radius: 12px; background: var(--emc-lilac); color: var(--emc-muted); }
 .process .emc-roles strong { color: var(--emc-text); }
 @media (max-width: 40rem) {
-  .process .emc-diagram { min-height: 17.5rem; margin-block: .7rem .25rem; }
-  .process .emc-ring { top: 8.875rem; width: 11.25rem; height: 11.25rem; }
-  .process .emc-wordmark { width: 5rem; height: 5rem; }
-  .process .emc-wordmark img { width: 6.35rem; }
-  .process .emc-steps li { gap: .36rem; font-size: .82rem; text-align: center; }
-  .process .emc-profile { top: 1.12rem; }
+  .process .wrap { container-type: inline-size; }
+  .process .emc-diagram {
+    --ring-size: clamp(11.5rem, 72cqi, 17rem);
+    --ring-radius: calc(var(--ring-size) * .425);
+    --ring-center: calc(var(--ring-size) / 2 + 2rem);
+    --icon-size: clamp(2.9rem, 14cqi, 3.75rem);
+    min-height: calc(var(--ring-size) + 5.5rem);
+    margin-block: .7rem .25rem;
+  }
+  .process .emc-ring { top: var(--ring-center); width: var(--ring-size); height: var(--ring-size); }
+  .process .emc-wordmark { width: calc(var(--ring-size) * .47); height: calc(var(--ring-size) * .47); }
+  .process .emc-wordmark img { width: calc(var(--ring-size) * .61); }
+  .process .emc-steps li { gap: .42rem; font-size: clamp(.82rem, 3.9cqi, .95rem); text-align: center; }
+  .process .emc-profile { top: calc(var(--ring-center) - var(--ring-radius) - var(--icon-size) / 2); }
+  .process .emc-profile strong { position: absolute; bottom: calc(100% + .42rem); }
   .process .emc-invest, .process .emc-follow {
-    top: 7.5625rem; width: 5.3rem;
+    top: calc(var(--ring-center) - var(--icon-size) / 2);
+    width: clamp(5rem, 28cqi, 6.75rem);
     transform: translateX(-50%); flex-direction: column;
   }
-  .process .emc-invest { left: calc(50% + 4.8rem); }
-  .process .emc-follow { left: calc(50% - 4.8rem); right: auto; }
+  .process .emc-invest { left: calc(50% + var(--ring-radius)); }
+  .process .emc-follow { left: calc(50% - var(--ring-radius)); right: auto; }
   .process .emc-invest strong, .process .emc-follow strong {
     background: var(--emc-surface); border-radius: .25rem;
   }
-  .process .emc-adjust { top: 12.375rem; bottom: auto; }
-  .process .emc-icon { width: 42px; height: 42px; }
-  .process .emc-symbol { width: 34px; height: 34px; }
-  .process .emc-symbol svg { width: 23px; height: 23px; }
-  .process .emc-icon b { width: 17px; height: 17px; font-size: 11px; }
+  .process .emc-adjust { top: calc(var(--ring-center) + var(--ring-radius) - var(--icon-size) / 2); bottom: auto; }
+  .process .emc-icon { width: var(--icon-size); height: var(--icon-size); }
+  .process .emc-symbol { width: 81%; height: 81%; }
+  .process .emc-symbol svg { width: 68%; height: 68%; }
+  .process .emc-icon b { width: 19px; height: 19px; font-size: 12px; }
 }
