@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Centro de ayuda | El Menudo Cuenta</title>
+  <meta name="description" content="Busca respuestas sobre tu cuenta, membresía e inversiones, o contacta a El Menudo Cuenta por correo o WhatsApp.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Nunito:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./navigation.js" defer></script>
+  <link rel="stylesheet" href="./ayuda.css">
+  <script src="./ayuda.js" defer></script>
+  <link rel="stylesheet" href="./chat.css">
+  <script src="./chat.js" defer></script>
+</head>
+<body id="inicio">
+  <a class="skip-link" href="#contenido">Ir al contenido</a>
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./index.html" aria-label="El Menudo Cuenta, inicio"><img src="./images/emc-logo.webp" alt="" width="540" height="99"></a>
+      <a class="button solid mobile-login" href="https://app.elmenudocuenta.com/users/log_in">Ingresar</a>
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-controls="menu-principal" aria-expanded="false" hidden>
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+      <div class="menu" id="menu-principal">
+        <nav class="nav" aria-label="Navegación principal">
+          <a href="./index.html">Inicio</a>
+          <a href="./membresia.html">Membresía</a>
+          <a href="./aprende.html">Aprende</a>
+          <a href="./como-funciona.html">Cómo funciona</a>
+          <a href="https://www.elmenudocuenta.com/legal">Legal</a>
+          <a href="./ayuda.html" aria-current="page">Ayuda</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="nav-register" href="https://app.elmenudocuenta.com/register">Regístrate</a>
+          <a class="button solid" href="https://app.elmenudocuenta.com/users/log_in">Ingresar</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido" class="help">
+    <section class="help-hero" aria-labelledby="ayuda-title">
+      <div class="wrap help-hero-inner">
+        <h1 id="ayuda-title">¿En qué te podemos ayudar?</h1>
+        <p>Encuentra respuestas sobre tu cuenta, membresía e inversiones.</p>
+        <form class="help-search" role="search" aria-label="Buscar en el centro de ayuda" hidden>
+          <label for="help-query">Busca una pregunta o un tema</label>
+          <div class="help-search-box">
+            <input type="search" id="help-query" placeholder="Ej. contraseña, depósitos o retiro" autocomplete="off">
+            <button class="button solid" type="submit">Buscar</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="wrap help-contact" aria-label="Contacta a El Menudo Cuenta">
+      <a class="help-channel" href="mailto:tech@elmenudocuenta.com">
+        <span class="help-channel-icon help-email-icon" aria-hidden="true"></span>
+        <span><strong>Correo electrónico</strong><span>tech@elmenudocuenta.com</span></span>
+        <span class="help-arrow" aria-hidden="true">↗</span>
+      </a>
+      <a class="help-channel" href="https://wa.me/message/P5RVRV7B3XENP1">
+        <span class="help-channel-icon help-message-icon" aria-hidden="true"></span>
+        <span><strong>WhatsApp</strong><span>Escríbenos por WhatsApp</span></span>
+        <span class="help-arrow" aria-hidden="true">↗</span>
+      </a>
+    </section>
+
+    <section class="wrap help-faq" id="preguntas" aria-labelledby="help-faq-title">
+      <div class="help-faq-heading">
+        <h2 id="help-faq-title" tabindex="-1">Preguntas frecuentes</h2>
+        <div class="help-filter" hidden>
+          <label for="help-topic">Tema</label>
+          <select id="help-topic">
+            <option value="">Todos los temas</option>
+            <option value="sobre-emc">Sobre nosotros</option>
+            <option value="suscripcion">Suscripción</option>
+            <option value="acceso">Acceso</option>
+            <option value="abrir-cuenta">Abrir cuenta</option>
+            <option value="depositos">Depositar dinero</option>
+            <option value="inversiones">Inversiones</option>
+            <option value="futuro">Futuro</option>
+            <option value="portafolios">Portafolios</option>
+            <option value="aprende">Aprende</option>
+          </select>
+        </div>
+      </div>
+      <p class="help-results" role="status" aria-atomic="true"></p>
+      <div class="help-empty" hidden>
+        <p>Prueba con otra palabra o elige otro tema.</p>
+        <button class="button outline" type="button">Ver todas las preguntas</button>
+      </div>
+      <div class="help-topics">
+        <section class="help-topic" data-topic="sobre-emc" aria-labelledby="tema-sobre-emc">
+          <h3 id="tema-sobre-emc">Sobre nosotros</h3>
+          <details>
+            <summary>¿Por qué El Menudo Cuenta?</summary>
+            <div class="help-answer"><p>Nuestra comunidad en EE.UU. enfrenta un serio problema: el bajo nivel de ahorro y riqueza.  </p><br><p>Claro, poca educación financiera, la información que nos dan es complicada y nos ignoran porque no somos ricos o no hablamos el mismo idioma. Razones suficientes que explican el bajo nivel de ahorro y riqueza.  </p><br><p>Nosotros creemos fielmente que invertir es una de las maneras más efectivas de hacer riqueza. Necesitamos que sea fácil y accesible para cada uno, no importa cuán pequeña sea su riqueza. Necesitamos empezar a construir un futuro mejor poco a poco, menudo a menudo.  </p><br><p>Así nace El Menudo Cuenta. Nuestra misión es simple: velar por los mejores intereses financieros del hispano de a pie. ¿Cómo? Empoderándolos con conocimiento y acceso a la micro inversión para que tomen mejores decisiones y que sean ellos los que salgan ganando.  </p><br><p>Nosotros creemos fielmente que cada uno puede construir riqueza sin importar el tamaño de la cartera, el nivel de educación, la raza o qué hacen para ganarse la vida.</p></div>
+          </details>
+          <details>
+            <summary>¿Por qué enfocarse en los hispanos?</summary>
+            <div class="help-answer"><p>Los hispanos tienen muy poca exposición a activos financieros. Los activos financieros suman tan sólo un 10 por ciento de sus tenencias de activos a nivel total (incluyendo el valor de sus viviendas, cuentas bancarias y bonos), mientras que para la población blanca no hispana, la exposicion se aproxima a cerca del 25 porciento de sus activos totales. </p><br><p>¿Dónde está el grueso de los ahorros? Está centrado en instrumentos monetarios y bienes raíces.  La exposición sumamente baja a las acciones, por parte de la comunidad hispana, supone perderse la valiosa oportunidad de participar en el sector de inversión el cual históricamente ha sido el más importante en la acumulación de valor para retiro.</p></div>
+          </details>
+          <details>
+            <summary>¿Cómo funciona un robo-advisor?</summary>
+            <div class="help-answer"><p>Un <strong>robo-advisor</strong> es un servicio de inversión que utiliza tecnología para ayudarte a invertir de forma sencilla y automatizada.</p><br><p>En <strong>El Menudo Cuenta</strong>, primero conocemos tu situación financiera, tus objetivos y tu tolerancia al riesgo. Con esa información, se te asigna un <strong>portafolio de inversión acorde con tu perfil</strong>.</p><br><p>Cuando depositas dinero, <strong>nosotros nos encargamos de invertirlo y administrar el portafolio por ti</strong>. Tu inversión se diversifica a través de ETFs que pueden incluir acciones, bonos y otros activos, y el portafolio puede rebalancearse cuando sea necesario.</p><br><p>Tú no tienes que escoger ni comprar inversiones individualmente. Desde la app puedes <strong>dar seguimiento a tu portafolio y al valor de tu inversión</strong>.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_c69265b8b6bc414490624748215c584d~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_c69265b8b6bc414490624748215c584d~mv2.png" alt="Guía visual · ¿Cómo funciona un robo-advisor?" loading="lazy">Ver infografía original</a><br><p>*Para saber más sobre nuestra filosofía de inversiones ver &quot;<a href="https://www.elmenudocuenta.com/legal">EMC Investment Philosophy</a>&quot; en la sección de Legal.</p></div>
+          </details>
+        </section>
+        <section class="help-topic" data-topic="suscripcion" aria-labelledby="tema-suscripcion">
+          <h3 id="tema-suscripcion">Suscripción</h3>
+          <details>
+            <summary>¿Por qué solo estas cuentas?</summary>
+            <div class="help-answer"><p>Todas ellas nacen de una necesidad económica: necesitamos invertir en activos financieros para hacer crecer nuestro patrimonio a través del tiempo.  </p><br><p>Necesitamos ahorrar para invertir. Como primer estadio de nuestro camino a la independencia financiera necesitamos tener un lugar para estacionar el efectivo que acumulamos. </p><br><p>De ahí comenzamos a mover el dinero a las otras canastas: acumular para la jubilación, acumular activos financieros que hagan crecer el valor de lo acumulado y acumular para las siguientes generaciones. Por eso Inversiones y Futuro.  </p><br><p>O sea, que las cuentas nacen de la necesidad económica que todos tenemos de hacer crecer nuestro patrimonio y lograr llegar a la independencia financiera.</p></div>
+          </details>
+          <details>
+            <summary>¿Podré entenderlo sin previa experiencia?</summary>
+            <div class="help-answer"><p>Por supuesto. El contenido esta hecho pensando en ti. El lema de nosotros es: “Ser simple, pero no simplista”. Lo que más nos interesa es que aprendas los fundamentos que toda persona debe saber para estar más confiado en el manejo de sus finanzas.  </p><br><p>Estamos conscientes del reto: vidas ocupadas, poder acceder fácil y rápido al contenido sin complicaciones.  </p><br><p>Por eso, combinando las millones de horas de conocimiento y experiencia de nuestros fundadores, hemos desarrollado un contenido donde usamos las herramientas a nuestro alcance para ser más efectivo al momento de llevarte el mensaje.  </p><br><p>Porque lo que queremos es que estés mejor informado. Todos ganamos cuando sabemos más.</p></div>
+          </details>
+          <details>
+            <summary>¿Cómo opera El Menudo Cuenta?</summary>
+            <div class="help-answer"><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_c69265b8b6bc414490624748215c584d~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_c69265b8b6bc414490624748215c584d~mv2.png" alt="Guía visual · ¿Cómo opera El Menudo Cuenta?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Cuáles son los planes en MC?</summary>
+            <div class="help-answer"><p>MC se creó para brindar a todos las herramientas para generar riqueza. Ya sea que sea nuevo en invertir o planificar el futuro de su familia, agrupamos nuestros productos, herramientas y educación en distintos niveles de suscripción, cada uno seleccionado para conocerlo en cualquier etapa de la vida en la que se encuentre.</p><br><p>MC ofrece dos niveles de suscripción diferentes para las necesidades financieras de cada persona.</p><br><p><strong>MC Básico- $5/mes</strong></p><p>Este nivel incluye:</p><ul><li><p>1 cuenta de inversiones o retiro</p></li><li><p>Opción de invertir en fondos diversificados</p></li><li><p>Rebalanceo y reinversión automática</p></li></ul><br><p><strong>MC Premium - $10/mes</strong></p><p>Este nivel incluye:</p><ul><li><p>Múltiples cuentas de inversiones, de retiro o una combinación de ambas</p></li><li><p>Rebalanceo y reinversión automática</p></li><li><p>Portafolios avanzados construidos por expertos</p></li><li><p>Abrir múltiples cuentas</p></li><li><p>Acceso a contenido educativo de inversiones y finanzas personales</p></li></ul><br></div>
+          </details>
+          <details>
+            <summary>¿Diferencias entre cada cuenta?</summary>
+            <div class="help-answer"><p><strong>Inversiones</strong> es una cuenta de inversión normal. Utiliza dólares después de impuestos para invertir sea en acciones, renta fija o en una combinación diversificada de fondos cotizados en bolsa (ETF).</p><br><p><strong>Futuro</strong> son tipos de cuentas de retiro. Tienes IRA tradicional y IRA Roth. Con el IRA tradicional, no pagas impuestos hasta que retiras el dinero y puedes recibir ahora una exención de impuestos sobre cualquier contribución que hagas a la cuenta IRA tradicional. En el caso de cuentas IRA Roth, pagas impuestas antes de invertir, pero el dinero crece y puede retirarse libre de impuestos al llegar a la edad de jubilación.</p></div>
+          </details>
+          <details>
+            <summary>¿Se requiere una inversión mínima para abrir una cuenta?</summary>
+            <div class="help-answer"><p>No se requiere una cantidad mínima para abrir una cuenta MC, pero para comenzar a invertir o ahorrar para la jubilación debes tener fondos en su cuenta. Inversión de solo $ 5, o configurando una inversión recurrente automática, a partir de solo $ 5 por día, semana o mes.</p></div>
+          </details>
+          <details>
+            <summary>¿Qué necesito para empezar?</summary>
+            <div class="help-answer"><p>Conexión a internet o un teléfono móvil.</p><br><p>Para accesar via internet:</p><br><ol><li><p>Ve a <a href="http://elmenudocuenta.com">elmenudocuenta.com</a> y busca en la parte superior el enlace que dice &quot;Regístrate&quot;</p></li><li><p>Haces clic y sigues el proceso </p></li></ol><br><p>Para accesar via móvil: </p><br><ol><li><p>Ve a <a href="https://app.elmenudocuenta.com/register">https://app.elmenudocuenta.com/register</a></p></li><li><p>Haces clic y sigues el proceso </p></li></ol><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_4d8d12c1353c4165bd481bc790702108~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_4d8d12c1353c4165bd481bc790702108~mv2.png" alt="Guía visual · ¿Qué necesito para empezar?" loading="lazy">Ver infografía original</a><p>En ambos casos necesitarás:</p><br><ol><li><p>Una dirección de correo electrónico válida a la que podamos comunicarnos y enviarte periódicamente información sobre tu cuenta.</p></li><li><p>Información de inicio de banca en línea para vincular tus cuentas de banco con MC. (Ten en cuenta que DEBES figurar como propietario titular en la cuenta bancaria)</p></li><li><p>Dirección física: esta debe ser tu dirección permanente, ya que no podemos aceptar un apartado de correos ni una dirección comercial. (Ten en cuenta que podrás designar una dirección postal diferente si es necesario)</p></li><li><p>Número de Seguro Social , ITIN (Número de Identificación Individual),  ID gubernamental (Pasaporte, Licencia, etc.).</p></li><li><p>Información general de tu perfil personal, tales como tus objetivos financieros, ocupación e ingresos. Esto nos ayudará a recomendarte la cartera adecuada.</p></li><li><p>Después de registrarte, es posible que también debas cargar una foto de identificación emitida por el gobierno u otra documentación que nos permita verificar tu identidad.</p></li></ol><br><p>¡Y ya! La mayoría de las cuentas se aprueban dentro de 1 día hábil. Si experimentas un retraso en la aprobación de la cuenta, favor comunícate con nosotros a <a href="mailto:tech@elmenudocuenta.com"><strong>tech@elmenudocuenta.com</strong></a>.</p></div>
+          </details>
+          <details>
+            <summary>¿MC está disponible fuera de los EE. UU.?</summary>
+            <div class="help-answer"><p>Actualmente, MC solo está disponible para ciudadanos estadounidenses y residentes legales que residen actualmente en los Estados Unidos. Se hacen excepciones para el personal activo de las Fuerzas Armadas de EE. UU. que mantienen direcciones en los EE. UU. y se encuentran temporalmente en el extranjero.</p></div>
+          </details>
+        </section>
+        <section class="help-topic" data-topic="acceso" aria-labelledby="tema-acceso">
+          <h3 id="tema-acceso">Acceso</h3>
+          <details>
+            <summary>Me acabo de registrar, ¿cómo verifico mi cuenta?</summary>
+            <div class="help-answer"><p>¡Tu seguridad es nuestra principal preocupación, por lo que tomamos todas las medidas para verificar que tú eres tú! Si toda la información es correcta, generalmente verificamos y aprobamos las cuentas el mismo día. Si hay un retraso, puede ser porque falta información. MC está sujeto a la supervisión regulatoria de FINRA, la SEC y el IRS, por lo que incluso la más mínima inconsistencia puede retrasar el registro.</p><br><p>Tan pronto como sepamos qué información adicional se necesita, te enviaremos una alerta. Verifica el correo electrónico que proporcionaste durante el registro o busca una alerta en la aplicación y te guiaremos a través de algunos pasos para la verificación.</p><br><p>Recuerda que tu seguridad es nuestra principal preocupación.</p></div>
+          </details>
+          <details>
+            <summary>¿Qué sucede si elimino la aplicación MC de mi dispositivo o compro un teléfono nuevo?</summary>
+            <div class="help-answer"><p>MC opera en la nube (internet cloud) y tu cuenta e inversiones seguirán funcionando incluso si eliminas la aplicación u obtienes un nuevo teléfono o dispositivo. Los depósitos recurrentes y las tarifas de suscripción mensuales aún se procesarán, incluso si la aplicación MC no está instalada actualmente.</p></div>
+          </details>
+          <details>
+            <summary>Olvidé mi nombre de usuario</summary>
+            <div class="help-answer"><p>Esas cosas suceden. ¡Nuestro equipo de soporte está aquí para ayudarte! Si olvidaste tu nombre de usuario, contáctanos a <a href="mailto:tech@elmenudocuenta.com">tech@elmenudocuenta.com</a> y envía la información siguiente:</p><br><ol><li><p>Tu nombre y apellido</p></li><li><p>Número de teléfono unido a la cuenta</p></li><li><p>Fecha de nacimiento</p></li><li><p>Tu dirección postal completa registrada con tu cuenta MC
+<br></p></li></ol><p>Si tienes alguna otra pregunta, favor no dudes en comunicarte con nosotros a <a href="mailto:tech@elmenudocuenta.com">tech@elmenudocuenta.com</a> </p></div>
+          </details>
+          <details>
+            <summary>¿Cómo puedo restablecer mi contraseña?</summary>
+            <div class="help-answer"><p>Puedes cambiar o restablecer tu contraseña en cualquier momento utilizando nuestra herramienta '¿Olvidaste tu contraseña?'</p><br><ol><li><p>Toca '¿Olvidaste tu contraseña?' desde la pantalla de inicio de sesión</p></li><li><p>Ingresa tu dirección de correo electrónico y toca 'Recuperar'</p></li><li><p>Abre el correo electrónico y en tu bandeja de entrada* recibirás un código de validación de seis dígitos. Cópialo e ingrésalo en la app.</p></li><li><p>Una vez validado el código, presiona ‘Continuar’ (si te da error presiona ‘Reintentar’ para recibir un código nuevo)</p></li><li><p>Crea tu nueva contraseña (recuerda los requisitos básicos: 12 dígitos que incluya 1 letra mayúscula y 1 carácter especial)</p></li><li><p>Toca ‘Continuar’ y listo ingresa con la nueva contraseña.</p></li></ol><br><p>*Si no recibiste el correo electrónico de restablecimiento de contraseña en tu bandeja de entrada, primero verifica tu carpeta de correo no deseado. Si aún no recibiste el correo electrónico, favor comunícate con tech@elmenudocuenta.com para obtener asistencia adicional. NOTA: para tu seguridad, deberás verificar cierta información personal.</p><br><p>Si conoces tu contraseña actual y deseas cambiarla, favor completa los pasos siguientes:</p><br><p>Móvil</p><br><ol><li><p>Después de iniciar sesión en tu cuenta, toca el menú (avatar) en la esquina superior izquierda de la pantalla</p></li><li><p>Toca 'Configuración'</p></li><li><p>Toca 'Cambiar contraseña' y sigue las indicaciones para finalizar sus cambios</p></li></ol><br><p>Web</p><br><ol><li><p>Después de iniciar sesión en tu cuenta, busca perfil en la mano izquierda de pantalla </p></li><li><p>Toca 'Configuración'</p></li><li><p>Toca 'Cambiar contraseña' y sigue las indicaciones para finalizar sus cambios</p></li></ol></div>
+          </details>
+          <details>
+            <summary>¿Qué hago si no puedo entrar a El Menudo Cuenta?</summary>
+            <div class="help-answer"><p>Si al intentar ingresar aparece un error de conexión o un mensaje como <strong>“The connection for this site is not secure”</strong> o <strong>“ERR_SSL_PROTOCOL_ERROR”</strong>, el problema puede estar relacionado con la red que estás utilizando.</p><br><p>Prueba cambiar de Wi-Fi a datos móviles o conectarte a otra red. Si estás en una computadora, también puedes reiniciar la conexión o probar otro navegador.</p><br><p>Si el problema continúa, contáctanos para ayudarte.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_3979f4505d2a45c5b5086bb0d09a018d~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_3979f4505d2a45c5b5086bb0d09a018d~mv2.png" alt="Guía visual · ¿Qué hago si no puedo entrar a El Menudo Cuenta?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Cómo puedo tener El Menudo Cuenta en la pantalla de inicio de mi teléfono?</summary>
+            <div class="help-answer"><p>Puedes crear un acceso directo a El Menudo Cuenta en la pantalla de inicio de tu <strong>iPhone o Android</strong>, para entrar más rápido sin tener que buscar el sitio cada vez.</p><br><p>El acceso funciona de forma similar a una app y no necesitas descargar nada adicional.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_feb8ae16d2d1455491a0d18a5fe3e56a~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_feb8ae16d2d1455491a0d18a5fe3e56a~mv2.png" alt="Guía visual · ¿Cómo puedo tener El Menudo Cuenta en la pantalla de inicio de mi teléfono?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+        </section>
+        <section class="help-topic" data-topic="abrir-cuenta" aria-labelledby="tema-abrir-cuenta">
+          <h3 id="tema-abrir-cuenta">Abrir cuenta</h3>
+          <details>
+            <summary>¿Quién puede registrarse para obtener una cuenta?</summary>
+            <div class="help-answer"><p>MC está disponible para los residentes de los Estados Unidos que tienen un número de seguro social, número ITIN válido y ID gubernamental válido como pasaporte, licencia. Los usuarios deben tener al menos 18 años para iniciar una suscripción.</p></div>
+          </details>
+          <details>
+            <summary>¿Qué hace que MC sea diferente?</summary>
+            <div class="help-answer"><p>Nuestras carteras de inversión fueron diseñadas con el objetivo de maximizar los rendimientos potenciales bajo un nivel de riesgo seleccionado. No hay montos mínimos de cuenta y no trabajamos a comisión. Nuestro objetivo es exclusivamente brindarle las herramientas para que se cuide financieramente de la mejor manera posible.</p><br><p>En respuesta al pago de una baja tarifa mensual, obtienes:</p><br><ul><li><p>Carteras diversificadas que van de acuerdo a tus perfil de inversionista</p></li><li><p>Reequilibrio automático de carteras</p></li><li><p>Acceso a contenido educativo de primer nivel</p></li><li><p>Accesibilidad sobre la marcha a través de nuestra aplicación móvil y web</p></li><li><p>Soporte de inversión por parte de nuestro equipo con apoyo dedicado</p></li><li><p>Acceso a Inversiones la cual es nuestra cuenta para invertir en una combinación diversificada de fondos cotizados en bolsa (ETF).</p></li><li><p>Acceso a Futuro, una manera fácil de ahorrar para la jubilación</p></li></ul><br><p>El camino hacia la independencia financiera debe ser accesible para todos, por eso hacemos invertir más fácil. Con MC, puedes comenzar temprano e invertir con frecuencia, sin hacer grandes cambios en tu vida cotidiana. De hecho, puedes comenzar con tan solo US$ 5.</p></div>
+          </details>
+          <details>
+            <summary>¿Cómo abro mi cuenta de inversión?</summary>
+            <div class="help-answer"><p>Abrir tu cuenta es sencillo. Después de registrarte en El Menudo Cuenta, deberás verificar tu teléfono, activar tu membresía y completar la solicitud de apertura de tu cuenta de inversión. Una vez que la cuenta sea aprobada, podrás realizar tu primer depósito y comenzar a invertir.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_4d8d12c1353c4165bd481bc790702108~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_4d8d12c1353c4165bd481bc790702108~mv2.png" alt="Guía visual · ¿Cómo abro mi cuenta de inversión?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Qué tan segura está mi información al abrir una cuenta?</summary>
+            <div class="help-answer"><p>Tu seguridad y privacidad son una prioridad. La información que proporcionas se utiliza para verificar tu identidad, cumplir con los requisitos regulatorios y procesar la apertura de tu cuenta de inversión.</p><br><p>Utilizamos medidas de seguridad para proteger tus datos y limitar el acceso a personal autorizado. Además, tu cuenta de inversión está a tu nombre y tus activos se mantienen con nuestro custodio.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_374846e5a1bb46caa2f5358c4a21c499~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_374846e5a1bb46caa2f5358c4a21c499~mv2.png" alt="Guía visual · ¿Qué tan segura está mi información al abrir una cuenta?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Cómo se abre mi cuenta de inversión?</summary>
+            <div class="help-answer"><p>Después de crear tu cuenta en <strong>El Menudo Cuenta</strong> y activar tu membresía, deberás completar la solicitud para abrir tu cuenta de inversión.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_969d4f59d3914edda534bc5f67efb63a~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_969d4f59d3914edda534bc5f67efb63a~mv2.png" alt="Guía visual · ¿Cómo se abre mi cuenta de inversión?" loading="lazy">Ver infografía original</a><p>El proceso incluye tres partes principales: <strong>verificar tu identidad, completar tu perfil financiero y responder preguntas sobre tu experiencia como inversionista</strong>.</p><br><p>Una vez completada, enviaremos tu solicitud de forma segura a la casa de corretaje para su revisión. Durante este proceso, podrían solicitarte información o documentos adicionales para completar la verificación.</p><br><p>Cuando tu cuenta sea aprobada, te notificaremos y podrás realizar tu primer depósito para comenzar a invertir.</p></div>
+          </details>
+        </section>
+        <section class="help-topic" data-topic="depositos" aria-labelledby="tema-depositos">
+          <h3 id="tema-depositos">Depositar dinero</h3>
+          <details>
+            <summary>¿Cómo conecto mi cuenta bancaria?</summary>
+            <div class="help-answer"><p>Para realizar depósitos y retiros, primero debes vincular una cuenta bancaria a tu cuenta de inversión. Desde la app, ve a <strong>Ajustes &gt; Cuentas Bancarias</strong>, selecciona <strong>Agregar cuenta</strong> e ingresa la información solicitada, incluyendo tu Routing Number y Account Number.</p><br><p>Una vez conectada y verificada, podrás utilizarla para realizar depósitos y retiros.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_3fe0b31c362d4bb898e01919084790cd~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_3fe0b31c362d4bb898e01919084790cd~mv2.png" alt="Guía visual · ¿Cómo conecto mi cuenta bancaria?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Por qué tengo que verificar mi cuenta bancaria con microdepósitos?</summary>
+            <div class="help-answer"><p>En algunos casos, para verificar que la cuenta bancaria te pertenece, el custodio enviará <strong>dos pequeños depósitos</strong> a tu banco.</p><br><p>Cuando aparezcan en tus movimientos, anota los dos montos. Luego regresa a El Menudo Cuenta, entra en <strong>“Verifica tu cuenta bancaria”</strong> e ingresa las cantidades exactas para completar la verificación.</p><br><p>También podrías ver un pequeño débito relacionado con el proceso de verificación. No necesitas realizar ninguna acción con ese débito.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_9122c967db334318b61b03d4be81c480~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_9122c967db334318b61b03d4be81c480~mv2.png" alt="Guía visual · ¿Por qué tengo que verificar mi cuenta bancaria con microdepósitos?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Qué hago si no puedo conectar mi cuenta bancaria?</summary>
+            <div class="help-answer"><p>Primero verifica que el <strong>Routing Number</strong> y el <strong>Account Number</strong> estén ingresados correctamente.</p><br><p>Si la conexión aparece como <strong>“Rejected”</strong> aun cuando los datos son correctos, puede deberse a los controles de seguridad o autenticación de tu banco. Puedes intentarlo nuevamente o utilizar otra alternativa para enviar los fondos.</p><br><p>Si el problema continúa, contáctanos y te ayudaremos con los próximos pasos.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_c7834fb829cc40e197d111d8abc30038~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_c7834fb829cc40e197d111d8abc30038~mv2.png" alt="Guía visual · ¿Qué hago si no puedo conectar mi cuenta bancaria?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Cómo hago mi primer depósito?</summary>
+            <div class="help-answer"><p>Una vez que tu cuenta bancaria esté conectada y verificada, ve a <strong>Depositar</strong> en la app, ingresa el monto que deseas transferir, selecciona la cuenta bancaria de origen y confirma el depósito.</p><br><p>Después de enviarlo, podrás darle seguimiento al estado de la transferencia desde la app.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_0af6d956e0a7454fbd33f90dabe15c8d~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_0af6d956e0a7454fbd33f90dabe15c8d~mv2.png" alt="Guía visual · ¿Cómo hago mi primer depósito?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Cuánto tarda un depósito en llegar a mi cuenta de inversión?</summary>
+            <div class="help-answer"><p>Los depósitos por ACH no son inmediatos. Después de iniciar la transferencia, el depósito pasa por diferentes etapas mientras es procesado por tu banco y el custodio.</p><br><p>Generalmente puede tomar <strong>varios días hábiles</strong>, dependiendo de tu banco y del proceso de transferencia. Desde la app podrás ver cuándo el depósito está <strong>en curso, confirmado y disponible para invertir</strong>.</p><br><p>No necesitas hacer nada mientras se procesa. Si necesitamos alguna acción de tu parte, te lo informaremos.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_ab3876e5f8d440d28347d5732ab8f885~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_ab3876e5f8d440d28347d5732ab8f885~mv2.png" alt="Guía visual · ¿Cuánto tarda un depósito en llegar a mi cuenta de inversión?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Qué sucede con mi dinero cuando el depósito está disponible?</summary>
+            <div class="help-answer"><p>Una vez que los fondos están disponibles para invertir, <strong>El Menudo Cuenta se encarga de invertirlos de acuerdo con el portafolio asignado a tu perfil de inversión</strong>.</p><br><p>No tienes que seleccionar acciones, ETFs ni realizar las compras por tu cuenta. Nosotros administramos el proceso por ti.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_40d11d4825a04cc7a270a3a8e1508e7b~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_40d11d4825a04cc7a270a3a8e1508e7b~mv2.png" alt="Guía visual · ¿Qué sucede con mi dinero cuando el depósito está disponible?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Qué pasa si mi depósito es rechazado?</summary>
+            <div class="help-answer"><p>Si un depósito es rechazado, los fondos serán devueltos a la cuenta bancaria de origen. Un rechazo puede ocurrir, por ejemplo, por información bancaria incorrecta, fondos insuficientes u otras restricciones de la institución financiera.</p><br><p>Si necesitas ayuda para identificar la causa o realizar nuevamente el depósito, contáctanos:</p><br><p><strong>WhatsApp:</strong> <a href="https://wa.me/message/P5RVRV7B3XENP1">Escríbenos por WhatsApp</a></p><p><strong>Email:</strong><a href="mailto:tech@elmenudocuenta.com">tech@elmenudocuenta.com</a></p></div>
+          </details>
+          <details>
+            <summary>¿Puedo programar depósitos automáticos?</summary>
+            <div class="help-answer"><p>Sí. En El Menudo Cuenta puedes programar <strong>depósitos recurrentes</strong> para invertir de forma automática y mantener la constancia en tus aportes.</p><br><p>Tú eliges <strong>cuánto quieres depositar, con qué frecuencia y desde qué cuenta bancaria</strong>. Una vez configurado, los depósitos se realizarán automáticamente según las instrucciones que hayas establecido.</p><br><p>También puedes <strong>editar, pausar o cancelar</strong> tus depósitos recurrentes cuando lo necesites.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_5bc8797abf5845f9a9698b86b2ea0ff5~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_5bc8797abf5845f9a9698b86b2ea0ff5~mv2.png" alt="Guía visual · ¿Puedo programar depósitos automáticos?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+        </section>
+        <section class="help-topic" data-topic="inversiones" aria-labelledby="tema-inversiones">
+          <h3 id="tema-inversiones">Inversiones</h3>
+          <details>
+            <summary>¿Qué es Inversiones?</summary>
+            <div class="help-answer"><p>Inversiones es una cuenta de inversión individual que te permite invertir en la bolsa de valores.</p><br><p>La aplicación te permite invertir de forma automática donde nosotros invertimos por ti. </p><br><p>Recomendamos un portafolio acorde a tus objetivos de inversión, horizonte temporal y tolerancia al riesgo manifestados en las respuestas que ofreces en la sección que define tu perfil personal.</p><br><p>Los portafolios diversificados están creados por expertos. Dichos portafolios se ajustarán automáticamente cuando sea posible para ayudar a reducir el impacto de la volatilidad del mercado y mantenerlo en el buen camino.</p><br><p>Una vez que depositas, automáticamente invertimos en el mercado. Nuestros algoritmos monitorean y administran continuamente tu cartera a una fracción del costo de un asesor tradicional. Podrás ir monitoreando tus inversiones a través de la aplicación.</p><p>Nuestras carteras de ETF van desde agresivas (toda la cartera invertida en acciones) hasta conservadoras (toda la cartera invertida en bonos), con una combinación intermedia.</p><br><p>El mismo principio se aplicará para las cuentas Futuro. </p></div>
+          </details>
+          <details>
+            <summary>¿Cuánto dinero necesito para comenzar a invertir?</summary>
+            <div class="help-answer"><p>No se requiere una cantidad mínima para abrir una cuenta MC, pero para comenzar a invertir debes tener fondos en tu cuenta.</p><br><p>Una vez te registras y escoges el plan que va de acuerdo con tus objetivos, puedes comenzar a invertir en cualquier cuenta con solo $5 o configurar una inversión recurrente automática, a partir de solo $5 por día, semana o mes.</p><br><p>La misión es que comiences a construir tu futuro financiero menudo a menudo.</p></div>
+          </details>
+          <details>
+            <summary>¿Cuántas cuentas Inversiones puedo abrir?</summary>
+            <div class="help-answer"><p>Las que quieras. Puedes abrir para ti, pareja, tu hijos. Si deseas abrir más de una cuenta de inversiones con el plan MC Premium puedes hacerlo.</p></div>
+          </details>
+          <details>
+            <summary>¿Cómo abro una cuenta de Inversiones?</summary>
+            <div class="help-answer"><p>Estos son los pasos para abrir una cuenta Inversiones.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_c0c5c5f3a46d446f8c76c80e952e51c4~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_c0c5c5f3a46d446f8c76c80e952e51c4~mv2.png" alt="Guía visual · ¿Cómo abro una cuenta de Inversiones?" loading="lazy">Ver infografía original</a><br><p><em>*En caso que el depósito fuera recurrente tienes la opción de entrar la fecha que quieras o puedes no poner fecha y nosotros entraremos en efecto el día de tu creación, y el mismo día de la semana (para inversiones semanales) o el mismo día del mes (para inversiones mensuales).</em></p></div>
+          </details>
+          <details>
+            <summary>¿Cuál es la diferencia entre Futuro y Inversiones?</summary>
+            <div class="help-answer"><p><strong>MC Inversiones</strong> es una cuenta de inversión normal. Deberás impuestos sobre cualquier ganancia realizada (es decir, donde al vender un título de inversion como acción o bono, el precio de venta supera el costo de adquisición), pero no hay límite en cuanto a cuánto puedes invertir y puedes retirar de tus inversiones en cualquier momento (aunque generalmente pagarás menos impuestos si conservas la inversión más de un año sin realizar ganancias).</p><br><p><strong>MC Futuro</strong> son tipos de cuentas de retiro. Tienes IRA tradicional y IRA Roth. Con el IRA tradicional, no pagas impuestos hasta que retiras el dinero y puedes recibir ahora una exención de impuestos sobre cualquier contribución. Con una Roth IRA, pagas impuestos antes de invertir, pero el dinero crece y puede retirarse libre de impuestos.</p><br><p>Como las IRA están destinadas a ayudar a las personas acumular dinero para su vida posterior al trabajo, el gobierno les otorga ciertos beneficios fiscales.</p><br><p>El dinero que depositas en estas cuentas se invierte de acuerdo a tu preferencia y lo vas monitoreando via web y también via móvil. </p></div>
+          </details>
+          <details>
+            <summary>¿Puedo tener Inversiones y Futuro a la misma vez?</summary>
+            <div class="help-answer"><p>Por supuesto. MC Premium te permite tener ambas cuentas a la misma vez. MC Básico solo permite tener una de las dos.</p><br><p>Con MC Premium tienes más opción de abrir cuentas además de acceder a contenido de conocimiento en el área de inversiones, retiro y finanzas personales.</p><br><p>Si eres un cliente nuevo, puedes empezar registrándote en nuestro nivel de suscripción MC Básico y después cambiarte a MC Premium si lo deseas más adelante.</p></div>
+          </details>
+          <details>
+            <summary>¿Qué pasa con el dinero que deposito en mi cuenta?</summary>
+            <div class="help-answer"><p>Cuando depositas dinero en tu cuenta de inversión, <strong>El Menudo Cuenta se encarga de invertirlo de acuerdo con el portafolio asignado a tu perfil de inversión</strong>. No tienes que seleccionar ni comprar inversiones individualmente.</p><br><p>Tu dinero se invierte en un portafolio diversificado compuesto por ETFs, que pueden incluir acciones, bonos y otros activos. Desde la app puedes darle seguimiento al valor de tu inversión y a tu portafolio.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_40d11d4825a04cc7a270a3a8e1508e7b~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_40d11d4825a04cc7a270a3a8e1508e7b~mv2.png" alt="Guía visual · ¿Qué pasa con el dinero que deposito en mi cuenta?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+        </section>
+        <section class="help-topic" data-topic="futuro" aria-labelledby="tema-futuro">
+          <h3 id="tema-futuro">Futuro</h3>
+          <details>
+            <summary>¿Qué es Futuro?</summary>
+            <div class="help-answer"><p>Futuro es la oportunidad de ahorrar para el retiro. Futuro brinda acceso a dos tipos de cuentas de jubilación individuales (IRA) que ofrecen a los clientes una manera fácil y automatizada de ahorrar para la jubilación. Ofrecemos el IRA Tradicional y el IRA Roth. </p><br><p>Por eso, es momento de aprovechar los posibles beneficios fiscales contribuyendo a una o varias de las cuentas Futuro.	</p></div>
+          </details>
+          <details>
+            <summary>¿Por qué debería invertir a través de una IRA?</summary>
+            <div class="help-answer"><p>Una cuenta IRA de Futuro puede ayudarte a que inviertas en ti y, al mismo tiempo, recibir posibles ventajas fiscales. Por ejemplo, es posible que puedas diferir algunos impuestos hasta la jubilación o incluso pagar menos impuestos.</p><br><p>Y, ¿si tienes una cuenta IRA?. Ningún problema. Puedes tener más de una IRA si calificas.</p></div>
+          </details>
+          <details>
+            <summary>¿Cuánto dinero necesito para abrir una cuenta Futuro?</summary>
+            <div class="help-answer"><p>No se requiere una cantidad mínima para abrir una cuenta Futuro, pero para comenzar a invertir debes tener fondos en tu cuenta.</p><br><p>Una vez te registras y escoges el plan que va de acuerdo con tus objetivos, puedes comenzar a invertir con solo $5 o configurar una inversión recurrente automática, a partir de solo $5 por día, semana o mes.</p></div>
+          </details>
+          <details>
+            <summary>¿Cómo abrir una cuenta Futuro?</summary>
+            <div class="help-answer"><p>Para abrir una cuenta Futuro estos son los pasos.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_b021874910554712acb4a06daed24394~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_b021874910554712acb4a06daed24394~mv2.png" alt="Guía visual · ¿Cómo abrir una cuenta Futuro?" loading="lazy">Ver infografía original</a><p>Desde <strong>Cuentas</strong>, selecciona <strong>Crear cuenta</strong> y luego <strong>Cuenta Futuro</strong>. Antes de continuar, deberás revisar y aceptar el <strong>Contrato de Cuenta de Custodia de Jubilación Individual</strong>.</p><br><p>Después podrás elegir el tipo de cuenta de retiro que deseas abrir entre las opciones disponibles en Futuro, como <strong>IRA Tradicional y IRA Roth. </strong></p><br><p>Una vez que elijas el tipo de cuenta, <strong>continuarás con el proceso de apertura</strong>, donde completarás la información necesaria para configurar tu cuenta, definir tu perfil de inversión y establecer tus aportes.</p><br><p><strong>Importante:</strong> Las cuentas IRA tienen reglas, requisitos de elegibilidad, límites de aportación y posibles consecuencias fiscales. Considera tu situación particular al seleccionar el tipo de cuenta.</p><br><p><em>*En caso de que el depósito fuera recurrente tienes la opción de entrar la fecha que quieras o puedes no poner fecha y nosotros entraremos en efecto el día de tu creación, y el mismo día de la semana (para inversiones semanales) o el mismo día del mes (para inversiones mensuales).</em></p></div>
+          </details>
+          <details>
+            <summary>¿Cuál es la diferencia entre Futuro y Inversiones?</summary>
+            <div class="help-answer"><p><strong>Futuro</strong> son tipos de cuentas de retiro. Tienes IRA tradicional y IRA Roth. Con el IRA tradicional, no pagas impuestos hasta que retiras el dinero y puedes recibir ahora una exención de impuestos sobre cualquier contribución. Con una Roth IRA, pagas impuestos antes de invertir, pero el dinero crece y puede retirarse libre de impuestos.</p><br><p>Como las IRA están destinadas a ayudar a las personas ahorrar dinero para su vida posterior al trabajo, el gobierno les otorga ciertos beneficios fiscales.</p><br><p><strong>Inversiones</strong> es una cuenta de inversión normal. Deberás impuestos sobre cualquier ganancia realizada (es decir, donde al vender un título de inversion como acción o bono, el precio de venta supera el costo de adquisición), pero no hay límite en cuanto a cuánto puedes invertir y puedes retirar de tus inversiones en cualquier momento (aunque generalmente pagarás menos impuestos si conservas la inversión más de un año sin realizar ganancias).</p><br><p>El dinero que depositas en estas cuentas se invierte de acuerdo a tu preferencia. Esto puede ser acciones, ETF, renta fija o en una combinación diversificada de fondos cotizados en bolsa (ETF) escogido por nosotros.</p></div>
+          </details>
+        </section>
+        <section class="help-topic" data-topic="portafolios" aria-labelledby="tema-portafolios">
+          <h3 id="tema-portafolios">Portafolios</h3>
+          <details>
+            <summary>¿Cuáles son las carteras de inversión disponibles actualmente?</summary>
+            <div class="help-answer"><p>Actualmente son cinco:</p><br><ul><li><p>MC Portfolio Corta Duración (Duración de Renta Fija Inferior a 1 año)</p></li><li><p>MC Portfolio Ingresos (Renta Fija, Acciones Preferidas y de Alto Dividendo)</p></li><li><p>MC Portfolio Moderado ( 50% acciones/ 50% Renta Fija)</p></li><li><p>MC Portfolio Moderado Agresivo (Renta fija, Acciones y Alternativos)</p></li><li><p>MC Portfolio Agresivo (Acciones y Alternativos)</p></li></ul><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_c421d1786bd5452bba7ecfa74417caf9~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_c421d1786bd5452bba7ecfa74417caf9~mv2.png" alt="Guía visual · ¿Cuáles son las carteras de inversión disponibles actualmente?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Cómo selecciono un portafolio de inversiones?</summary>
+            <div class="help-answer"><p>Una vez dentro de la aplicación y hayas abierto una de las cuentas (Inversiones, Futuro) se creará un portafolio en función de tus objetivos de inversión, horizonte temporal y tolerancia al riesgo. Una vez determinada tu tolerancia al riesgo, escogemos el portafolio en relación con tu perfil de riesgo.</p><br><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_c421d1786bd5452bba7ecfa74417caf9~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_c421d1786bd5452bba7ecfa74417caf9~mv2.png" alt="Guía visual · ¿Cómo selecciono un portafolio de inversiones?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿Puedo ver un desglose de mi cartera?</summary>
+            <div class="help-answer"><p>Por supuesto. En la pantalla principal de cada cuenta (Inversiones y Futuro), se muestra un desglose de lo que compone tu cartera, cómo funciona tu cartera y en qué estás invirtiendo específicamente.</p><br><p>Verás tu cartera actual y el valor total de tu cartera con un carrusel que muestra una representación visual de tus bonos/acciones/alternativos, desglosadas en función de los porcentajes correspondientes.</p><br><p>Después de eso, verás tus inversiones en las que puedes hacer clic para ver los detalles del fondo para cada ETF que está incluido en tu cartera.</p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_51a4576b230f4ad59221749769da6732~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_51a4576b230f4ad59221749769da6732~mv2.png" alt="Guía visual · ¿Puedo ver un desglose de mi cartera?" loading="lazy">Ver infografía original</a><br><p>Si tienes alguna pregunta o inquietud, favor comunícate con <a href="mailto:tech@elmenudocuenta.com">tech@elmenudocuenta.com</a> </p></div>
+          </details>
+          <details>
+            <summary>¿Con qué frecuencia debo invertir dinero?</summary>
+            <div class="help-answer"><p>Creemos en el poder de las inversiones pequeñas y frecuentes. Es por eso que te ayudamos a comenzar a invertir con tan solo $5. Las inversiones regulares te permiten aprovechar algo llamado promedio de costo en dólares (&quot;dollar cost averaging&quot; en inglés). Invertir en intervalos regulares, con el tiempo, puede ayudarte a capturar mayores ganancias de inversión porque estás comprando más acciones cuando los precios son bajos y menos cuando son altos.</p><br><p>Para obtener más información sobre la táctica de &quot;dollar cost averaging&quot;, en nuestra sección de Aprende (incluida en el Premium) tenemos un curso sobre qué es dollar-cost-averaging y cómo funciona. </p><br><a class="help-figure" href="https://static.wixstatic.com/media/f40967_5bc8797abf5845f9a9698b86b2ea0ff5~mv2.png" aria-label="Infografía original sobre esta pregunta"><img src="https://static.wixstatic.com/media/f40967_5bc8797abf5845f9a9698b86b2ea0ff5~mv2.png" alt="Guía visual · ¿Con qué frecuencia debo invertir dinero?" loading="lazy">Ver infografía original</a><br></div>
+          </details>
+          <details>
+            <summary>¿MC usa inversión pasiva o activa?</summary>
+            <div class="help-answer"><p>Si has leído un poco sobre inversiones, es posible que hayas leído sobre dos enfoques de inversión: pasivo y activo.</p><br><p>La inversión pasiva significa comprar un mercado completo de acciones o bonos, a menudo en proporción a su valor relativo entre sí, en lugar de comprar de forma selectiva (o activa) un conjunto determinado de acciones, bonos y alternativos. La inversión pasiva supone diversificación, tarifas e impuestos más bajos y, en general, mayor retorno por la misma cantidad de riesgo. </p><br><p>La inversión activa está menos diversificada, tiende a tener tarifas e impuestos más altos y puede proporcionar mayor retorno por el mismo riesgo, pero a menudo no obtiene mejores resultados que el mercado. Por estas razones usamos inversiones pasivas en nuestras carteras, complementado con un proceso disciplinado de rebalanceo dinámico alrededor de dichas carteras*.</p><br><p><em>*Para saber más sobre nuestra filosofía de inversiones favor leer: </em><a href="https://www.elmenudocuenta.com/_files/ugd/f40967_2c93061d12ac4967905988680d379b4c.pdf"><strong><em>&quot;EMC Investment Philosophy&quot;</em></strong></a></p></div>
+          </details>
+          <details>
+            <summary>¿Qué debo considerar cuando se está en un mercado bajista?</summary>
+            <div class="help-answer"><p>Recuerda: el mercado de valores puede ser volátil. Sin embargo, cada fase bajista (generalmente acompañada de una recesión económica) en la historia del mercado estadounidense ha terminado en un repunte. </p><br><p>Claro que el rendimiento pasado no garantiza resultados futuros.</p><br><p>Los portafolios de MC están diseñados con el objetivo de capear los altibajos normales del mercado de valores. Es por eso  que tu cartera de MC está diversificada o compuesta de muchos instrumentos diferentes. Cuando algunos instrumentos están en bajas, otros pueden estar altos, para ayudar a equilibrar el rendimiento a lo largo del tiempo.</p><br></div>
+          </details>
+          <details>
+            <summary>¿Están mis inversiones aseguradas?</summary>
+            <div class="help-answer"><p>Si las casas de bolsa fallan, el seguro SIPC protege a los inversionistas hasta $500,000 en valores y hasta $250,000 en efectivo no invertido.</p><br><p>La SIPC es una organización privada sin fines de lucro con mandato federal. Fue creada en el 1970 como parte de la Ley de Protección del Inversionista en Valores (SIPA) de dicho año, la cual buscaba proteger a los inversionistas de la insolvencia de las casas de bolsa.</p><br><p>Visite <a href="https://www.sipc.org/">www.sipc.org</a> para encontrar más información al respecto.</p><br><p>Ahora bien, todas las inversiones implican cierto grado de riesgo. Si tienes la intención de comprar valores es importante que comprendas que podrías perder parte o la totalidad de tu dinero. A diferencia de los depósitos en bancos asegurados por la FDIC y cooperativas de crédito aseguradas por la NCUA, el dinero que inviertes en valores normalmente no está asegurado por el gobierno federal. Podrías perder tu capital, que es la cantidad que has invertido. Eso es cierto incluso si compra tus inversiones a través de un banco.</p><br><p>La recompensa por asumir riesgos es el potencial de un mayor rendimiento de la inversión. Si tienes un objetivo financiero con un horizonte a largo plazo, es probable que ganes más dinero invirtiendo cuidadosamente en categorías de activos con mayor riesgo, como acciones o bonos, en lugar de restringir tus inversiones a activos con menos riesgo, como es el caso de efectivo o cuentas equivalentes a tener efectivo.</p><br><p>Por otro lado, invertir únicamente en efectivo puede ser apropiado para objetivos financieros a corto plazo. La preocupación principal para las personas que invierten en equivalentes de efectivo es el riesgo de inflación, la cual  puede erosionar considerablemente tanto el valor del efectivo así como también el valor de los rendimientos de cuentas corrientes en el transcurso del tiempo.  </p></div>
+          </details>
+          <details>
+            <summary>¿Hay riesgo involucrado en mi inversión?</summary>
+            <div class="help-answer"><p>Sí. Los instrumentos financieros siempre están sujetos a las fluctuaciones del mercado. La volatilidad del mercado puede ser desconcertante, pero también puede ser una oportunidad para los inversores.</p><br><p>Dollar-Cost Averaging (DCA), una estrategia de inversión probada en el tiempo, en realidad puede ayudarte a aprovechar la volatilidad del mercado. DCA es así de fácil: inviertes la misma cantidad de dinero regularmente (diariamente, semanalmente, mensualmente) a lo largo del tiempo.</p><p>Usar DCA significa que, en lugar de tratar de adivinar el mejor momento para invertir, inviertes tu dinero en partes iguales a lo largo del tiempo, a intervalos regulares, independientemente de las subidas y bajadas del mercado. Puedes usar fácilmente esta estrategia, configurando una inversión periódica en tu cartera de MC.</p><br><p>La lección más importante que todo inversionista debe recordar es manenerse firme en el proceso de invertir de forma regular; históricamente, el mercado siempre llega a recuperarse luego de atravezar recesiones; por eso, hay que dar tiempo a las pérdidas para que se recuperen y permitir que la inversión crezca.</p><br><p>Tu cartera de MC se construye y administra teniendo en cuenta la inversión a largo plazo. Aquí hay algunos otros beneficios clave, especialmente en momentos como estos:</p><br><p><strong>Teoría Moderna del Portafolio</strong></p><br><p>Los portafolios MC fueron construidos por expertos, siguiendo los principios de la Teoría Moderna del Portafolio. Esta teoría se utiliza para diseñar carteras destinadas a proporcionar rendimientos máximos para un nivel de riesgo determinado.</p><br><p><strong>Diversificación</strong><strong><em> </em></strong></p><br><p>Las carteras ETF de MC pueden brindar exposición a más de 7,000 acciones y bonos, por lo que nunca todos tus huevos están en una sola canasta. Piénsalo de esta manera: si inviertes todo tu dinero en una empresa y esa empresa quiebra, podrías perderlo todo. Pero si repartes tus inversiones entre 100 empresas y una quiebra, todavía tienes 99 que pueden ayudarte a mantenerte a flote y prosperar. Dividir tu cartera entre una amplia gama de inversiones puede ayudarte a reducir el riesgo y la volatilidad. Eso es diversificación.</p><br><p><strong>Rebalanceo automático</strong></p><br><p>Como sabemos que el mercado fluctúa, creamos tecnología para reequilibrar periódicamente tu cartera para ajustarte a esos cambios y mantener tu diversificación. Supongamos que una cartera se divide equitativamente entre bonos y acciones y, con el tiempo, el mercado sube más para las acciones que para los bonos y tu cartera ahora tiene un 55 % de acciones y un 45 % de bonos: aquí es donde tu cartera se reequilibraría automáticamente, vendiendo algunas acciones para comprar bonos.</p><br><p><strong>Inversión regular</strong></p><br><p>Nuestras funciones de inversión automatizadas, como Inversiones recurrentes, pueden ayudarte a aprovechar los beneficios del promedio de costo en dólares (dollar cost averaging, en inglés) en piloto automático. Nuestro objetivo es ayudarte a invertir de manera fácil y continua en el mercado.</p><p>No podemos hacer que el mercado sea más predecible, pero sí te brindamos las herramientas para ayudarte a aprovechar el mercado de valores a lo largo del tiempo.</p><br><p>Para obtener más información sobre invertir favor ve a la sección de Aprende.</p></div>
+          </details>
+        </section>
+        <section class="help-topic" data-topic="aprende" aria-labelledby="tema-aprende">
+          <h3 id="tema-aprende">Aprende</h3>
+          <details>
+            <summary>¿Por qué la sección de Aprende?</summary>
+            <div class="help-answer"><p>Nosotros creemos fielmente que el acceso a conocimiento es fundamental para que el ahorro y las inversiones sean más fáciles para todos.  </p><br><p>Por eso creamos Aprende.  Es la sección de contenido educativo e informativo donde a través de videos, cursos y artículos te mostramos en un lenguaje simple el mundo de las inversiones para que cada uno esté mejor preparado en la toma de decisiones.</p></div>
+          </details>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand">
+      <div class="wrap footer-row">
+        <div>
+          <a class="brand" href="./index.html" aria-label="El Menudo Cuenta, inicio"><img src="https://static.wixstatic.com/media/f40967_101705cf6d064b42b8f63c5a4bc2c124~mv2.png" alt="" width="218" height="40" loading="lazy"></a>
+          <p>Una moneda no es una moneda, es un inicio.</p>
+        </div>
+        <nav class="socials" aria-label="Redes sociales">
+          <a href="https://www.facebook.com/profile.php?id=61551454593641" aria-label="Facebook"><img src="./images/social-media/facebook.png" alt="" width="72" height="72" loading="lazy"></a>
+          <a href="https://www.instagram.com/elmenudocuenta/" aria-label="Instagram"><img src="./images/social-media/instagram.png" alt="" width="72" height="72" loading="lazy"></a>
+          <a href="https://x.com/elmenudocuenta" aria-label="X"><img src="./images/social-media/x.png" alt="" width="72" height="72" loading="lazy"></a>
+          <a href="https://www.tiktok.com/@elmenudocuenta" aria-label="TikTok"><img src="./images/social-media/tiktok.png" alt="" width="72" height="72" loading="lazy"></a>
+          <a href="https://www.youtube.com/@elmenudocuenta" aria-label="YouTube"><img src="./images/social-media/youtube.png" alt="" width="72" height="72" loading="lazy"></a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <div class="wrap legal-row">
+        <a href="https://www.elmenudocuenta.com/legal">Términos y condiciones · Política de privacidad</a>
+        <span>© 2026 El Menudo Cuenta, LLC. All Rights Reserved</span>
+        <a href="https://www.elmenudocuenta.com/legal">Ver EMC Client Relationship Summary · Form ADV Part 2A Website Disclosure</a>
+      </div>
+    </div>
+    <section class="wrap disclosures" lang="en" aria-labelledby="disclosures-title">
+      <p class="center">Investment products | Not FDIC insured | No bank guarantee | May lose value</p>
+      <h2 class="center" id="disclosures-title">Important Disclosures</h2>
+      <p>Investing involves risk, including loss of principal. Please consider, among other important factors, your investment objectives, risk tolerance and El Menudo Cuenta’s pricing before investing. Investment advisory services offered by El Menudo Cuenta, LLC (EMC), an SEC-registered investment advisor. Brokerage services are provided to clients of EMC by Interactive Brokers, LLC., an SEC-registered broker-dealer and member FINRA/SIPC.</p>
+      <ul>
+        <li>A properly suggested portfolio recommendation is dependent upon current and accurate financial and risk profiles. Clients who have experienced changes to their goals, financial circumstances, or investment objectives, or who wish to modify their portfolio recommendation, should promptly update their information in the EMC app.</li>
+        <li>EMC Subscription Fees are assessed based on the tier of services in which you are enrolled. EMC does not charge transactional fees, commissions or fees based on assets.</li>
+        <li>The ETFs comprising the portfolios charge fees and expenses that will reduce a client’s return. Investors should consider the investment objectives, risks, charges and expenses of the funds carefully before investing. Investment policies, management fees and other information can be found in the individual ETF’s prospectus. Please read each prospectus carefully before investing.</li>
+        <li>Inversiones, an individual investment account which invests in a portfolio of ETFs (exchange traded funds), is recommended to clients based on their investment objectives, time horizon, and risk tolerance.</li>
+        <li>For Individual Retirement Account (either Traditional, or ROTH IRA), please consult your tax advisor with any questions.</li>
+        <li>It is not possible to invest directly in an index. Past performance is no guarantee of future results.</li>
+        <li>EMC reserves the right to restrict or revoke any and all offers at any time.</li>
+        <li>Compounding is the process in which an asset’s earning from either capital gains or interest are reinvested to generate additional earnings over time. It does not ensure positive performance, nor does it protect against loss. EMC clients may not experience compound returns and investment results will vary based on market volatility and fluctuating prices.</li>
+        <li>Diversification and asset allocation do not guarantee a profit, nor do they eliminate the risk of loss of principal.</li>
+        <li>The information contained on this website should not be considered an offer, solicitation of an offer or advice to buy or sell any security or investment product. The information should not be construed as tax or legal advice. Please consult your tax advisor with any questions.</li>
+      </ul>
+      <p>For additional important risks, disclosures, and information, please visit <a href="https://www.elmenudocuenta.com/legal/">elmenudocuenta.com/legal</a>.</p>
+      <p class="center">© 2026 El Menudo Cuenta, LLC.</p>
+    </section>
+  </footer>
+  <div class="emc-chat" data-emc-chat hidden>
+    <button class="chat-launcher" type="button" aria-haspopup="dialog" aria-controls="emc-chat-panel">
+      <span class="chat-icon" aria-hidden="true"><i></i><i></i><i></i></span> Pregúntale a EMC
+    </button>
+    <dialog class="chat-panel" id="emc-chat-panel" aria-labelledby="chat-title">
+      <header class="chat-header">
+        <div><h2 id="chat-title">Pregúntale a EMC</h2><p>Ayuda automatizada en español</p></div>
+        <button class="chat-close" type="button" aria-label="Cerrar chat" autofocus>×</button>
+      </header>
+      <div class="chat-thread" role="log" aria-label="Conversación" aria-live="polite">
+        <p class="chat-answer">Hola. ¿Qué quieres saber sobre El Menudo Cuenta?</p>
+      </div>
+      <div class="chat-topics" aria-label="Preguntas sugeridas">
+        <button type="button" data-topic="start">¿Con cuánto empiezo?</button>
+        <button type="button" data-topic="plans">Ver membresías</button>
+        <button type="button" data-topic="retirement">¿Qué es MC Futuro?</button>
+      </div>
+      <form class="chat-form">
+        <label class="chat-sr" for="chat-question">Escribe tu pregunta</label>
+        <input id="chat-question" name="question" type="text" placeholder="Escribe tu pregunta" maxlength="300" autocomplete="off" required>
+        <button type="submit">Enviar</button>
+      </form>
+      <p class="chat-note">Para ayuda con tu cuenta o un depósito, <a href="https://wa.me/message/P5RVRV7B3XENP1">escribe a soporte por WhatsApp</a>.</p>
+    </dialog>
+  </div>
+</body>
+</html>
