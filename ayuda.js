@@ -74,4 +74,10 @@
   form.hidden = false;
   filter.hidden = false;
   updateResults();
+
+  const linkedQuestion = document.getElementById(window.location.hash.slice(1));
+  if (linkedQuestion?.matches(".help-topic details:not([hidden])")) {
+    linkedQuestion.open = true;
+    linkedQuestion.scrollIntoView({ block: "start" });
+  }
 })();

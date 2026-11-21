@@ -67,6 +67,10 @@
     // Keep the acknowledgement in this page if browser storage is unavailable.
   }
 
+  const availabilityId = "disponibilidad-fuera-eeuu";
+  const availabilityLink = ["Ver disponibilidad en Ayuda", "./ayuda.html?tema=suscripcion#" + availabilityId];
+  let availabilityRequest;
+
   const app = "https://app.elmenudocuenta.com";
   const loginLink = ["Ingresar a la app", app + "/users/log_in"];
   const supportLinks = [
@@ -98,6 +102,9 @@
   };
 
   const intents = [
+    [/\b(?:fuera (?:de|del) (?:los )?(?:ee\s*\.?\s*uu|estados unidos|usa|pais)|en el extranjero|desde el extranjero|desde otro pais|sin (?:residencia|ciudadania))\b/, "availability"],
+    [/\b(?:pued[eo]n?|podria|disponible|aceptan|registr\w*|abrir)\b.*\b(?:vivo|vive|resid\w*|estados unidos|ee\s*\.?\s*uu|usa|puerto rico)\b|\b(?:vivo|vive|resido|reside)\b.*\b(?:pued[eo]n?|podria|abrir|registr\w*)\b/, "availability"],
+    [/\b(?:abrir (?:una |mi |la )?cuenta|registr\w*|disponible)\b.*\bdesde\b(?!\s+(?:la app|mi (?:telefono|celular)|el navegador|mi computadora)\b)/, "availability"],
     [/\b(?:recomiend\w*|mejor)\b.*\b(?:invertir|comprar|vender|accion|etf|cartera|portafolio)\b|(?:debo|deberia) (?:invertir|comprar|vender)|\b(?:que|cual) (?:accion|etf|portafolio|cartera) (?:compro|elijo|me conviene)|cuanto (?:debo|deberia) invertir|\b(?:me conviene|me aconsejas|que me recomiendas)\b/, "personalized"],
     [/\b(?:soporte|whatsapp|agente|asesor humano|reclamo)\b|(?:correo|email) (?:de|del|para) (?:soporte|contacto)|hablar con (?:una persona|alguien)/, "support"],
     [/\b(?:olvid\w*|restablec\w*|recuper\w*|cambi\w*)\b.*\b(?:clave|contrasena)\b|\b(?:clave|contrasena)\b.*\b(?:olvid\w*|restablec\w*|recuper\w*|cambi\w*)\b/, "password"],
@@ -124,6 +131,15 @@
     message.textContent = question;
     const reply = document.createElement("p");
     reply.className = "chat-answer";
+    writeReply(reply, text, links);
+    if (intro.contains(document.activeElement)) thread.focus({ preventScroll: true });
+    intro.hidden = true;
+    thread.append(message, reply);
+    scroll.scrollTop = scroll.scrollHeight;
+    return reply;
+  }
+
+  function writeReply(reply, text, links) {
     reply.textContent = text;
     if (links.length) {
       const actions = document.createElement("span");
@@ -136,9 +152,30 @@
       }
       reply.append(actions);
     }
-    if (intro.contains(document.activeElement)) thread.focus({ preventScroll: true });
-    intro.hidden = true;
-    thread.append(message, reply);
+  }
+
+  async function loadAvailability() {
+    const response = await fetch("./ayuda.html");
+    if (!response.ok) throw new Error("El Centro de Ayuda no está disponible");
+    const template = document.createElement("template");
+    template.innerHTML = await response.text();
+    const answer = template.content.querySelector("#" + availabilityId + " .help-answer p");
+    const text = answer?.textContent.trim();
+    if (!text) throw new Error("No se encontró la respuesta de disponibilidad");
+    return text;
+  }
+
+  async function answerAvailability(question) {
+    const reply = appendQuestion(question, "Consultando el Centro de Ayuda…", []);
+    clearInput();
+    availabilityRequest ??= loadAvailability();
+    try {
+      const text = await availabilityRequest;
+      writeReply(reply, text, [availabilityLink]);
+    } catch {
+      availabilityRequest = undefined;
+      writeReply(reply, "No pude consultar los requisitos de residencia. El equipo de soporte puede orientarte.", [availabilityLink, ...supportLinks]);
+    }
     scroll.scrollTop = scroll.scrollHeight;
   }
 
@@ -208,6 +245,10 @@
       return;
     }
     const match = intents.find(([pattern]) => pattern.test(normalized));
+    if (match?.[1] === "availability") {
+      answerAvailability(question);
+      return;
+    }
     ask(match?.[1] || "unknown", question);
   });
 
