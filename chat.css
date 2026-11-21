@@ -41,10 +41,6 @@ html:has(.chat-panel[open]) { overflow: hidden; }
   height: auto;
   transform: translate(-50%, -50%);
 }
-.chat-launcher .chat-wordmark {
-  border-radius: 999px;
-  background: #fff;
-}
 
 .chat-panel {
   position: fixed;
@@ -82,7 +78,10 @@ html:has(.chat-panel[open]) { overflow: hidden; }
   gap: .4rem;
   font-size: 1.15rem;
 }
-.chat-header .chat-wordmark img { width: 3.5rem; }
+.chat-header .chat-wordmark {
+  border-radius: 999px;
+  background: var(--purple);
+}
 .chat-close {
   display: grid;
   place-items: center;

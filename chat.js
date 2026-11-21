@@ -12,7 +12,7 @@
   const terms = "./images/legal-documents/EMC_Terminos_y_Condiciones_ES.pdf";
   const privacy = "./images/legal-documents/EMC_Politica_de_Privacidad_Espanol.pdf";
 
-  const chatBrand = `<span>Pregúntale a</span> <span class="chat-wordmark"><img src="./images/Logos%20MC%20-Pink%20RGB-61.png" alt="MC" width="4487" height="3513"></span>`;
+  const chatBrand = `<span>Pregúntale a</span> <span class="chat-wordmark"><img src="./images/Logos%20MC%20-Pink%20RGB-59.png" alt="MC" width="4487" height="3513"></span>`;
   launcher.innerHTML = chatBrand;
   panel.innerHTML = `
     <header class="chat-header">
