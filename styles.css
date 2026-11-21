@@ -192,11 +192,11 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
 .socials a { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; }
 .socials img { width: 100%; height: auto; }
 .socials a:hover img { filter: brightness(1.2); }
-.footer-legal { padding-block: 1.3rem; background: #250545; color: #fff; }
+.footer-legal { padding-block: 1.3rem; background: #250545; color: #ded8e6; }
 .legal-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; font-size: .87rem; }
 .legal-row a { text-decoration: none; }
 .legal-row a:hover { text-decoration: underline; }
-.disclosures { padding-block: 2rem; color: #707078; }
+.disclosures { padding-block: 2rem; color: #757579; }
 .disclosures h2 { margin-bottom: 1.35rem; font: inherit; }
 .disclosures ul { margin-block: 1rem; padding-left: 1.35rem; }
 .disclosures > p:last-child { margin-top: 1.4rem; }
