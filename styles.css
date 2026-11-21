@@ -196,7 +196,7 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
 .legal-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: center; font-size: .87rem; }
 .legal-row a { text-decoration: none; }
 .legal-row a:hover { text-decoration: underline; }
-.disclosures { padding-block: 2rem; color: var(--muted); }
+.disclosures { padding-block: 2rem; color: #707078; }
 .disclosures h2 { margin-bottom: 1.35rem; font: inherit; }
 .disclosures ul { margin-block: 1rem; padding-left: 1.35rem; }
 .disclosures > p:last-child { margin-top: 1.4rem; }
@@ -276,6 +276,7 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
   .video-meta p { white-space: nowrap; font-variant-numeric: tabular-nums; }
   .footer-row { flex-direction: column; text-align: center; }
   .footer-row .socials { justify-content: center; }
+  .disclosures { font-size: .9rem; }
 }
 
 .hero-copy { margin-bottom: .35rem; }
