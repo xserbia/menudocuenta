@@ -213,102 +213,66 @@ async function respond(request, env) {
   }
 }
 
-const previewHtml = `<!doctype html>
-<html lang="es">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pregúntale a MC · Prueba interna</title>
-<style>
-  * { box-sizing: border-box; }
-  body { margin: 0; color: #251468; background: #f5f0fc; font: 1rem/1.5 system-ui, sans-serif; }
-  main { display: flex; flex-direction: column; width: min(100%, 40rem); height: 100dvh; margin: auto; background: white; }
-  header, form { padding: 1rem; }
-  header { border-bottom: 1px solid #e6dbf3; }
-  h1 { margin: 0; font-size: 1.25rem; }
-  header p { margin: .25rem 0 0; font-size: .85rem; color: #5b5073; }
-  #thread { flex: 1; overflow: auto; padding: 1rem; }
-  .bubble { width: fit-content; max-width: 92%; margin: 0 0 .75rem; padding: .65rem .9rem; border-radius: 1rem; background: #f5f0fc; overflow-wrap: anywhere; }
-  .user { margin-left: auto; background: #49069e; color: white; }
-  .sources { display: block; margin-top: .4rem; }
-  a { display: inline-block; color: #49069e; margin-right: .75rem; }
-  label { display: block; font-size: .85rem; }
-  .controls { display: flex; gap: .4rem; }
-  input, button { font: inherit; padding: .7rem .9rem; border-radius: 999px; }
-  input { flex: 1; min-width: 0; border: 1px solid #bda8d4; }
-  button { border: 0; background: #49069e; color: white; }
-  button:disabled { opacity: .55; }
-</style>
-<main>
-  <header><h1>Pregúntale a MC</h1><p>Prueba interna con IA. Usa preguntas de ejemplo, sin datos personales.</p></header>
-  <div id="thread" role="log"><p class="bubble">¿En qué te puedo ayudar?</p></div>
-  <form>
-    <label for="question">Tu pregunta</label>
-    <div class="controls"><input id="question" maxlength="500" required autocomplete="off"><button>Enviar</button></div>
-  </form>
-</main>
-<script src="/preview.js" defer></script>
-</html>`;
+const siteChat = "(() => {\n  \"use strict\";\n\n  const widget = document.querySelector(\"[data-emc-chat]\");\n  if (!widget) return;\n  const panel = widget.querySelector(\"dialog\");\n  if (typeof panel.showModal !== \"function\") return;\n\n  const launcher = widget.querySelector(\".chat-launcher\");\n  const viewport = window.visualViewport;\n  const noticeKey = \"emc-chat-aviso-ia-v1\";\n  const terms = \"./images/legal-documents/EMC_Terminos_y_Condiciones_ES.pdf\";\n  const privacy = \"./images/legal-documents/EMC_Politica_de_Privacidad_Espanol.pdf\";\n\n  const chatBrand = `<span>Pregúntale a</span> <span class=\"chat-wordmark\"><img src=\"./images/Logos%20MC%20-Pink%20RGB-61.png\" alt=\"MC\" width=\"4487\" height=\"3513\"></span>`;\n  launcher.innerHTML = chatBrand;\n  panel.innerHTML = `\n    <header class=\"chat-header\">\n      <h2 id=\"chat-title\">${chatBrand}</h2>\n      <button class=\"chat-close\" type=\"button\" aria-label=\"Cerrar chat\" autofocus>×</button>\n    </header>\n    <section class=\"chat-notice\" aria-labelledby=\"chat-notice-title\">\n      <h3 id=\"chat-notice-title\">Antes de empezar</h3>\n      <ul class=\"chat-notice-list\">\n        <li>Este asistente de prueba usa OpenAI para responder tus preguntas. Ofrece información general. Sus respuestas no constituyen asesoramiento de inversión. Invertir implica riesgos, incluida la pérdida del capital.</li>\n        <li>Este chat es para personas de 18 años o más. Evita compartir contraseñas, códigos o datos de tu cuenta.</li>\n      </ul>\n      <p class=\"chat-legal-links\">\n        Consulta los <a href=\"${terms}\" target=\"_blank\" rel=\"noopener\">Términos y condiciones</a>\n        y la <a href=\"${privacy}\" target=\"_blank\" rel=\"noopener\">Política de privacidad</a> de EMC.\n      </p>\n      <button class=\"chat-continue\" type=\"button\">Entendido, continuar</button>\n    </section>\n    <section class=\"chat-conversation\" aria-label=\"Chat\" hidden>\n      <div class=\"chat-scroll\">\n        <div class=\"chat-intro\">\n          <h3 tabindex=\"-1\">¿En qué te puedo ayudar?</h3>\n          <div class=\"chat-topics\" role=\"group\" aria-label=\"Preguntas sugeridas\">\n            <button type=\"button\" data-topic=\"openAccount\">¿Cómo me registro?</button>\n            <button type=\"button\" data-topic=\"plans\">¿Cuánto cuesta la membresía?</button>\n            <button type=\"button\" data-topic=\"deposit\">¿Cómo hago un depósito?</button>\n          </div>\n        </div>\n        <div class=\"chat-thread\" role=\"log\" aria-label=\"Conversación\" aria-live=\"polite\" tabindex=\"-1\"></div>\n      </div>\n      <div class=\"chat-composer\">\n        <form class=\"chat-form\">\n          <label class=\"chat-sr\" for=\"chat-question\">Escribe tu pregunta</label>\n          <input id=\"chat-question\" name=\"question\" type=\"text\" placeholder=\"Escribe tu pregunta\" maxlength=\"300\" autocomplete=\"off\" enterkeyhint=\"send\" required>\n          <button type=\"submit\" aria-label=\"Enviar pregunta\" disabled><span aria-hidden=\"true\">↑</span></button>\n        </form>\n        <p class=\"chat-note\">Información general. Invertir implica riesgos. <a href=\"${terms}\" target=\"_blank\" rel=\"noopener\">Ver términos</a></p>\n      </div>\n    </section>`;\n\n  const notice = panel.querySelector(\".chat-notice\");\n  const conversation = panel.querySelector(\".chat-conversation\");\n  const intro = panel.querySelector(\".chat-intro\");\n  const scroll = panel.querySelector(\".chat-scroll\");\n  const thread = panel.querySelector(\".chat-thread\");\n  const form = panel.querySelector(\"form\");\n  const input = form.elements.question;\n  const send = form.querySelector(\"button\");\n  let acknowledged = false;\n  try {\n    acknowledged = sessionStorage.getItem(noticeKey) === \"1\";\n  } catch {\n    // Keep the acknowledgement in this page if browser storage is unavailable.\n  }\n\n  const supportLinks = [\n    [\"Centro de Ayuda\", \"./ayuda.html#preguntas\"],\n    [\"WhatsApp de soporte\", \"https://wa.me/message/P5RVRV7B3XENP1\"],\n    [\"Correo de soporte\", \"mailto:tech@elmenudocuenta.com\"]\n  ];\n  const messages = [];\n  let pending = false;\n  const privateData = /[^\\s@]+@[^\\s@]+\\.[^\\s@]+|\\b\\d{3}-\\d{2}-\\d{4}\\b|\\b\\d{9,}\\b|(?:contrase[nñ]a|clave|ssn|itin|account number|routing number)\\s*[:=]|(?:c[oó]digo de verificaci[oó]n|mi c[oó]digo es)\\s*[:=]?\\s*\\d{4,8}\\b/i;\n\n  function appendQuestion(question, text, links) {\n    const message = document.createElement(\"p\");\n    message.className = \"chat-message\";\n    message.textContent = question;\n    const reply = document.createElement(\"p\");\n    reply.className = \"chat-answer\";\n    writeReply(reply, text, links);\n    if (intro.contains(document.activeElement)) thread.focus({ preventScroll: true });\n    intro.hidden = true;\n    thread.append(message, reply);\n    scroll.scrollTop = scroll.scrollHeight;\n    return reply;\n  }\n\n  function writeReply(reply, text, links) {\n    reply.textContent = text;\n    if (links.length) {\n      const actions = document.createElement(\"span\");\n      actions.className = \"chat-answer-actions\";\n      for (const [label, href] of links) {\n        const anchor = document.createElement(\"a\");\n        anchor.textContent = label;\n        anchor.href = href;\n        actions.append(anchor);\n      }\n      reply.append(actions);\n    }\n  }\n\n  async function ask(question) {\n    if (!question || pending) return;\n    input.value = \"\";\n    send.disabled = true;\n    if (privateData.test(question)) {\n      appendQuestion(\"Pregunta con datos personales\", \"Escribe tu pregunta sin incluir correos, contraseñas, códigos ni números de cuenta.\", supportLinks);\n      return;\n    }\n\n    pending = true;\n    const user = { role: \"user\", content: question };\n    const reply = appendQuestion(question, \"Consultando las fuentes de EMC…\", []);\n    try {\n      const response = await fetch(\"/api/chat\", {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify({ messages: [...messages, user] })\n      });\n      const result = await response.json();\n      if (response.status === 422) {\n        reply.previousElementSibling.textContent = \"Pregunta con datos personales\";\n        writeReply(reply, result.answer, supportLinks);\n        return;\n      }\n      if (!response.ok || typeof result.answer !== \"string\") throw new Error(\"El chat no está disponible\");\n      const links = result.sources.map(({ title, url }) => {\n        const source = new URL(url);\n        const match = source.pathname.match(/^\\/xserbia\\/menudocuenta\\/[^/]+\\/([a-z-]+\\.html)$/);\n        return [title, match ? \"./\" + match[1] + source.search + source.hash : source.href];\n      });\n      writeReply(reply, result.answer, links);\n      messages.push(user, { role: \"assistant\", content: result.answer });\n      if (messages.length > 6) messages.splice(0, messages.length - 6);\n    } catch {\n      writeReply(reply, \"El asistente no pudo responder en este momento. Puedes volver a intentarlo o consultar Ayuda.\", supportLinks);\n    } finally {\n      pending = false;\n      send.disabled = !input.value.trim();\n      scroll.scrollTop = scroll.scrollHeight;\n    }\n  }\n\n  function updateViewport() {\n    if (!viewport || !panel.open) return;\n    panel.style.setProperty(\"--chat-height\", viewport.height + \"px\");\n    panel.style.setProperty(\"--chat-top\", viewport.offsetTop + \"px\");\n    scroll.scrollTop = scroll.scrollHeight;\n  }\n\n  launcher.addEventListener(\"click\", () => {\n    notice.hidden = acknowledged;\n    conversation.hidden = !acknowledged;\n    panel.showModal();\n    updateViewport();\n    viewport?.addEventListener(\"resize\", updateViewport);\n    viewport?.addEventListener(\"scroll\", updateViewport);\n  });\n\n  panel.querySelector(\".chat-continue\").addEventListener(\"click\", () => {\n    acknowledged = true;\n    try {\n      sessionStorage.setItem(noticeKey, \"1\");\n    } catch {\n      // The conversation remains available until the page is left.\n    }\n    notice.hidden = true;\n    conversation.hidden = false;\n    intro.querySelector(\"h3\").focus();\n  });\n  panel.querySelector(\".chat-close\").addEventListener(\"click\", () => panel.close());\n  panel.addEventListener(\"close\", () => {\n    viewport?.removeEventListener(\"resize\", updateViewport);\n    viewport?.removeEventListener(\"scroll\", updateViewport);\n    launcher.focus();\n  });\n  input.addEventListener(\"input\", () => {\n    send.disabled = pending || !input.value.trim();\n  });\n  panel.querySelectorAll(\"[data-topic]\").forEach((button) => {\n    button.addEventListener(\"click\", () => ask(button.textContent.trim()));\n  });\n  form.addEventListener(\"submit\", (event) => {\n    event.preventDefault();\n    ask(input.value.trim());\n  });\n\n  widget.hidden = false;\n})();\n";
 
-const previewScript = `
-const history = [];
-const thread = document.querySelector("#thread");
-const form = document.querySelector("form");
-const input = document.querySelector("#question");
-const button = form.querySelector("button");
+const siteRoot = "https://raw.githubusercontent.com/xserbia/menudocuenta/c0132313d18fb0d96ca02bdc2a76c35b00d6416c/";
+const siteHeaders = {
+  ...headers,
+  "Content-Security-Policy": "frame-ancestors 'none'; base-uri 'self'; connect-src 'self'"
+};
+const pages = new Set(["index.html", "ayuda.html", "aprende.html", "membresia.html", "como-funciona.html", "legal.html"]);
+const types = {
+  html: "text/html; charset=utf-8",
+  css: "text/css; charset=utf-8",
+  js: "text/javascript; charset=utf-8",
+  pdf: "application/pdf",
+  png: "image/png",
+  webp: "image/webp",
+  avif: "image/avif",
+  jpg: "image/jpeg",
+  jpeg: "image/jpeg",
+  svg: "image/svg+xml",
+  gif: "image/gif",
+  ico: "image/x-icon",
+  woff: "font/woff",
+  woff2: "font/woff2"
+};
 
-function bubble(text, role) {
-  const node = document.createElement("p");
-  node.className = role === "user" ? "bubble user" : "bubble";
-  node.textContent = text;
-  thread.append(node);
-  thread.scrollTop = thread.scrollHeight;
-  return node;
-}
+async function serveSite(request, path) {
+  const file = path === "/" ? "index.html" : path.slice(1);
+  const extension = file.split(".").at(-1).toLowerCase();
+  const isCode = /^[a-z0-9-]+\.(?:css|js)$/.test(file);
+  const isAsset = /^(?:images|fonts)\/[^?#\\]+$/.test(file) &&
+    Object.hasOwn(types, extension) && !["html", "css", "js"].includes(extension);
 
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const question = input.value.trim();
-  if (!question || button.disabled) return;
-  input.value = "";
-  button.disabled = true;
-  const user = { role: "user", content: question };
-  const userBubble = bubble(question, "user");
-  const reply = bubble("Consultando las fuentes de EMC…");
-  try {
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: [...history.slice(-6), user] })
+  if (file === "chat.js") {
+    return new Response(request.method === "HEAD" ? null : siteChat, {
+      headers: { ...siteHeaders, "Content-Type": types.js }
     });
-    const result = await response.json();
-    reply.textContent = result.answer || result.error || "Intenta de nuevo.";
-    if (response.status === 422) userBubble.textContent = "Pregunta con datos personales";
-    if (response.ok) {
-      history.push(user, { role: "assistant", content: result.answer });
-      if (history.length > 6) history.splice(0, history.length - 6);
-    }
-    if (result.sources?.length) {
-      const links = document.createElement("span");
-      links.className = "sources";
-      for (const source of result.sources) {
-        const link = document.createElement("a");
-        link.href = source.url;
-        link.textContent = source.title;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        links.append(link);
-      }
-      reply.append(links);
-    }
-  } catch {
-    reply.textContent = "No pude conectar con el asistente. Intenta de nuevo.";
-  } finally {
-    button.disabled = false;
-    input.focus();
-    thread.scrollTop = thread.scrollHeight;
   }
-});
-`;
+  if (!pages.has(file) && !isCode && !isAsset) {
+    return new Response("Página no disponible.", { status: 404, headers: siteHeaders });
+  }
+
+  // Build the upstream request independently, so Worker credentials stay at this origin.
+  const upstream = new URL(file, siteRoot);
+  if (!upstream.href.startsWith(siteRoot)) return new Response(null, { status: 404, headers: siteHeaders });
+  try {
+    const response = await fetch(upstream, { method: request.method, redirect: "error" });
+    if (!response.ok) {
+      return new Response("No se pudo cargar el archivo de la vista previa.", {
+        status: response.status === 404 ? 404 : 502, headers: siteHeaders
+      });
+    }
+    return new Response(request.method === "HEAD" ? null : response.body, {
+      headers: { ...siteHeaders, "Content-Type": types[extension] }
+    });
+  } catch {
+    return new Response("La vista previa no está disponible. Intenta de nuevo.", {
+      status: 502, headers: siteHeaders
+    });
+  }
+}
 
 export default {
   async fetch(request, env) {
@@ -324,13 +288,8 @@ export default {
     }
 
     const path = new URL(request.url).pathname;
-    if (request.method === "GET" && path === "/") {
-      return new Response(previewHtml, { headers: { ...headers, "Content-Type": "text/html; charset=utf-8" } });
-    }
-    if (request.method === "GET" && path === "/preview.js") {
-      return new Response(previewScript, { headers: { ...headers, "Content-Type": "text/javascript; charset=utf-8" } });
-    }
     if (request.method === "POST" && path === "/api/chat") return respond(request, env);
+    if (request.method === "GET" || request.method === "HEAD") return serveSite(request, path);
     return json({ error: "Ruta no disponible." }, 404);
   }
 };
