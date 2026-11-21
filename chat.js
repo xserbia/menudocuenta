@@ -12,8 +12,8 @@
   const terms = "./images/legal-documents/EMC_Terminos_y_Condiciones_ES.pdf";
   const privacy = "./images/legal-documents/EMC_Politica_de_Privacidad_Espanol.pdf";
 
-  const chatBrand = `<span>Pregúntale a</span> <span class="chat-wordmark"><img src="./images/Logos%20MC%20-Pink%20RGB-59.png" alt="MC" width="4487" height="3513"></span>`;
-  launcher.innerHTML = chatBrand;
+  const chatBrand = (logoVersion) => `<span>Pregúntale a</span> <span class="chat-wordmark"><img src="./images/Logos%20MC%20-Pink%20RGB-${logoVersion}.png" alt="MC" width="4487" height="3513"></span>`;
+  launcher.innerHTML = chatBrand(59);
   panel.insertAdjacentHTML("beforebegin", `
     <div class="chat-desktop-actions" role="group" aria-label="Ayuda y registro">
       <a class="chat-desktop-card chat-desktop-register" href="https://app.elmenudocuenta.com/register">
@@ -30,7 +30,7 @@
   let activeLauncher = launcher;
   panel.innerHTML = `
     <header class="chat-header">
-      <h2 id="chat-title">${chatBrand}</h2>
+      <h2 id="chat-title">${chatBrand(61)}</h2>
       <button class="chat-close" type="button" aria-label="Cerrar chat" autofocus>×</button>
     </header>
     <section class="chat-notice" aria-labelledby="chat-notice-title">
