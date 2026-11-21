@@ -16,15 +16,15 @@
   launcher.innerHTML = chatBrand;
   panel.insertAdjacentHTML("beforebegin", `
     <div class="chat-desktop-actions" role="group" aria-label="Ayuda y registro">
-      <button class="chat-desktop-card chat-desktop-question" type="button" aria-haspopup="dialog" aria-controls="${panel.id}">
-        <span class="chat-wordmark"><img src="./images/Logos%20MC%20-Pink%20RGB-59.png" alt="" width="4487" height="3513"></span>
-        <span class="chat-desktop-label"><strong>Pregúntale a Xavier</strong><small>Asistente automatizado</small></span>
-        <span class="chat-desktop-arrow" aria-hidden="true">↗</span>
-      </button>
       <a class="chat-desktop-card chat-desktop-register" href="https://app.elmenudocuenta.com/register">
         <img class="chat-desktop-brand" src="https://static.wixstatic.com/media/f40967_101705cf6d064b42b8f63c5a4bc2c124~mv2.png" alt="El Menudo Cuenta" width="218" height="40">
         <span class="chat-desktop-cta">Empieza hoy</span>
       </a>
+      <button class="chat-desktop-card chat-desktop-question" type="button" aria-haspopup="dialog" aria-controls="${panel.id}">
+        <span class="chat-wordmark"><img src="./images/Logos%20MC%20-Pink%20RGB-59.png" alt="" width="4487" height="3513"></span>
+        <span class="chat-desktop-label"><strong>Pregúntale a MC</strong><small>Asistente automatizado</small></span>
+        <span class="chat-desktop-arrow" aria-hidden="true">↗</span>
+      </button>
     </div>`);
   const desktopQuestion = widget.querySelector(".chat-desktop-question");
   let activeLauncher = launcher;

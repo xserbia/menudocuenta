@@ -226,9 +226,9 @@ html:has(.chat-panel[open]) { overflow: hidden; }
     bottom: var(--chat-bottom);
     z-index: 9;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     gap: .75rem;
-    width: min(44.75rem, calc(100% - 2.5rem));
+    width: min(22rem, calc(100% - 2.5rem));
   }
   .chat-desktop-card {
     display: flex;
