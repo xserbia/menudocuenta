@@ -1,0 +1,82 @@
+.journey-hero {
+  padding-block: clamp(2.5rem, 6vw, 5.25rem);
+  background: var(--lilac);
+  text-align: center;
+}
+.journey-hero h1 {
+  max-width: 24ch;
+  margin-inline: auto;
+  color: var(--deep);
+  font-size: clamp(2.35rem, 6vw, 4.9rem);
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+.journey-hero p {
+  margin-top: .75rem;
+  color: var(--muted);
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+}
+.journey-flow { padding-block: clamp(2rem, 5vw, 4.25rem); }
+.journey-steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: .85rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.journey-step {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  justify-items: center;
+  gap: .9rem;
+  min-width: 0;
+  padding: 1.15rem .8rem 0;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: #fbf9fe;
+  text-align: center;
+  overflow: hidden;
+}
+.journey-number {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  aspect-ratio: 1;
+  margin: 0 auto .8rem;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: var(--deep);
+  font: 900 1.2rem/1 var(--heading);
+}
+.journey-step h3 { color: var(--purple); font-size: clamp(1.13rem, 2.1vw, 1.45rem); }
+.journey-step p { margin-top: .55rem; color: var(--muted); font-size: .98rem; }
+/* Show the individual phone screens from the existing 1536 × 1024 artwork. */
+.journey-screen {
+  width: min(100%, 11.5rem);
+  aspect-ratio: 232 / 335;
+  background: url("./images/infograficos/tu-camino-hacia-inversion.png") var(--screen-x) 72.13% / 662.069% auto no-repeat;
+}
+.journey-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .7rem;
+  margin-top: clamp(1.7rem, 4vw, 2.75rem);
+}
+@media (max-width: 64rem) {
+  .journey-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 42rem) {
+  .journey-steps { grid-template-columns: minmax(0, 1fr); }
+  .journey-step {
+    grid-template-columns: minmax(0, 1fr) clamp(5.25rem, 29vw, 8rem);
+    grid-template-rows: auto;
+    align-items: center;
+    padding: .85rem .65rem 0 .95rem;
+    text-align: left;
+  }
+  .journey-step-copy { width: 100%; padding-bottom: .85rem; }
+  .journey-number { margin: 0 0 .55rem; width: 2rem; font-size: 1.05rem; }
+  .journey-screen { align-self: end; }
+}
