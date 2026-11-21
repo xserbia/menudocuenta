@@ -7,9 +7,66 @@
   if (typeof panel.showModal !== "function") return;
 
   const launcher = widget.querySelector(".chat-launcher");
+  const mobile = window.matchMedia("(max-width: 46rem)");
+  const viewport = window.visualViewport;
+  const noticeKey = "emc-chat-aviso-v1";
+  const terms = "./images/legal-documents/EMC_Terminos_y_Condiciones_ES.pdf";
+  const privacy = "./images/legal-documents/EMC_Politica_de_Privacidad_Espanol.pdf";
+
+  panel.innerHTML = `
+    <header class="chat-header">
+      <h2 id="chat-title">Pregúntale a EMC</h2>
+      <button class="chat-close" type="button" aria-label="Cerrar chat" autofocus>×</button>
+    </header>
+    <section class="chat-notice" aria-labelledby="chat-notice-title">
+      <h3 id="chat-notice-title">Antes de empezar</h3>
+      <ul class="chat-notice-list">
+        <li>Este asistente automatizado ofrece información general. Sus respuestas no constituyen asesoramiento de inversión. Invertir implica riesgos, incluida la pérdida del capital.</li>
+        <li>Este chat es para personas de 18 años o más. Evita compartir contraseñas, códigos o datos de tu cuenta.</li>
+      </ul>
+      <p class="chat-legal-links">
+        Consulta los <a href="${terms}" target="_blank" rel="noopener">Términos y condiciones</a>
+        y la <a href="${privacy}" target="_blank" rel="noopener">Política de privacidad</a> de EMC.
+      </p>
+      <button class="chat-continue" type="button">Entendido, continuar</button>
+    </section>
+    <section class="chat-conversation" aria-label="Chat" hidden>
+      <div class="chat-scroll">
+        <div class="chat-intro">
+          <h3 tabindex="-1">¿En qué te puedo ayudar?</h3>
+          <div class="chat-topics" role="group" aria-label="Preguntas sugeridas">
+            <button type="button" data-topic="register">¿Cómo me registro?</button>
+            <button type="button" data-topic="plans">¿Cuánto cuesta la membresía?</button>
+            <button type="button" data-topic="deposit">¿Cómo hago un depósito?</button>
+          </div>
+        </div>
+        <div class="chat-thread" role="log" aria-label="Conversación" aria-live="polite" tabindex="-1"></div>
+      </div>
+      <div class="chat-composer">
+        <form class="chat-form">
+          <label class="chat-sr" for="chat-question">Escribe tu pregunta</label>
+          <input id="chat-question" name="question" type="text" placeholder="Escribe tu pregunta" maxlength="300" autocomplete="off" enterkeyhint="send" required>
+          <button type="submit" aria-label="Enviar pregunta" disabled><span aria-hidden="true">↑</span></button>
+        </form>
+        <p class="chat-note">Información general. Invertir implica riesgos. <a href="${terms}" target="_blank" rel="noopener">Ver términos</a></p>
+      </div>
+    </section>`;
+
+  const notice = panel.querySelector(".chat-notice");
+  const conversation = panel.querySelector(".chat-conversation");
+  const intro = panel.querySelector(".chat-intro");
+  const scroll = panel.querySelector(".chat-scroll");
   const thread = panel.querySelector(".chat-thread");
   const form = panel.querySelector("form");
   const input = form.elements.question;
+  const send = form.querySelector("button");
+  let acknowledged = false;
+  try {
+    acknowledged = sessionStorage.getItem(noticeKey) === "1";
+  } catch {
+    // Keep the acknowledgement in this page if browser storage is unavailable.
+  }
+
   const app = "https://app.elmenudocuenta.com";
   const loginLink = ["Ingresar a la app", app + "/users/log_in"];
   const supportLinks = [
@@ -79,35 +136,63 @@
       }
       reply.append(actions);
     }
+    if (intro.contains(document.activeElement)) thread.focus({ preventScroll: true });
+    intro.hidden = true;
     thread.append(message, reply);
-    thread.scrollTop = thread.scrollHeight;
+    scroll.scrollTop = scroll.scrollHeight;
+  }
+
+  function clearInput() {
+    input.value = "";
+    send.disabled = true;
   }
 
   function ask(topic, question) {
     const [text, links] = answers[topic];
     appendQuestion(question, text, links);
-    input.value = "";
+    clearInput();
   }
 
-  launcher.addEventListener("click", () => panel.showModal());
+  function updateViewport() {
+    if (!viewport || !panel.open) return;
+    panel.style.setProperty("--chat-height", viewport.height + "px");
+    panel.style.setProperty("--chat-top", viewport.offsetTop + "px");
+    scroll.scrollTop = scroll.scrollHeight;
+  }
+
+  launcher.addEventListener("click", () => {
+    if (!mobile.matches) return;
+    notice.hidden = acknowledged;
+    conversation.hidden = !acknowledged;
+    panel.showModal();
+    updateViewport();
+    viewport?.addEventListener("resize", updateViewport);
+    viewport?.addEventListener("scroll", updateViewport);
+  });
+
+  panel.querySelector(".chat-continue").addEventListener("click", () => {
+    acknowledged = true;
+    try {
+      sessionStorage.setItem(noticeKey, "1");
+    } catch {
+      // The conversation remains available until the page is left.
+    }
+    notice.hidden = true;
+    conversation.hidden = false;
+    intro.querySelector("h3").focus();
+  });
   panel.querySelector(".chat-close").addEventListener("click", () => panel.close());
-  panel.addEventListener("close", () => launcher.focus());
-  const topics = panel.querySelector(".chat-topics");
-  for (const [topic, label] of [["deposit", "Hacer un depósito"], ["password", "Recuperar acceso"]]) {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.dataset.topic = topic;
-    button.textContent = label;
-    topics.append(button);
-  }
-
-  const note = panel.querySelector(".chat-note");
-  const email = document.createElement("a");
-  email.href = supportLinks[1][1];
-  email.textContent = "correo";
-  const whatsapp = note.querySelector("a");
-  whatsapp.textContent = "WhatsApp";
-  note.replaceChildren("Soporte de EMC por ", whatsapp, " o ", email, ".");
+  panel.addEventListener("close", () => {
+    viewport?.removeEventListener("resize", updateViewport);
+    viewport?.removeEventListener("scroll", updateViewport);
+    if (mobile.matches) launcher.focus();
+  });
+  mobile.addEventListener("change", () => {
+    if (!mobile.matches && panel.open) panel.close();
+  });
+  input.addEventListener("input", () => {
+    send.disabled = !input.value.trim();
+  });
 
   panel.querySelectorAll("[data-topic]").forEach((button) => {
     button.addEventListener("click", () => ask(button.dataset.topic, button.textContent.trim()));
@@ -119,7 +204,7 @@
     const normalized = question.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     if (/\b\d{3}-\d{2}-\d{4}\b|\b\d{9,}\b|[^\s@]+@[^\s@]+\.[^\s@]+|(?:clave|contrasena|ssn|(?:mi )?codigo(?: de verificacion)?)\s*[:=]|(?:mi codigo es|codigo de verificacion)\s+\d{4,8}\b/.test(normalized)) {
       appendQuestion("Pregunta con datos personales", "Por seguridad, evita compartir datos personales aquí. Si necesitas ayuda con tu cuenta, contacta a soporte.", supportLinks);
-      input.value = "";
+      clearInput();
       return;
     }
     const match = intents.find(([pattern]) => pattern.test(normalized));
