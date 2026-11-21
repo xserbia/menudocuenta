@@ -214,9 +214,9 @@ html:has(.chat-panel[open]) { overflow: hidden; }
   body:has(.header .menu.open) .emc-chat { display: none; }
 }
 
-/* Desktop preview for testing the chat. */
+/* Desktop shows only the registration card. */
 @media (min-width: 46.001rem) {
-  .chat-launcher { display: none; }
+  .chat-launcher, .chat-panel { display: none; }
   .chat-desktop-actions {
     position: fixed;
     right: max(1.25rem, env(safe-area-inset-right));
@@ -246,11 +246,8 @@ html:has(.chat-panel[open]) { overflow: hidden; }
     cursor: pointer;
   }
   .chat-desktop-card:hover { background: var(--deep); }
-  .chat-desktop-label { flex: 1; }
-  .chat-desktop-label strong { display: block; font-size: 1.05rem; }
-  .chat-desktop-label small { display: block; margin-top: .2rem; font-size: .8rem; font-weight: 600; }
   .chat-desktop-brand { width: min(52%, 10rem); height: auto; }
-  .chat-desktop-arrow, .chat-desktop-cta {
+  .chat-desktop-cta {
     display: grid;
     place-items: center;
     flex: none;
@@ -259,17 +256,6 @@ html:has(.chat-panel[open]) { overflow: hidden; }
     background: var(--yellow);
     color: var(--ink);
   }
-  .chat-desktop-arrow { width: 2.5rem; font-size: 1.15rem; }
   .chat-desktop-cta { padding: .5rem .85rem; white-space: nowrap; }
 
-  .chat-panel {
-    inset: 0;
-    width: min(34rem, calc(100% - 2rem));
-    height: min(44rem, calc(var(--chat-height, 100dvh) - 2rem));
-    margin: auto;
-    border: 1px solid var(--line);
-    border-radius: 1.5rem;
-    box-shadow: 0 1rem 4rem #25146830;
-  }
-  .chat-panel::backdrop { background: #1e0b3b55; }
 }
