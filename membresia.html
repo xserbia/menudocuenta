@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Membresía | El Menudo Cuenta</title>
+  <meta name="description" content="Compara las membresías Básico y Premium de El Menudo Cuenta y consulta las tarifas mensuales y anuales.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Nunito:wght@700;800;900&display=swap">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./navigation.js" defer></script>
+  <link rel="stylesheet" href="./membresia.css">
+  <script src="./membresia.js" defer></script>
+  <link rel="stylesheet" href="./chat.css">
+  <script src="./chat.js" defer></script>
+  <link rel="icon" type="image/png" sizes="64x64" href="./favicon.png">
+</head>
+<body id="inicio">
+  <a class="skip-link" href="#contenido">Ir al contenido</a>
+  <header class="header">
+    <div class="wrap header-inner">
+      <a class="brand" href="./index.html" aria-label="El Menudo Cuenta, inicio"><img src="./images/emc-logo.webp" alt="" width="540" height="99"></a>
+      <a class="button solid mobile-login" href="https://app.elmenudocuenta.com/users/log_in">Ingresar</a>
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-controls="menu-principal" aria-expanded="false" hidden>
+        <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+      </button>
+      <div class="menu" id="menu-principal">
+        <nav class="nav" aria-label="Navegación principal">
+          <a href="./index.html">Inicio</a>
+          <a href="./membresia.html" aria-current="page">Membresía</a>
+          <a href="./aprende.html">Aprende</a>
+          <a href="./como-funciona.html">Cómo funciona</a>
+          <a href="./legal.html">Legal</a>
+          <a href="./ayuda.html">Ayuda</a>
+        </nav>
+        <div class="nav-actions">
+          <a class="nav-register" href="https://app.elmenudocuenta.com/register">Regístrate</a>
+          <a class="button solid" href="https://app.elmenudocuenta.com/users/log_in">Ingresar</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenido" class="membership">
+    <section class="membership-hero" aria-labelledby="membership-title">
+      <div class="wrap">
+        <div class="membership-heading">
+          <h1 id="membership-title">Elige tu membresía</h1>
+          <p>Compara Básico y Premium y elige cuántas cuentas quieres manejar y qué recursos quieres tener a mano.</p>
+        </div>
+        <fieldset class="billing" hidden>
+          <legend class="membership-sr">Frecuencia de cobro</legend>
+          <label><input type="radio" name="billing" value="monthly" checked><span>Mensual</span></label>
+          <label><input type="radio" name="billing" value="annual"><span>Anual</span></label>
+        </fieldset>
+        <p class="membership-sr" id="billing-status" role="status"></p>
+        <div class="plan-grid">
+          <article class="plan-card plan-basic" data-plan="Básico" data-monthly="500" data-annual="4999" aria-labelledby="basic-title">
+            <div class="plan-intro">
+              <h2 id="basic-title">Básico</h2>
+              <p>Una cuenta para invertir o preparar tu retiro.</p>
+            </div>
+            <div class="plan-body">
+              <p class="plan-price"><span class="currency">US$</span> <strong data-price>5</strong> <span data-period>/ mes</span></p>
+              <p class="plan-billing" data-billing-note>También disponible por US$49.99 al año.</p>
+              <p class="plan-saving" data-saving hidden></p>
+              <a class="button solid plan-cta" href="https://app.elmenudocuenta.com/register">Empezar con Básico</a>
+              <ul class="plan-features">
+                <li>Una cuenta de inversión o de retiro</li>
+                <li>Rebalanceo y reinversión automática</li>
+                <li>Portafolios diseñados por expertos</li>
+              </ul>
+            </div>
+          </article>
+          <article class="plan-card plan-premium" data-plan="Premium" data-monthly="1000" data-annual="9999" aria-labelledby="premium-title">
+            <div class="plan-intro">
+              <h2 id="premium-title">Premium</h2>
+              <p>Varias cuentas para distintas metas, con contenido educativo.</p>
+            </div>
+            <div class="plan-body">
+              <p class="plan-price"><span class="currency">US$</span> <strong data-price>10</strong> <span data-period>/ mes</span></p>
+              <p class="plan-billing" data-billing-note>También disponible por US$99.99 al año.</p>
+              <p class="plan-saving" data-saving hidden></p>
+              <a class="button solid plan-cta" href="https://app.elmenudocuenta.com/register">Empezar con Premium</a>
+              <ul class="plan-features">
+                <li>Múltiples cuentas de inversión, de retiro o ambas</li>
+                <li>Rebalanceo y reinversión automática</li>
+                <li>Portafolios diseñados por expertos</li>
+                <li>Contenido educativo de inversiones y finanzas personales</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+        <p class="pricing-note">Precios en dólares estadounidenses. Selecciona tu membresía y la frecuencia de pago al registrarte. La suscripción y el monto que aportas para invertir son pagos distintos.</p>
+        <a class="compare-jump" href="#comparar">Comparar membresías <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <section class="section wrap membership-compare" id="comparar" aria-labelledby="compare-title">
+      <h2 id="compare-title">¿Qué incluye cada membresía?</h2>
+      <table class="plan-table" aria-labelledby="compare-title">
+        <thead><tr><th scope="col">Beneficio</th><th scope="col">Básico</th><th scope="col">Premium</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Cuentas de inversión o de retiro</th><td>Una</td><td>Múltiples</td></tr>
+          <tr><th scope="row">Rebalanceo y reinversión automática</th><td>Incluido</td><td>Incluido</td></tr>
+          <tr><th scope="row">Portafolios diseñados por expertos</th><td>Incluido</td><td>Incluido</td></tr>
+          <tr><th scope="row">Contenido educativo de la membresía</th><td>No incluido</td><td>Incluido</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section membership-faq" aria-labelledby="billing-faq-title">
+      <div class="wrap">
+        <h2 id="billing-faq-title">Preguntas sobre la membresía</h2>
+        <div class="faq-list">
+          <details name="membership-faq"><summary>¿Cómo se cobra la membresía anual?</summary><p>Pagas el total del año en un solo cargo. El equivalente mensual te ayuda a comparar precios.</p></details>
+          <details name="membership-faq"><summary>¿Cuánto ahorro si pago el año completo?</summary><p>Comparado con 12 pagos mensuales del mismo plan, el pago anual te ahorra US$10.01 en Básico y US$20.01 en Premium.</p></details>
+          <details name="membership-faq"><summary>¿Puedo tener una cuenta de inversión y una de retiro?</summary><p>Con Premium puedes tener cuentas de inversión y de retiro a la vez. Básico incluye una cuenta del tipo que elijas.</p></details>
+          <details name="membership-faq"><summary>¿La membresía incluye mi aporte para invertir?</summary><p>La membresía cubre el servicio. Los aportes que decidas hacer a tu cuenta de inversión o de retiro se manejan por separado.</p></details>
+        </div>
+        <p class="membership-more"><a href="./ayuda.html#preguntas">Ver todas las preguntas frecuentes</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-brand">
+      <div class="wrap footer-row">
+        <div>
+          <a class="brand" href="./index.html" aria-label="El Menudo Cuenta, inicio"><img src="https://static.wixstatic.com/media/f40967_101705cf6d064b42b8f63c5a4bc2c124~mv2.png" alt="" width="218" height="40" loading="lazy"></a>
+          <p>Una moneda no es una moneda, es un inicio.</p>
+        </div>
+        <nav class="socials" aria-label="Redes sociales">
+          <a href="https://www.facebook.com/profile.php?id=61551454593641" aria-label="Facebook"><img src="./images/social-media/facebook.png" alt="" width="72" height="72" loading="lazy"></a>
+          <a href="https://www.instagram.com/elmenudocuenta/" aria-label="Instagram"><img src="./images/social-media/instagram.png" alt="" width="72" height="72" loading="lazy"></a>
+          <a href="https://x.com/elmenudocuenta" aria-label="X"><img src="./images/social-media/x.png" alt="" width="72" height="72" loading="lazy"></a>
+          <a href="https://www.tiktok.com/@elmenudocuenta" aria-label="TikTok"><img src="./images/social-media/tiktok.png" alt="" width="72" height="72" loading="lazy"></a>
+          <a href="https://www.youtube.com/@elmenudocuenta" aria-label="YouTube"><img src="./images/social-media/youtube.png" alt="" width="72" height="72" loading="lazy"></a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <div class="wrap legal-row">
+        <a href="./legal.html#acuerdos">Términos y condiciones · Política de privacidad</a>
+        <span>© 2026 El Menudo Cuenta, LLC. All Rights Reserved</span>
+        <a href="./legal.html#divulgaciones">Ver EMC Client Relationship Summary · Form ADV Part 2A Website Disclosure</a>
+      </div>
+    </div>
+    <section class="wrap disclosures" lang="en" aria-labelledby="disclosures-title">
+      <p class="center">Investment products | Not FDIC insured | No bank guarantee | May lose value</p>
+      <h2 class="center" id="disclosures-title">Important Disclosures</h2>
+      <p>Investing involves risk, including loss of principal. Please consider, among other important factors, your investment objectives, risk tolerance and El Menudo Cuenta’s pricing before investing. Investment advisory services offered by El Menudo Cuenta, LLC (EMC), an SEC-registered investment advisor. Brokerage services are provided to clients of EMC by Interactive Brokers, LLC., an SEC-registered broker-dealer and member FINRA/SIPC.</p>
+      <ul>
+        <li>A properly suggested portfolio recommendation is dependent upon current and accurate financial and risk profiles. Clients who have experienced changes to their goals, financial circumstances, or investment objectives, or who wish to modify their portfolio recommendation, should promptly update their information in the EMC app.</li>
+        <li>EMC Subscription Fees are assessed based on the tier of services in which you are enrolled. EMC does not charge transactional fees, commissions or fees based on assets.</li>
+        <li>The ETFs comprising the portfolios charge fees and expenses that will reduce a client’s return. Investors should consider the investment objectives, risks, charges and expenses of the funds carefully before investing. Investment policies, management fees and other information can be found in the individual ETF’s prospectus. Please read each prospectus carefully before investing.</li>
+        <li>Inversiones, an individual investment account which invests in a portfolio of ETFs (exchange traded funds), is recommended to clients based on their investment objectives, time horizon, and risk tolerance.</li>
+        <li>For Individual Retirement Account (either Traditional, or ROTH IRA), please consult your tax advisor with any questions.</li>
+        <li>It is not possible to invest directly in an index. Past performance is no guarantee of future results.</li>
+        <li>EMC reserves the right to restrict or revoke any and all offers at any time.</li>
+        <li>Compounding is the process in which an asset’s earning from either capital gains or interest are reinvested to generate additional earnings over time. It does not ensure positive performance, nor does it protect against loss. EMC clients may not experience compound returns and investment results will vary based on market volatility and fluctuating prices.</li>
+        <li>Diversification and asset allocation do not guarantee a profit, nor do they eliminate the risk of loss of principal.</li>
+        <li>The information contained on this website should not be considered an offer, solicitation of an offer or advice to buy or sell any security or investment product. The information should not be construed as tax or legal advice. Please consult your tax advisor with any questions.</li>
+      </ul>
+      <p>For additional important risks, disclosures, and information, please visit <a href="./legal.html">elmenudocuenta.com/legal</a>.</p>
+      <p class="center">© 2026 El Menudo Cuenta, LLC.</p>
+    </section>
+  </footer>
+  <div class="emc-chat" data-emc-chat hidden>
+    <button class="chat-launcher" type="button" aria-haspopup="dialog" aria-controls="emc-chat-panel">
+      <span class="chat-icon" aria-hidden="true"><i></i><i></i><i></i></span> Pregúntale a EMC
+    </button>
+    <dialog class="chat-panel" id="emc-chat-panel" aria-labelledby="chat-title">
+      <header class="chat-header">
+        <div><h2 id="chat-title">Pregúntale a EMC</h2><p>Ayuda automatizada en español</p></div>
+        <button class="chat-close" type="button" aria-label="Cerrar chat" autofocus>×</button>
+      </header>
+      <div class="chat-thread" role="log" aria-label="Conversación" aria-live="polite">
+        <p class="chat-answer">Hola. ¿Qué quieres saber sobre El Menudo Cuenta?</p>
+      </div>
+      <div class="chat-topics" aria-label="Preguntas sugeridas">
+        <button type="button" data-topic="start">¿Con cuánto empiezo?</button>
+        <button type="button" data-topic="plans">Ver membresías</button>
+        <button type="button" data-topic="retirement">¿Qué es MC Futuro?</button>
+      </div>
+      <form class="chat-form">
+        <label class="chat-sr" for="chat-question">Escribe tu pregunta</label>
+        <input id="chat-question" name="question" type="text" placeholder="Escribe tu pregunta" maxlength="300" autocomplete="off" required>
+        <button type="submit">Enviar</button>
+      </form>
+      <p class="chat-note">Para ayuda con tu cuenta o un depósito, <a href="https://wa.me/message/P5RVRV7B3XENP1">escribe a soporte por WhatsApp</a>.</p>
+    </dialog>
+  </div>
+</body>
+</html>
