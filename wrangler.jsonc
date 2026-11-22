@@ -2,11 +2,8 @@
   "name": "emc-chatbot-public",
   "main": "emc-chatbot-worker.js",
   "compatibility_date": "2026-11-21",
-  "workers_dev": false,
+  "workers_dev": true,
   "preview_urls": false,
-  "routes": [
-    { "pattern": "chat.elmenudocuenta.com", "custom_domain": true }
-  ],
   "vars": {
     "PUBLIC_CHAT": "true"
   },
