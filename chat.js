@@ -8,7 +8,7 @@
 
   const launcher = widget.querySelector(".chat-launcher");
   const viewport = window.visualViewport;
-  const noticeKey = "emc-chat-aviso-v1";
+  const noticeKey = "emc-chat-aviso-ia-v1";
   const terms = "./images/legal-documents/EMC_Terminos_y_Condiciones_ES.pdf";
   const privacy = "./images/legal-documents/EMC_Politica_de_Privacidad_Espanol.pdf";
 
@@ -30,7 +30,7 @@
     <section class="chat-notice" aria-labelledby="chat-notice-title">
       <h3 id="chat-notice-title">Antes de empezar</h3>
       <ul class="chat-notice-list">
-        <li>Este asistente automatizado ofrece información general. Sus respuestas no constituyen asesoramiento de inversión. Invertir implica riesgos, incluida la pérdida del capital.</li>
+        <li>Cuando usas la IA, tu pregunta se envía a OpenAI para generar una respuesta. El asistente ofrece información general. Sus respuestas no constituyen asesoramiento de inversión. Invertir implica riesgos, incluida la pérdida del capital.</li>
         <li>Este chat es para personas de 18 años o más. Evita compartir contraseñas, códigos o datos de tu cuenta.</li>
       </ul>
       <p class="chat-legal-links">
@@ -348,21 +348,21 @@
     viewport?.removeEventListener("scroll", updateViewport);
     if (!desktop.matches) launcher.focus();
   });
-  input.addEventListener("input", () => {
-    send.disabled = !input.value.trim();
-  });
+  const aiHistory = [];
+  let aiPending = false;
 
-  panel.querySelectorAll("[data-topic]").forEach((button) => {
-    button.addEventListener("click", () => {
-      const question = button.textContent.trim();
-      if (button.dataset.topic === "plans") answerPricing(question);
-      else answerFromHelp(question, button.dataset.topic);
+  function aiSourceLinks(sources) {
+    return sources.flatMap(({ title, url }) => {
+      const source = new URL(url);
+      if (!["https:", "mailto:"].includes(source.protocol)) return [];
+      const page = source.hostname === "raw.githubusercontent.com" &&
+        source.pathname.match(/^\/xserbia\/menudocuenta\/[^/]+\/([a-z-]+\.html)$/);
+      return [[title, page ? "./" + page[1] + source.search + source.hash : source.href]];
     });
-  });
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const question = input.value.trim();
-    if (!question) return;
+  }
+
+  async function askAI(question, topic) {
+    if (!acknowledged || aiPending || !question) return;
     const normalized = normalize(question);
     if (/\b\d{3}-\d{2}-\d{4}\b|\b\d{9,}\b|[^\s@]+@[^\s@]+\.[^\s@]+|(?:clave|contrasena|ssn|(?:mi )?codigo(?: de verificacion)?)\s*[:=]|(?:mi codigo es|codigo de verificacion)\s+\d{4,8}\b/.test(normalized)) {
       appendQuestion("Pregunta con datos personales", "Por seguridad, evita compartir datos personales aquí. Si necesitas ayuda con tu cuenta, contacta a soporte.", supportLinks);
@@ -376,10 +376,50 @@
       return;
     }
 
+    aiPending = true;
+    clearInput();
+    const user = { role: "user", content: question };
+    const reply = appendQuestion(question, "Consultando las fuentes de MC…", []);
+    const message = reply.previousElementSibling;
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: [...aiHistory, user] }),
+        signal: AbortSignal.timeout(22000)
+      });
+      if (response.status === 429) {
+        writeReply(reply, "Hay demasiadas consultas en este momento. Intenta de nuevo en un minuto.", [["Abrir Ayuda", helpPage], ...supportLinks]);
+        return;
+      }
+      if (response.status === 422) {
+        message.textContent = "Pregunta con datos personales";
+        writeReply(reply, "Por seguridad, evita compartir datos personales aquí.", supportLinks);
+        return;
+      }
+      if (!response.ok) throw new Error("La IA no está disponible");
+      const { answer, sources } = await response.json();
+      if (typeof answer !== "string" || !Array.isArray(sources)) throw new Error("Respuesta no disponible");
+      writeReply(reply, answer, aiSourceLinks(sources));
+      aiHistory.push(user, { role: "assistant", content: answer });
+      if (aiHistory.length > 6) aiHistory.splice(0, aiHistory.length - 6);
+    } catch {
+      message.remove();
+      reply.remove();
+      await answerLocally(question, normalized, action, topic);
+    } finally {
+      aiPending = false;
+      send.disabled = !input.value.trim();
+      scroll.scrollTop = scroll.scrollHeight;
+    }
+  }
+
+  function answerLocally(question, normalized, action, topic) {
+    if (topic === "plans") return answerPricing(question);
+    if (topic) return answerFromHelp(question, topic);
     const phrase = words(question).join(" ");
     if (isPricingQuestion(phrase)) {
-      answerPricing(question);
-      return;
+      return answerPricing(question);
     }
 
     const quickReply = /^(?:hola|buenas|buenos dias|y|y que mas|y entonces|que mas|y eso)$/.test(phrase) ? "clarify" :
@@ -390,8 +430,19 @@
       return;
     }
 
-    const topic = faqIntents.find(([pattern]) => pattern.test(normalized))?.[1];
-    answerFromHelp(question, topic, action);
+    const matchedTopic = faqIntents.find(([pattern]) => pattern.test(normalized))?.[1];
+    return answerFromHelp(question, matchedTopic, action);
+  }
+
+  input.addEventListener("input", () => {
+    send.disabled = aiPending || !input.value.trim();
+  });
+  panel.querySelectorAll("[data-topic]").forEach((button) => {
+    button.addEventListener("click", () => askAI(button.textContent.trim(), button.dataset.topic));
+  });
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    askAI(input.value.trim());
   });
 
   widget.hidden = false;

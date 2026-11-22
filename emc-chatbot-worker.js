@@ -234,12 +234,12 @@ function json(value, status = 200) {
 
 const privateData = /[^\s@]+@[^\s@]+\.[^\s@]+|\b\d{3}-\d{2}-\d{4}\b|\b\d{9,}\b|(?:contrase[nñ]a|clave|ssn|itin|account number|routing number)\s*[:=]|(?:c[oó]digo de verificaci[oó]n|mi c[oó]digo es)\s*[:=]?\s*\d{4,8}\b/i;
 
-async function respond(request, env) {
+export async function respond(request, env) {
   if (request.headers.get("Origin") !== new URL(request.url).origin) {
     return json({ error: "Usa el formulario de Pregúntale a MC." }, 403);
   }
   if (!env.OPENAI_API_KEY) {
-    return json({ error: "Falta configurar OPENAI_API_KEY en Cloudflare." }, 503);
+    return json({ error: "El asistente no está disponible en este momento." }, 503);
   }
 
   if (env.PUBLIC_CHAT === "true") {
@@ -299,7 +299,7 @@ async function respond(request, env) {
     if (!response.ok) {
       console.warn("OpenAI API status:", response.status);
       const error = response.status === 401 || response.status === 403
-        ? "Cloudflare no pudo autenticar la solicitud a OpenAI. Revisa la clave y los permisos del proyecto."
+        ? "El asistente no pudo conectarse en este momento."
         : "El asistente no está disponible en este momento. Intenta de nuevo.";
       return json({ error }, 502);
     }
