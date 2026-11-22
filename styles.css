@@ -245,8 +245,9 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
   .hero-grid { grid-template-areas: "intro" "figure" "details"; grid-template-rows: auto; gap: .9rem; text-align: center; padding-block: clamp(1.45rem, 5.5vw, 2.3rem) 1.6rem; }
   .hero-label { display: none; }
   .hero h1 { max-width: 19ch; margin-inline: auto; font-size: clamp(1.8rem, 8.4vw, 2.8rem); text-wrap: balance; }
+  .hero-details { display: flex; flex-direction: column; }
   .hero-copy { margin: .25rem auto .9rem; font-size: 1rem; }
-  .hero-actions { justify-content: center; gap: .45rem .65rem; }
+  .hero-actions { order: -1; justify-content: center; gap: .45rem .65rem; margin-bottom: .75rem; }
   .hero-actions .button { min-width: 0; min-height: 2.75rem; padding-inline: 1rem; }
   .hero-figure img { max-width: 84%; max-height: clamp(14rem, 55svh, 27rem); }
   .mission-grid { grid-template-areas: "heading" "portrait" "copy"; grid-template-rows: auto auto auto; gap: 1.15rem; padding-block: 1.8rem 2.2rem; }
@@ -314,7 +315,7 @@ h2 { font-size: clamp(2rem, 3.6vw, 3.4rem); }
 .account-name { color: var(--purple); font-weight: 500; }
 
 @media (max-width: 46rem) {
-  .hero-fees { margin-bottom: .9rem; }
+  .hero-fees { margin-bottom: 0; }
   .account-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
   .account-phone { width: min(72%, 16rem); }
   .account-cards { gap: .8rem; }
