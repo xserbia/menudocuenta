@@ -356,7 +356,7 @@
       const source = new URL(url);
       if (!["https:", "mailto:"].includes(source.protocol)) return [];
       const page = source.hostname === "raw.githubusercontent.com" &&
-        source.pathname.match(/^\/xserbia\/menudocuenta\/[^/]+\/([a-z-]+\.html)$/);
+        source.pathname.match(/^\/xserbia\/menudocuenta\/[^/]+\/([a-z-]+\.html|images\/legal-documents\/[A-Za-z0-9_-]+\.pdf)$/);
       return [[title, page ? "./" + page[1] + source.search + source.hash : source.href]];
     });
   }
