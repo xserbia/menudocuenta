@@ -429,3 +429,31 @@ body:has(.header .menu.open) .whatsapp-launcher { display: none; }
   .whatsapp-launcher { padding: .45rem; }
   .whatsapp-launcher span { display: none; }
 }
+
+
+/* Preview: continuidad visual entre el encabezado público y la app EMC. */
+.header .brand { width: clamp(10.5rem, 15vw, 13rem); }
+.header .nav-actions .button.solid,
+.header .mobile-login.button.solid {
+  background: #b13396;
+  border-color: #b13396;
+  color: #fff;
+  min-height: 2.75rem;
+  padding-inline: 1.4rem;
+  letter-spacing: 0;
+}
+.header .nav-actions .button.solid:hover,
+.header .mobile-login.button.solid:hover { background: #95277e; }
+@media (max-width: 64rem) {
+  .header .brand { width: min(39vw, 12.75rem); }
+  .header .mobile-login.button.solid {
+    min-height: 2.75rem;
+    padding-inline: clamp(.8rem, 3.6vw, 1.3rem);
+    font-size: .97rem;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 24rem) {
+  .header .brand { width: min(35vw, 10rem); }
+  .header .mobile-login.button.solid { font-size: .87rem; padding-inline: .75rem; }
+}
