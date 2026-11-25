@@ -1,39 +1,542 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&family=Nunito:wght@400;600;700;800&display=swap"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>EMC CRM · Demo</title><style>
-*{box-sizing:border-box}body{margin:0;background:#f5f4f8;color:#24183c;font:15px system-ui,sans-serif}header{background:#fff;padding:22px 5%;border-bottom:1px solid #e4dfed;display:flex;align-items:center;gap:16px}header b{background:#51069c;color:#ffdb35;padding:12px;border-radius:12px;font-size:24px}h1,h2,p{margin:0}h1{font-size:26px}small{color:#756b85}main{max-width:1450px;margin:auto;padding:24px}nav,.panel,.metric{background:white;border:1px solid #e4dfed;border-radius:15px;padding:20px;margin-bottom:16px}nav{display:flex;gap:8px;padding:8px}button,input,select,textarea{font:inherit;border:1px solid #d9d0e8;border-radius:9px;padding:10px;background:white;color:inherit}button{cursor:pointer;color:#51069c;font-weight:600}button.active,button.primary{background:#51069c;color:white}nav button{flex:1;border:0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px}.metric strong{display:block;font-size:32px;color:#51069c}.stage{background:#f1eafa;padding:16px;border-radius:12px;text-align:center;display:flex;flex-direction:column;gap:8px}.stage strong{font-size:26px}.bar{height:7px;background:#ded5ee;border-radius:9px;overflow:hidden}.bar i{display:block;background:#7137b8;height:100%}.notice{padding:12px;background:#fff4d5;border-radius:10px;margin-bottom:16px}.scroll{overflow:auto}table{width:100%;border-collapse:collapse;text-align:left}th,td{padding:12px;border-bottom:1px solid #eee}h2{font-size:20px;margin-bottom:16px}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}dialog{border:1px solid #ddd;border-radius:16px;width:min(540px,95%);padding:24px}dialog::backdrop{background:#20133388}label{display:block;margin:12px 0}label input,label textarea,label select{display:block;width:100%;margin-top:5px} @media(max-width:600px){main{padding:12px}nav button{font-size:12px;padding:8px}}
-body{font-family:Kanit,system-ui,sans-serif}h1,h2,h3{font-family:Nunito,system-ui,sans-serif}.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}.subnav{display:flex;gap:8px;margin-bottom:16px}.subnav button{flex:1}.donut{width:130px;height:130px;border-radius:50%;display:grid;place-items:center}.donut span{background:white;border-radius:50%;width:88px;height:88px;display:grid;place-items:center;font-size:25px;font-weight:bold}.preview{background:#e5eee7;padding:22px;border-radius:12px;min-height:160px;white-space:pre-wrap}.bubble{background:white;padding:16px;border-radius:12px}.template{border:1px solid #e4dfed;padding:16px;border-radius:12px;display:flex;flex-direction:column;gap:12px}dialog{width:min(850px,95%);max-height:90vh;overflow:auto} .muted{color:#756b85}.danger{color:#b42318}.step{font-size:12px;text-align:center;padding:8px;background:#f1eafa;border-radius:8px} @media(max-width:700px){.split{grid-template-columns:1fr}.subnav{flex-wrap:wrap}}</style></head><body><header><b>mc</b><div><h1>EMC CRM</h1><small>Gestión de clientes · El Menudo Cuenta</small></div></header><main><div class="notice">Modo demostración · Datos ficticios · Sin conexión al Admin · No introducir información real.</div><nav><button data-tab="journey" class="active">Journey</button><button data-tab="comms">Comunicaciones</button><button data-tab="clients">Clientes</button></nav><section id="view"></section></main><dialog id="detail"></dialog><script>
-'use strict';
-const stages=['Registro','Suscripción','Solicitud IBKR','Cuenta aprobada','Banco conectado','Primer depósito','Primera inversión'];
-const eligibility=['Por determinar','Calificado','No calificado','En verificación'];
-const rows=Array.from({length:24},(_,i)=>({id:1001+i,name:'Cliente demo '+String(i+1).padStart(2,'0'),stage:[0,0,1,2,3,4,5,6,1,2,0,3][i%12],elig:i%12===0?'No calificado':i%12===1?'Por determinar':'Calificado',days:i%9+1,notes:'',follow:'',channel:'Email'}));
-let tab='journey',filter='Todos',stageFilter=-1,query='';
-const view=document.querySelector('#view'),detail=document.querySelector('#detail');
-function el(tag,txt,cls){const e=document.createElement(tag);if(txt!==undefined)e.textContent=txt;if(cls)e.className=cls;return e}
-function add(parent,tag,txt,cls){const e=el(tag,txt,cls);parent.append(e);return e}
-function btn(parent,txt,fn){const b=add(parent,'button',txt);b.onclick=fn;return b}
-function panel(title){const p=add(view,'div',undefined,'panel');add(p,'h2',title);return p}
-function openTab(t){tab=t;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));render()}
-document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{stageFilter=-1;filter='Todos';query='';openTab(b.dataset.tab)});
-function render(){view.replaceChildren();if(tab==='journey'){const g=add(view,'div',undefined,'grid');[['Registrados',rows.length],['Suscritos',rows.filter(r=>r.stage>=1).length],['Aprobados',rows.filter(r=>r.stage>=3).length],['Bancos conectados',rows.filter(r=>r.stage>=4).length],['Con depósito',rows.filter(r=>r.stage>=5).length],['Invirtiendo',rows.filter(r=>r.stage>=6).length]].forEach(([l,n])=>{const m=add(g,'div',undefined,'metric');add(m,'strong',n);add(m,'span',l)});const p=panel('Embudo del Journey');const sg=add(p,'div',undefined,'grid');stages.forEach((s,i)=>{const n=rows.filter(r=>r.stage>=i).length,now=rows.filter(r=>r.stage===i).length;const c=add(sg,'div',undefined,'stage');add(c,'strong',n);add(c,'span',s);const bar=add(c,'div',undefined,'bar');add(bar,'i').style.width=(100*n/rows.length)+'%';add(c,'small',Math.round(100*n/rows.length)+'% · '+now+' aquí ahora');btn(c,'Ver '+now+' usuarios',()=>{stageFilter=i;openTab('clients')})});add(p,'small','Alcanzaron la etapa incluye quienes avanzaron. Aquí ahora muestra la etapa actual. Datos simulados.');const a=panel('Tiempo promedio en etapa actual');stages.forEach((s,i)=>{const r=rows.filter(x=>x.stage===i);add(a,'p',s+': '+(r.length?(r.reduce((n,x)=>n+x.days,0)/r.length).toFixed(1)+' días':'—'))});return}
-if(tab==='comms'){const p=panel('Segmentos de seguimiento');stages.slice(0,6).forEach((s,i)=>{const n=rows.filter(r=>r.stage===i&&r.elig!=='No calificado').length;const line=add(p,'p',undefined,'filters');btn(line,s+' · '+n,()=>{stageFilter=i;filter='Contactables demo';openTab('clients')})});add(p,'small','No se envían mensajes. El consentimiento real deberá verificarse antes de contactar.');const q=panel('Próximos seguimientos');rows.filter(r=>r.follow).forEach(r=>btn(q,r.follow+' · '+r.name,()=>show(r)));return}
-const p=panel('Clientes');const f=add(p,'div',undefined,'filters');const search=add(f,'input');search.placeholder='Buscar nombre o ID';search.value=query;const sel=add(f,'select');['Todos',...eligibility,'Contactables demo'].forEach(v=>{const o=add(sel,'option',v);o.value=v});sel.value=filter;const st=add(f,'select');['Todas las etapas',...stages].forEach((v,i)=>{const o=add(st,'option',v);o.value=i-1});st.value=stageFilter;const out=add(p,'div',undefined,'scroll');function list(){out.replaceChildren();const t=add(out,'table');const h=add(t,'tr');['ID','Cliente','Elegibilidad','Etapa','Días','Acción'].forEach(v=>add(h,'th',v));rows.filter(r=>(filter==='Todos'||(filter==='Contactables demo'?eligible(r):r.elig===filter))&&(stageFilter<0||r.stage===stageFilter)&&(r.name.toLowerCase().includes(query.toLowerCase())||String(r.id).includes(query))).forEach(r=>{const tr=add(t,'tr');[r.id,r.name,r.elig,stages[r.stage],r.days].forEach(v=>add(tr,'td',v));btn(add(tr,'td'),'Ver ficha',()=>show(r))})}search.oninput=()=>{query=search.value;list()};sel.onchange=()=>{filter=sel.value;list()};st.onchange=()=>{stageFilter=Number(st.value);list()};list()}
-function show(r){detail.replaceChildren();add(detail,'h2',r.name+' · #'+r.id);add(detail,'p',r.elig+' · '+stages[r.stage]);add(detail,'p','Estado operativo de solo lectura (simulado).');const l=add(detail,'label','Canal');const c=add(l,'select');['Email','WhatsApp','Teléfono'].forEach(v=>add(c,'option',v));c.value=r.channel;const d=add(add(detail,'label','Próximo seguimiento'),'input');d.type='date';d.value=r.follow;const n=add(add(detail,'label','Notas ficticias'),'textarea');n.value=r.notes;n.maxLength=500;btn(detail,'Guardar en esta sesión',()=>{r.channel=c.value;r.follow=d.value;r.notes=n.value;detail.close();render()}).className='primary';btn(detail,'Cerrar',()=>detail.close());detail.showModal()}
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EMC CRM</title><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet"><style>
+:root{
+  --font-head:"Space Grotesk",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  --font-body:"Sora",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  --bg:#f6f8fc;
+  --card:#ffffff;
+  --ink:#111827;
+  --muted:#6b7280;
+  --line:#e5e7eb;
+  --blue:#2f66f3;
+  --blue-soft:#eef4ff;
+  --green:#16a34a;
+  --green-soft:#ecfdf3;
+  --orange:#d97706;
+  --orange-soft:#fff7ed;
+  --purple:#7c3aed;
+  --purple-soft:#f5f3ff;
+  --red:#dc2626;
+  --red-soft:#fef2f2;
+  --shadow:0 14px 40px rgba(15,23,18,.07);
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Inter,system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--bg);
+  min-height:100vh;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app{display:block;min-height:100vh}
+.sidebar{
+  background:#fff;
+  border-right:1px solid var(--line);
+  padding:28px 20px;
+  display:flex;
+  flex-direction:column;
+}
+.brand{font-family:"Space Grotesk";font-size:22px;font-weight:700;margin-bottom:34px}
+.brand span{color:var(--blue)}
+.nav-section{font-size:10px;text-transform:uppercase;color:#9ca3af;font-weight:700;margin:20px 12px 8px}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;border-radius:12px;
+  color:#374151;text-decoration:none;font-weight:600;font-size:14px;
+  margin-bottom:4px;
+}
+.nav-item.active{background:var(--blue-soft);color:var(--blue)}
+.nav-item:hover{background:#f8fafc}
+.sidebar-footer{margin-top:auto}
+.logout{color:var(--red);font-weight:600;padding:12px 14px}
+.main{padding:28px 30px 44px}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:26px}
+.topbar h1{font-family:"Space Grotesk";font-size:36px}
+.admin-card{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px 14px;box-shadow:var(--shadow)}
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue);font-weight:800}
+.admin-card small{display:block;color:var(--muted);margin-top:2px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}
+.stat-label{font-size:13px;color:var(--muted);font-weight:600}
+.stat-value{font-size:30px;font-weight:800;margin-top:8px}
+.stat-link{font-size:12px;color:var(--blue);font-weight:700;margin-top:8px}
+.content-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.7fr);gap:18px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden}
+.panel-head{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:1px solid var(--line)}
+.panel-head h2{font-family:"Space Grotesk";font-size:20px}
+.panel-head button{background:none;border:none;color:var(--blue);font-weight:700}
+.searchbar{padding:16px 22px;border-bottom:1px solid var(--line)}
+.searchbar input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fafafa}
+table{width:100%;border-collapse:collapse}
+th,td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:13px}
+th{color:var(--muted);font-weight:700;background:#fbfcfe}
+tbody tr{cursor:pointer;transition:.15s}
+tbody tr:hover{background:#f8fbff}
+.user-cell{display:flex;align-items:center;gap:10px}
+.user-initials{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue);font-weight:800}
+.plan-link{color:var(--blue);font-weight:700}
+.badge{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:11px;font-weight:700}
+.badge.green{background:var(--green-soft);color:var(--green)}
+.badge.orange{background:var(--orange-soft);color:var(--orange)}
+.badge.purple{background:var(--purple-soft);color:var(--purple)}
+.badge.blue{background:var(--blue-soft);color:var(--blue)}
+.agenda-list{padding:8px 18px 18px}
+.agenda-day{font-size:12px;color:var(--muted);font-weight:800;margin:14px 0 8px}
+.meeting{display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:14px;margin-bottom:10px}
+.meeting strong{font-size:13px}
+.meeting small{display:block;color:var(--muted);margin-top:3px}
+.meeting-status{font-size:11px;background:var(--green-soft);color:var(--green);padding:5px 8px;border-radius:999px;font-weight:700}
 
-// Version 2: isolated synthetic workflow.
-rows.forEach((r,i)=>Object.assign(r,{email:'cliente'+r.id+'@example.com',contact:'Sin contactar',history:[],last:'',subscription:r.stage>=1?'Activa (demo)':'Sin activar',account:r.stage>=3?'Aprobada':r.stage>=2?'Pendiente':'No iniciada'}));
-const actions=['Activar suscripción','Completar solicitud IBKR','Revisar estado de apertura','Conectar banco','Realizar primer depósito','Completar activación de inversión','Seguimiento de servicio'];
-const templates=stages.map((s,i)=>({title:actions[i],stage:i,message:'Hola {nombre}, '+['gracias por registrarte en El Menudo Cuenta. ¿Necesitas ayuda para activar tu suscripción?','ingresa a EMC para completar tu solicitud de apertura.','revisa en EMC si tienes tareas pendientes de apertura. Estamos disponibles para ayudarte.','tu cuenta fue aprobada. Ingresa a EMC para revisar cómo conectar tu banco.','si deseas continuar, revisa cómo realizar tu primer depósito en EMC.','¿Necesitas ayuda para completar los pasos para comenzar a invertir?','estamos disponibles para ayudarte con El Menudo Cuenta.'][i],attachment:null}));
-let sub='control',selected=0,templateIndex=0,threshold=7,segment=-1;
-const oldRender=render;
-function selectOptions(parent,items,value){const s=add(parent,'select');items.forEach(([v,l])=>{const o=add(s,'option',l);o.value=v});s.value=value;return s}
-function actionTable(p,items){const wrap=add(p,'div',undefined,'scroll'),t=add(wrap,'table'),head=add(t,'tr');['Cliente','Etapa actual','Días sin avanzar','Acción sugerida','Último contacto','Acción'].forEach(x=>add(head,'th',x));items.sort((a,b)=>b.days-a.days).forEach(r=>{const tr=add(t,'tr');[r.name,stages[r.stage],r.days,actions[r.stage],r.last||'Sin registrar'].forEach((v,i)=>add(tr,'td',v,i===2&&r.days>=threshold?'danger':''));btn(add(tr,'td'),tab==='comms'?'Contactar por WhatsApp':'Abrir ficha',()=>{if(tab==='comms'){selected=rows.indexOf(r);templateIndex=r.stage;sub='wa';render()}else show(r)})});if(!items.length)add(wrap,'p','No hay usuarios en este segmento.')}
-function eligible(r){return r.elig!=='No calificado'&&r.contact!=='No contactar'}
-render=function(){if(tab==='journey'){oldRender();const time=view.lastElementChild;time.remove();const k=panel('Conversión y activación financiera');const kg=add(k,'div',undefined,'grid');const count=i=>rows.filter(r=>r.stage>=i).length;[[0,1,'Registro → suscripción'],[1,3,'Suscripción → aprobación'],[3,5,'Aprobación → depósito'],[5,6,'Depósito → inversión'],[0,6,'Registro → inversión']].forEach(([a,b,l])=>{const m=add(kg,'div',undefined,'metric');add(m,'strong',count(a)?Math.round(100*count(b)/count(a))+'%':'—');add(m,'span',l)});add(k,'small','Montos agregados depositados e invertidos: no disponibles hasta integrar una fuente autorizada.');const split=add(view,'div',undefined,'split');const status=add(split,'div',undefined,'panel');add(status,'h2','Estado de usuarios');const groups=[['Invirtiendo',rows.filter(r=>r.stage>=6).length,'#20a873'],['No elegibles',rows.filter(r=>r.stage<6&&r.elig==='No calificado').length,'#a6a9b3'],['Estancados',rows.filter(r=>r.stage<6&&r.elig!=='No calificado'&&r.days>=threshold).length,'#f4bd37']];groups.push(['En progreso',rows.length-groups.reduce((n,g)=>n+g[1],0),'#793ac4']);let offset=0;const donut=add(status,'div',undefined,'donut');donut.style.background='conic-gradient('+groups.map(g=>{const start=offset;offset+=100*g[1]/rows.length;return g[2]+' '+start+'% '+offset+'%'}).join(',')+')';add(donut,'span',rows.length);groups.forEach(g=>{const p=add(status,'p',g[0]+' · '+g[1]);p.style.borderLeft='5px solid '+g[2];p.style.paddingLeft='8px';p.style.marginTop='8px'});const times=add(split,'div',undefined,'panel');add(times,'h2','Tiempo promedio en etapa actual');stages.forEach((s,i)=>{const a=rows.filter(r=>r.stage===i),n=a.length?a.reduce((sum,r)=>sum+r.days,0)/a.length:0;add(times,'small',s+' · '+n.toFixed(1)+' días');const b=add(times,'div',undefined,'bar');add(b,'i').style.width=n/9*100+'%';b.style.marginBottom='8px'});const p=panel('Usuarios que requieren acción');const f=add(p,'div',undefined,'filters');const s=selectOptions(f,[[3,'3 días o más'],[7,'7 días o más'],[14,'14 días o más']],threshold);s.onchange=()=>{threshold=Number(s.value);render()};const q=add(f,'input');q.placeholder='Buscar cliente';const target=add(p,'div');function draw(){target.replaceChildren();actionTable(target,rows.filter(r=>eligible(r)&&r.stage<6&&r.days>=threshold&&r.name.toLowerCase().includes(q.value.toLowerCase())))}q.oninput=draw;draw();return}
-if(tab==='clients'){oldRender();return}
-view.replaceChildren();const nav=add(view,'div',undefined,'subnav');[['control','Centro de control'],['wa','WhatsApp individual'],['lib','Biblioteca']].forEach(([v,l])=>{const b=btn(nav,l,()=>{sub=v;render()});if(sub===v)b.className='active'});
-if(sub==='control'){const p=panel('¿Dónde están detenidos los usuarios?');const g=add(p,'div',undefined,'grid');stages.slice(0,6).forEach((s,i)=>{const a=rows.filter(r=>eligible(r)&&r.stage===i);const c=add(g,'div',undefined,'stage');add(c,'strong',a.length);add(c,'span',s);btn(c,'Ver usuarios',()=>{segment=i;render()})});const queue=panel(segment<0?'Usuarios que requieren acción':actions[segment]);btn(queue,'Ver todos los pendientes',()=>{segment=-1;render()});actionTable(queue,rows.filter(r=>eligible(r)&&r.stage<6&&(segment<0?r.days>=threshold:r.stage===segment)));return}
-if(sub==='lib'){const p=panel('Biblioteca de WhatsApp');btn(p,'+ Nueva plantilla',()=>editTemplate(-1));const g=add(p,'div',undefined,'grid');g.style.gridTemplateColumns='repeat(auto-fit,minmax(250px,1fr))';templates.forEach((t,i)=>{const c=add(g,'div',undefined,'template');add(c,'small',stages[t.stage]);add(c,'strong',t.title);add(c,'p',t.message);if(t.attachment){const a=add(c,'a',t.attachment.name);a.href=t.attachment.url;a.download=t.attachment.name}btn(c,'Usar',()=>{templateIndex=i;sub='wa';render()});btn(c,'Editar',()=>editTemplate(i))});return}
-const p=panel('WhatsApp individual');add(p,'small','Demostración: no se envían mensajes ni se usan números reales.');const g=add(p,'div',undefined,'split'),left=add(g,'div'),right=add(g,'div');const c=selectOptions(add(left,'label','Cliente'),rows.map((r,i)=>[i,r.name]),selected);const t=selectOptions(add(left,'label','Plantilla'),templates.map((x,i)=>[i,x.title]),templateIndex);const m=add(add(left,'label','Mensaje editable'),'textarea');m.rows=7;m.value=templates[templateIndex].message;const u=add(add(left,'label','Enlace adicional'),'input');u.placeholder='https://elmenudocuenta.com';add(right,'h2','Vista previa');const bubble=add(add(right,'div',undefined,'preview'),'div',undefined,'bubble');function preview(){bubble.textContent=m.value.replaceAll('{nombre}',rows[selected].name)+(u.value?'\n'+u.value:'')}c.onchange=()=>{selected=Number(c.value);templateIndex=rows[selected].stage;t.value=templateIndex;m.value=templates[templateIndex].message;preview()};t.onchange=()=>{templateIndex=Number(t.value);m.value=templates[templateIndex].message;preview()};m.oninput=u.oninput=preview;preview();btn(left,'Copiar mensaje',()=>navigator.clipboard.writeText(bubble.textContent).catch(()=>alert('Selecciona el texto de la vista previa para copiarlo.')));const follow=add(add(left,'label','Próximo seguimiento'),'input');follow.type='date';follow.value=rows[selected].follow;const previousChange=c.onchange;c.onchange=()=>{previousChange();follow.value=rows[selected].follow};btn(left,'Registrar contacto simulado',()=>{const r=rows[selected];if(!eligible(r)){alert('Cliente excluido del seguimiento.');return}r.follow=follow.value;r.last=new Date().toLocaleDateString('es-US');r.contact='Contactado';r.history.push({date:r.last,message:bubble.textContent});alert('Contacto ficticio registrado en esta sesión.')});}
-function editTemplate(i){detail.replaceChildren();const old=templates[i]||{title:'',stage:0,message:''};add(detail,'h2',i<0?'Nueva plantilla':'Editar plantilla');const title=add(add(detail,'label','Título'),'input');title.value=old.title;const stage=selectOptions(add(detail,'label','Etapa'),stages.map((s,j)=>[j,s]),old.stage);const msg=add(add(detail,'label','Mensaje'),'textarea');msg.value=old.message;const file=add(add(detail,'label','Material de apoyo ficticio'),'input');file.type='file';file.accept='image/*,video/*,application/pdf';btn(detail,'Guardar',()=>{if(!title.value.trim()||!msg.value.trim())return;const f=file.files[0];const item={title:title.value,stage:Number(stage.value),message:msg.value,attachment:f?{name:f.name,url:URL.createObjectURL(f)}:old.attachment};if(i<0)templates.push(item);else templates[i]=item;detail.close();render()});btn(detail,'Cancelar',()=>detail.close());detail.showModal()}
-show=function(r){detail.replaceChildren();add(detail,'h2',r.name+' · #'+r.id);add(detail,'p',r.email+' · '+r.elig);const g=add(detail,'div',undefined,'grid');stages.forEach((s,i)=>add(g,'div',(i<r.stage?'✓ ':i===r.stage?'● ':'○ ')+s,'step'));const split=add(detail,'div',undefined,'split');const a=add(split,'div',undefined,'panel');add(a,'h3','Estado de cuenta');[r.subscription,'IBKR: '+r.account,'Banco: '+(r.stage>=4?'Conectado':'Pendiente'),'Depósito: '+(r.stage>=5?'Completado':'Pendiente'),'Inversión: '+(r.stage>=6?'Iniciada':'Pendiente'),'Etapa: '+stages[r.stage]].forEach(x=>add(a,'p',x));const b=add(split,'div',undefined,'panel');add(b,'h3','Actividad');add(b,'p',r.days+' días sin avanzar');add(b,'p','Último contacto: '+(r.last||'Sin registrar'));add(detail,'h3','Acción sugerida');add(detail,'p',actions[r.stage]);btn(detail,'Preparar mensaje',()=>{selected=rows.indexOf(r);templateIndex=r.stage;sub='wa';detail.close();openTab('comms')});const c=selectOptions(add(detail,'label','Estado de contacto'),['Sin contactar','Contactado','Respondió','Esperando respuesta','No interesado','No contactar'].map(x=>[x,x]),r.contact);const d=add(add(detail,'label','Próximo seguimiento'),'input');d.type='date';d.value=r.follow;const n=add(add(detail,'label','Notas de servicio ficticias'),'textarea');n.value=r.notes;add(detail,'h3','Historial de comunicaciones');r.history.forEach(x=>add(detail,'p',x.date+' · '+x.message));if(!r.history.length)add(detail,'small','Sin comunicaciones registradas');btn(detail,'Guardar en esta sesión',()=>{r.contact=c.value;r.follow=d.value;r.notes=n.value;detail.close();render()}).className='primary';btn(detail,'Cerrar',()=>detail.close());detail.showModal()};
-render();
+/* Member modal */
+.overlay{position:fixed;inset:0;background:rgba(15,23,42,.48);display:none;align-items:center;justify-content:center;padding:22px;z-index:50}
+.overlay.open{display:flex}
+.modal{
+  width:min(980px,96vw);
+  max-height:92vh;
+  overflow:auto;
+  background:#fff;border-radius:24px;box-shadow:0 30px 80px rgba(15,23,42,.25);
+}
+.modal-head{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:24px 26px;border-bottom:1px solid var(--line);
+}
+.member-id{display:flex;gap:16px;align-items:center}
+.member-avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--blue-soft);color:var(--blue);font-size:20px;font-weight:800}
+.member-name{font-family:"Space Grotesk";font-size:26px}
+.member-meta{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px;font-size:13px;color:var(--muted)}
+.close-btn{border:none;background:#f3f4f6;width:34px;height:34px;border-radius:50%;font-size:18px}
+.modal-body{padding:22px 26px 26px}
+.member-grid{display:grid;grid-template-columns:1fr 1.15fr .8fr;gap:16px}
+.card{border:1px solid var(--line);border-radius:18px;padding:18px;background:#fff}
+.card h3{font-family:"Space Grotesk";font-size:17px;margin-bottom:14px}
+.checklist{display:flex;flex-direction:column;gap:12px}
+.check-row{display:flex;align-items:flex-start;gap:10px}
+.check-dot{width:22px;height:22px;border-radius:50%;border:2px solid #cbd5e1;display:grid;place-items:center;flex:none;font-size:12px}
+.check-row.done .check-dot{background:var(--green);border-color:var(--green);color:#fff}
+.check-row small{display:block;color:var(--muted);margin-top:2px}
+.simple-list{display:flex;flex-direction:column}
+.simple-row{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
+.simple-row:last-child{border-bottom:none}
+.simple-row span:last-child{font-weight:800}
+.meetings-card{grid-column:1 / span 2}
+.notes-card{grid-column:3}
+.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.primary-btn{border:none;background:var(--blue);color:#fff;padding:10px 14px;border-radius:11px;font-weight:700}
+.secondary-btn{border:1px solid var(--line);background:#fff;color:var(--ink);padding:10px 14px;border-radius:11px;font-weight:700}
+.note{background:var(--orange-soft);border:1px solid #fed7aa;border-radius:13px;padding:13px;font-size:13px;line-height:1.55}
+.note small{display:block;color:var(--orange);font-weight:700;margin-bottom:4px}
+
+/* Meeting modal */
+.mini-overlay{position:fixed;inset:0;background:rgba(15,23,42,.38);display:none;align-items:center;justify-content:center;z-index:80;padding:20px}
+.mini-overlay.open{display:flex}
+.mini-modal{width:min(460px,95vw);background:#fff;border-radius:20px;padding:22px;box-shadow:0 24px 70px rgba(15,23,42,.28)}
+.mini-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.mini-head h3{font-family:"Space Grotesk"}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px}
+.form-group input,.form-group select,.form-group textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:#fafafa}
+.form-group textarea{min-height:100px;resize:vertical}
+.form-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:16px}
+
+@media(max-width:1100px){
+  .app{grid-template-columns:220px 1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .content-grid{grid-template-columns:1fr}
+  .member-grid{grid-template-columns:1fr 1fr}
+  .notes-card{grid-column:1 / -1}
+}
+@media(max-width:760px){
+  .app{grid-template-columns:1fr}
+  
+  .main{padding:18px}
+  .stats{grid-template-columns:1fr}
+  .member-grid{grid-template-columns:1fr}
+  .meetings-card,.notes-card{grid-column:auto}
+  th:nth-child(6),td:nth-child(6){display:none}
+}
+
+.se-check{
+  display:inline-grid;
+  place-items:center;
+  width:24px;
+  height:24px;
+  border-radius:50%;
+  background:var(--green-soft);
+  color:var(--green);
+  font-weight:900;
+  font-size:14px;
+  border:1px solid #bbf7d0;
+}
+.sessions-count{
+  font-weight:800;
+  color:var(--ink);
+  white-space:nowrap;
+}
+.sessions-count small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-weight:500;
+  font-size:11px;
+}
+
+
+.session-groups{display:grid;grid-template-columns:1fr;gap:16px}
+.session-group{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+.session-group-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#f8fafc;border-bottom:1px solid var(--line)}
+.session-group-head h4{font-family:"Space Grotesk";font-size:15px}
+.session-group-head span{font-size:12px;color:var(--muted);font-weight:700}
+.session-table{width:100%;border-collapse:collapse}
+.session-table th,.session-table td{padding:12px 14px;font-size:12.5px;border-bottom:1px solid var(--line)}
+.session-table tr:last-child td{border-bottom:none}
+.session-status{display:inline-flex;padding:5px 8px;border-radius:999px;font-size:11px;font-weight:800}
+.session-status.done{background:var(--green-soft);color:var(--green)}
+.session-status.pending{background:var(--orange-soft);color:var(--orange)}
+.session-action{border:1px solid var(--line);background:#fff;color:var(--blue);padding:7px 9px;border-radius:9px;font-size:11px;font-weight:800}
+.session-action:disabled{color:#9ca3af;background:#f3f4f6;cursor:default}
+.session-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.session-summary .mini-stat{border:1px solid var(--line);border-radius:13px;padding:12px;background:#fafafa}
+.session-summary .mini-stat small{display:block;color:var(--muted);font-size:11px}
+.session-summary .mini-stat strong{display:block;font-size:20px;margin-top:4px}
+@media(max-width:760px){.session-summary{grid-template-columns:1fr}}
+
+
+.meeting-section{margin-top:16px}
+.meeting-section:first-child{margin-top:0}
+.meeting-section-title{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.meeting-manual-row{display:grid;grid-template-columns:minmax(170px,1fr) 120px 130px;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line)}
+.meeting-manual-row:last-child{border-bottom:none}
+.meeting-manual-row strong{font-size:13px}
+.meeting-manual-row small{display:block;color:var(--muted);margin-top:2px}
+.manual-date{width:100%;border:1px solid var(--line);border-radius:9px;padding:8px 9px;font-size:12px;background:#fafafa}
+.manual-toggle{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff;font-size:12px;font-weight:800;color:var(--blue)}
+.manual-toggle.done{background:var(--green-soft);color:var(--green);border-color:#bbf7d0}
+@media(max-width:760px){.meeting-manual-row{grid-template-columns:1fr}}
+
+
+h1,h2,h3,h4,h5,h6,
+.display,
+.brand,
+.topbar h1,
+.panel-head h2,
+.member-name,
+.card h3,
+.modal h3{
+  font-family:var(--font-head);
+}
+
+
+.program-card-horizontal{
+  grid-column:1 / -1;
+}
+
+.program-track{
+  display:grid;
+  grid-template-columns:auto 1fr auto 1fr auto 1fr auto;
+  align-items:center;
+  gap:12px;
+  margin-top:14px;
+  padding:4px 2px 2px;
+}
+
+.program-step{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  min-width:105px;
+}
+
+.program-circle{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:2px solid #cbd5e1;
+  background:#fff;
+  color:#fff;
+  display:grid;
+  place-items:center;
+  font-weight:900;
+  margin-bottom:8px;
+}
+
+.program-step.done .program-circle{
+  background:var(--green);
+  border-color:var(--green);
+}
+
+.program-text strong{
+  display:block;
+  font-family:var(--font-head);
+  font-size:13px;
+}
+
+.program-text small{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:11.5px;
+}
+
+.program-connector{
+  width:100%;
+  height:2px;
+  background:#dbe2ea;
+  margin-top:-30px;
+}
+
+.program-connector.done{
+  background:var(--green);
+}
+
+@media(max-width:760px){
+  .program-track{
+    grid-template-columns:1fr;
+    gap:8px;
+    align-items:start;
+  }
+
+  .program-step{
+    flex-direction:row;
+    gap:10px;
+    text-align:left;
+    min-width:0;
+  }
+
+  .program-circle{
+    margin-bottom:0;
+    flex:none;
+  }
+
+  .program-connector{
+    width:2px;
+    height:20px;
+    margin:-2px 0 -2px 16px;
+  }
+}
+
+
+.notes-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-height:320px;
+  overflow-y:auto;
+  padding-right:4px;
+}
+
+.notes-list .note{
+  background:var(--orange-soft);
+  border:1px solid #fed7aa;
+  border-radius:13px;
+  padding:13px;
+  font-size:13px;
+  line-height:1.55;
+}
+
+.notes-list .note small{
+  display:block;
+  color:var(--orange);
+  font-weight:700;
+  margin-bottom:4px;
+}
+
+
+.member-contact{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 18px;
+  margin-top:12px;
+}
+
+.member-contact a{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  color:var(--ink);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:600;
+}
+
+.member-contact a:hover{
+  color:var(--blue);
+}
+
+.contact-icon{
+  width:26px;
+  height:26px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--blue-soft);
+  color:var(--blue);
+  font-size:12px;
+}
+
+.notes-card-wide{
+  grid-column:1 / -1;
+}
+
+.notes-list-horizontal{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  max-height:360px;
+  overflow-y:auto;
+}
+
+.note-row{
+  display:grid;
+  grid-template-columns:130px minmax(0,1fr) auto;
+  align-items:start;
+  gap:18px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+  background:transparent !important;
+  border-left:none !important;
+  border-right:none !important;
+  border-top:none !important;
+  border-radius:0 !important;
+}
+
+.note-row:last-child{
+  border-bottom:none;
+}
+
+.note-date{
+  font-size:12px;
+  font-weight:800;
+  color:var(--orange);
+  white-space:nowrap;
+}
+
+.note-text{
+  font-size:13px;
+  line-height:1.6;
+  color:var(--ink);
+}
+
+.note-actions{
+  display:flex;
+  gap:8px;
+}
+
+.note-actions button{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:9px;
+  padding:7px 9px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.note-edit{
+  color:var(--blue);
+}
+
+.note-delete{
+  color:var(--red);
+}
+
+@media(max-width:760px){
+  .note-row{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+  .note-actions{
+    justify-content:flex-start;
+  }
+}
+
+
+/* Diseño de ancho completo, sin navegación lateral */
+.fd-shell{display:block!important;width:100%}
+.fd-shell>.main{width:100%;max-width:none;margin:0 auto;padding:16px 22px 36px}
+@media(max-width:650px){.fd-shell>.main{padding:10px}}
+
+
+.main{max-width:1600px;margin:auto}.fd-tabs{display:flex;gap:8px;margin:0 0 20px;background:#fff;border:1px solid var(--line);padding:8px;border-radius:15px}.fd-tab{border:0;background:transparent;color:#64748b;padding:12px 24px;border-radius:10px;font-weight:750}.fd-tab.active{background:var(--blue-soft);color:var(--blue)}.fd-view{display:none}.fd-view.active{display:block}.fd-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}.fd-box{background:white;border:1px solid var(--line);border-radius:17px;padding:20px}.fd-label{font-size:12px;color:var(--muted);font-weight:650}.fd-number{font-size:30px;font-weight:800;margin-top:7px}.fd-heading{font-size:19px;font-weight:800;margin-bottom:14px}.fd-funnel{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}.fd-step{border:1px solid #dbe6f8;border-radius:13px;padding:15px 8px;background:#f2f7ff;text-align:center;cursor:pointer;min-width:0}.fd-step:nth-child(2){background:#f5f1ff}.fd-step:nth-child(3){background:#fff3eb}.fd-step:nth-child(4){background:#fff9e5}.fd-step:nth-child(5){background:#ecfbf5}.fd-step:nth-child(6){background:#ecfafa}.fd-step:nth-child(7){background:#eafaef}.fd-step.active{outline:3px solid #2f66f3}.fd-step strong{font-size:24px;display:block}.fd-step small{font-size:11px;display:block;margin-top:8px}.fd-bar{height:7px;border-radius:8px;background:#dbe4f3;margin-top:12px;overflow:hidden}.fd-bar span{display:block;height:100%;background:#2f66f3}.fd-tools{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:15px 0}.fd-tools input,.fd-tools select{border:1px solid var(--line);padding:10px;border-radius:10px;background:white;max-width:100%}.fd-table-wrap{overflow-x:auto}.fd-table{min-width:850px}.fd-action{background:#fff;color:var(--blue);border:1px solid #cbdafa;border-radius:9px;padding:8px 11px;font-size:12px;font-weight:700}.fd-action.primary{background:var(--blue);color:white}.fd-tag{background:#fff2e4;color:#a4560a;padding:5px 9px;border-radius:20px;font-size:11px}.fd-assets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.fd-asset{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff}.fd-asset .thumb{height:110px;border-radius:12px;background:linear-gradient(130deg,#082e3a,#11616d);color:white;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:800;padding:15px;margin-bottom:13px}.fd-modal{position:fixed;inset:0;background:#10182899;z-index:120;display:none;align-items:center;justify-content:center;padding:16px}.fd-modal.open{display:flex}.fd-dialog{width:min(640px,100%);background:white;padding:25px;border-radius:20px;max-height:90vh;overflow:auto}.fd-dialog textarea{width:100%;min-height:130px;border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:10px}.fd-muted{color:#64748b;font-size:13px}.fd-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.fd-hidden{display:none!important}@media(max-width:1100px){.fd-grid{grid-template-columns:repeat(2,1fr)}.fd-funnel{grid-template-columns:repeat(4,1fr)}}@media(max-width:650px){.fd-grid{grid-template-columns:1fr 1fr}.fd-funnel{grid-template-columns:repeat(2,1fr)}.fd-assets{grid-template-columns:1fr}.fd-tab{padding:11px 9px;font-size:12px}.main{padding:14px}.fd-box{padding:13px}}
+
+
+.fd-shell{display:grid;grid-template-columns:226px minmax(0,1fr)}.fd-sidebar{background:white;border:1px solid #e3e9f2;border-radius:16px;margin:10px 0 10px 10px;padding:22px 15px;min-height:calc(100vh - 20px)}.fd-brand{font-family:"Space Grotesk",sans-serif;font-size:19px;font-weight:800;color:#102b61;margin-bottom:34px;white-space:nowrap}.fd-brand span,.fd-brand:first-letter{color:#1769ef}.fd-sidebar nav{display:flex;flex-direction:column;gap:3px}.fd-sidebar nav>div,.fd-sidebar nav>strong,.fd-sidebar nav>button{font-size:13px;padding:10px 12px;text-align:left}.fd-sidebar nav>div span{float:right}.fd-sidebar nav>strong{margin-top:10px}.fd-sidebar nav>button{background:none;border:0;color:#627b9c;border-radius:10px;font-weight:650}.fd-sidebar nav>button.fd-side-active{background:#e8f0ff;color:#075bf1}.fd-sidebar .fd-side-muted{color:#7c8ca5}.main{max-width:none;min-width:0;padding:10px 16px 32px}.topbar{background:white;border:1px solid #e3e9f2;border-radius:15px;padding:13px 18px;margin-bottom:9px}.topbar h1{font-size:27px;color:#0b1941}.fd-subtitle{font-size:12px;color:#455571;margin-top:3px}.admin-card{box-shadow:none}.fd-tabs{padding:5px;margin:0 0 8px;border-radius:12px}.fd-tab{padding:8px 18px}.fd-demo{font-size:11px;color:#8995a9;text-align:right;margin-bottom:5px}.fd-grid{gap:10px;margin-bottom:10px}.fd-box{border-radius:13px;padding:16px;box-shadow:0 4px 22px rgba(15,23,42,.025)}.fd-kpi{display:flex;align-items:center;gap:13px;min-height:87px}.fd-kpi-icon{width:48px;height:48px;flex:none;display:grid;place-items:center;border-radius:12px;background:#e9f2ff;color:#1166ff;font-size:29px}.fd-kpi-icon.icon-1,.fd-kpi-icon.icon-3{background:#eafbf1;color:#12a44c}.fd-number{font-size:27px;margin:0;color:#0b1941}.fd-label{font-size:11px;color:#162447}.fd-kpi-change{margin-left:auto;color:#08a44e;font-size:12px;font-weight:800;text-align:right;white-space:nowrap}.fd-kpi-change small{display:block;color:#9ba6bb;font-size:10px;font-weight:400;margin-top:5px}.fd-funnel{gap:13px}.fd-step{position:relative;min-height:164px;border:0;border-radius:7px;padding:12px 8px 9px;background:#e6f1ff}.fd-step strong{font-size:23px;color:#0b1941}.fd-step small{font-size:11px;font-weight:700;color:#0b1941;margin-top:4px}.fd-stage-icon{font-size:23px;color:#1670ef;margin:10px 0 6px}.fd-step:nth-child(3) .fd-stage-icon{color:#fa7527}.fd-step:nth-child(4) .fd-stage-icon{color:#e99700}.fd-step:nth-child(5) .fd-stage-icon{color:#0c9f72}.fd-step:nth-child(6) .fd-stage-icon{color:#0c999a}.fd-step:nth-child(7) .fd-stage-icon{color:#13954b}.fd-step .fd-bar{margin-top:4px}.fd-step .fd-percent{color:#1254c6;margin-top:5px}.fd-see{display:inline-block;margin-top:7px;background:#e6efff;border:1px solid #c5d9fa;border-radius:6px;padding:6px 9px;color:#005bef;font-size:10px;font-weight:700}.fd-charts{display:grid;grid-template-columns:1.65fr 1fr .93fr;gap:10px}.fd-heading{font-size:17px;color:#111d40}.fd-heading small{display:block;font-size:11px;font-weight:400}.fd-chart-bars{height:162px;display:flex;align-items:flex-end;justify-content:space-around;gap:8px;border-bottom:1px solid #dbe3ee;padding:4px 4px 0}.fd-column{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}.fd-col-number{font-size:10px;font-weight:800;margin-bottom:5px}.fd-col-bar{width:85%;max-width:42px;border-radius:4px 4px 0 0}.fd-column small{text-align:center;font-size:9px;margin:6px 0 -29px;min-height:24px}.fd-chart-bars{margin-bottom:28px}.fd-donut{width:132px;height:132px;border-radius:50%;background:conic-gradient(#32b878 0 17%,#5199f6 17% 71%,#ffd064 71% 91%,#bfc4cd 91% 100%);position:relative;flex:none}.fd-donut:before{content:'581\A Total';white-space:pre;display:grid;place-items:center;text-align:center;position:absolute;inset:28px;background:white;border-radius:50%;font-size:17px;font-weight:800;color:#111d40}.fd-status-wrap{display:flex;align-items:center;gap:14px;margin-top:19px}.fd-legend{flex:1;font-size:10px;min-width:0}.fd-legend>div{display:flex;align-items:center;gap:5px;margin:11px 0;white-space:nowrap}.fd-legend i{width:9px;height:9px;border-radius:50%;flex:none}.fd-legend strong{font-weight:500;color:#7e8da8;margin-left:auto}.fd-time-row{display:grid;grid-template-columns:95px 1fr 38px;align-items:center;gap:8px;margin:12px 0;font-size:10px}.fd-time-row strong{font-weight:500}.fd-time-track{height:11px;background:#edf2fa;border-radius:3px}.fd-time-track i{display:block;height:100%;background:#85b7ff;border-radius:3px}.fd-tools{justify-content:flex-end}.fd-tools input{min-width:235px}.fd-table{min-width:1080px}.fd-table th,.fd-table td{font-size:11px;padding:10px 8px}.fd-person{display:flex;align-items:center;gap:8px;white-space:nowrap}.fd-person span{display:grid;place-items:center;background:#e6f0ff;color:#1b6cf0;width:29px;height:29px;border-radius:50%;font-weight:800}.fd-plan{display:inline-block;padding:5px 9px;background:#eff3ff;color:#2463e9;border-radius:20px;white-space:nowrap}.fd-stage-badge{display:inline-block;padding:6px 10px;border-radius:20px;background:#e7f1ff;color:#075be7;white-space:nowrap}.fd-stage-badge.stage-2{background:#fff0e4;color:#df6b1a}.fd-stage-badge.stage-3{background:#e6fbf1;color:#058b54}.fd-stage-badge.stage-4{background:#e8fbf0;color:#078652}.fd-stage-badge.stage-5{background:#e0f6f5;color:#087d81}.fd-action{white-space:nowrap}.fd-box .fd-row h3{margin-bottom:0}@media(max-width:1200px){.fd-charts{grid-template-columns:1fr 1fr}.fd-charts>.fd-box:first-child{grid-column:1/-1}.fd-kpi-change{display:none}}@media(max-width:850px){.fd-shell{grid-template-columns:1fr}.fd-sidebar{min-height:auto;margin:8px;padding:12px}.fd-sidebar nav{flex-direction:row;flex-wrap:wrap}.fd-sidebar nav>div,.fd-sidebar nav>strong,.fd-sidebar .fd-side-muted{display:none}.fd-brand{margin-bottom:8px}.fd-charts{grid-template-columns:1fr}.fd-charts>.fd-box:first-child{grid-column:auto}}@media(max-width:600px){.fd-grid{grid-template-columns:1fr 1fr}.fd-funnel{grid-template-columns:repeat(2,1fr)}.fd-kpi{gap:6px}.fd-kpi-icon{width:35px;height:35px;font-size:20px}.fd-number{font-size:21px}.topbar h1{font-size:23px}}
+
+
+/* Navegación única superior del módulo */
+.fd-tabs{position:sticky;top:0;z-index:20;display:flex;gap:5px;width:100%;box-shadow:0 3px 14px rgba(15,23,42,.045)}
+.fd-tab{flex:1;text-align:center;font-size:14px;padding:13px 18px}
+.fd-tab:focus-visible{outline:2px solid var(--blue);outline-offset:-2px}
+@media(max-width:650px){.fd-tab{font-size:12px;padding:12px 7px}}
+
+
+.cm-tabs{display:flex;gap:7px;margin:0 0 16px;background:#fff;border:1px solid var(--line);padding:7px;border-radius:13px}.cm-tab{flex:1;border:0;border-radius:9px;padding:12px 10px;background:transparent;color:#64748b;font-weight:750}.cm-tab.active{background:var(--blue-soft);color:var(--blue)}.cm-view{display:none}.cm-view.active{display:block}.cm-stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}.cm-stage{background:#f6f9ff;border:1px solid #dae5fb;border-radius:12px;padding:16px;text-align:left;cursor:pointer}.cm-stage.active{outline:2px solid var(--blue)}.cm-stage strong{display:block;font-size:26px;color:#0b1941}.cm-stage span{display:block;font-weight:750;margin-top:5px}.cm-stage small{color:var(--blue);display:block;margin-top:10px}.cm-columns{display:grid;grid-template-columns:1fr .8fr;gap:16px}.cm-label{display:block;font-weight:750;font-size:12px;margin:12px 0 6px}.cm-field{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px;background:#fff}.cm-buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}.cm-preview{background:#e6eee9;border-radius:15px;padding:22px;min-height:210px}.cm-bubble{background:#fff;border-radius:13px;padding:16px;white-space:pre-wrap;font-size:14px;line-height:1.6;max-width:460px;box-shadow:0 2px 9px #0001}.cm-resource{padding:12px;background:#f5f8ff;border-radius:10px;margin-top:12px;font-size:12px}.cm-library{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.cm-template-card{background:white;border:1px solid var(--line);border-radius:15px;padding:18px}.cm-template-card h3{font-size:16px;margin:10px 0}.cm-template-card p{font-size:13px;color:#64748b;line-height:1.55;white-space:pre-wrap}.cm-template-card .cm-buttons{margin-top:12px}.cm-overlay{position:fixed;inset:0;background:#10182899;z-index:160;display:none;align-items:center;justify-content:center;padding:15px}.cm-overlay.open{display:flex}.cm-dialog{background:#fff;border-radius:19px;padding:24px;width:min(650px,100%);max-height:92vh;overflow:auto}.cm-dialog textarea{min-height:120px}.cm-file-preview img{max-width:100%;max-height:160px;border-radius:8px;margin-top:8px}@media(max-width:900px){.cm-stages,.cm-library{grid-template-columns:repeat(2,1fr)}.cm-columns{grid-template-columns:1fr}}@media(max-width:580px){.cm-stages,.cm-library{grid-template-columns:1fr}.cm-tab{font-size:12px;padding:10px 5px}}
+
+
+#cm-control .fd-table{min-width:1150px}#cm-control .fd-table th,#cm-control .fd-table td{display:table-cell}.needs-cell{min-width:175px}.needs-link{display:block;border:0;background:none;color:var(--blue);font-size:11px;padding:5px 0;text-align:left}.needs-link:hover{text-decoration:underline}#needs-dialog{position:fixed;inset:0;margin:auto;width:min(560px,calc(100% - 32px));max-height:90vh;overflow:auto;border:1px solid var(--line);border-radius:20px;padding:24px;color:var(--ink);box-shadow:var(--shadow)}#needs-dialog:not([open]){display:none!important}#needs-dialog::backdrop{background:#10182899}.needs-answer{padding:14px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.5}.needs-answer p{margin-top:5px;color:var(--muted)}.needs-answer:last-child{border-bottom:0}
+
+.fd-charts{grid-template-columns:1fr 1fr;gap:18px}@media(max-width:850px){.fd-charts{grid-template-columns:1fr}}.fd-charts>.fd-box:first-child{grid-column:auto}
+:root{--font-head:Nunito,sans-serif;--font-body:Kanit,sans-serif;--blue:#51069c;--blue-soft:#f1e8fb;--bg:#f7f4fb;--ink:#24143b;--line:#e8e0f0}body{font-family:var(--font-body)}.topbar{border-top:5px solid #51069c}.brandmark{background:#51069c;color:#ffdc32;padding:9px 15px;border-radius:12px;font-family:Nunito;font-weight:900;font-size:22px}.fd-step.active{outline-color:#51069c}.fd-bar span,.fd-time-track i{background:#51069c}.fd-step,.fd-step:nth-child(n){background:#f1e8fb}.fd-step:last-child{background:#fff4bc}.fd-see,.fd-plan,.fd-stage-badge,.fd-person span,.fd-kpi-icon,.fd-kpi-icon.icon-1,.fd-kpi-icon.icon-3{background:#f1e8fb;color:#51069c;border-color:#e1d2f3}.fd-stage-icon,.fd-step:nth-child(n) .fd-stage-icon,.fd-step .fd-percent{color:#51069c}.fd-action.primary{background:#51069c;color:white}.fd-funnel{grid-template-columns:repeat(7,minmax(0,1fr))}.fd-charts{grid-template-columns:1fr 1fr}.fd-donut:before{content:attr(data-label)}.fd-shell>.main{max-width:1600px}.fd-heading,.fd-number,.topbar h1{color:#32105c}.fd-table{min-width:780px}.cm-stage{background:#f7f2fc;border-color:#e4d6f4}.cm-stage strong{color:#51069c}.fd-demo{color:#795b91}.program-track{display:flex;flex-wrap:wrap;gap:12px}.program-step{flex:1;min-width:85px}.program-circle{color:#51069c}.program-step.done .program-circle{color:white}.fd-status-wrap{flex-wrap:wrap}.fd-action:disabled{opacity:.5;cursor:not-allowed}.fd-tools{justify-content:flex-start}.fd-tab.active{background:#51069c;color:white}.cm-tab.active{background:#ffdc32;color:#32105c}@media(max-width:900px){.fd-funnel{grid-template-columns:repeat(4,1fr)}.fd-charts{grid-template-columns:1fr}}@media(max-width:550px){.fd-funnel{grid-template-columns:repeat(2,1fr)}.admin-card{display:none}.topbar{gap:10px}.brandmark{font-size:16px}.fd-grid{grid-template-columns:1fr 1fr}}
+ .emc-logo-crop{display:block;position:relative;overflow:hidden;width:253px;height:51px;max-width:100%;flex:none;margin:0 0 3px}
+.emc-logo-crop img{position:absolute;display:block;width:345px;max-width:none;height:auto;top:-70px;left:-47px}
+@media(max-width:550px){.emc-logo-crop{width:197px;height:40px}.emc-logo-crop img{width:268px;top:-54px;left:-36px}}
+ #fd-rows td:first-child{display:none} #fd-bulk{display:none!important}</style></head><body>
+<div class="app fd-shell">
+  <main class="main">
+    <div class="topbar">
+      <div><span class="emc-logo-crop"><img src="https://raw.githubusercontent.com/xserbia/menudocuenta/emc-portada/images/Logos%20MC%20-Pink%20RGB-03_edited.png" alt="El Menudo Cuenta" loading="eager" decoding="async"></span><h1 id="fd-main-title" style="margin-top:10px">EMC CRM</h1><p class="fd-subtitle">Journey, comunicaciones y clientes en un solo lugar.</p></div>
+      <div class="admin-card">
+        <div class="avatar">AA</div>
+        <div>
+          <strong>Equipo EMC</strong>
+          <small>Administrador</small>
+        </div>
+      </div>
+    </div>
+
+<div class="fd-tabs" role="tablist" aria-label="Navegación de gestión de clientes"><button class="fd-tab active" data-tab="journey">Journey</button><button class="fd-tab" data-tab="comms">Comunicaciones</button><button class="fd-tab" data-tab="clients">Clientes</button></div>
+<section id="fd-journey" class="fd-view active">
+ <div class="fd-demo">Prototipo · datos ilustrativos, no conectados</div>
+ <div class="fd-grid" id="fd-kpis"></div>
+ <div class="fd-box" style="margin-bottom:18px"><div class="fd-row"><h3 class="fd-heading">Embudo del Journey</h3><button class="fd-action" id="fd-reset">Ver todas las etapas</button></div><div class="fd-funnel" id="fd-funnel"></div><p class="fd-muted" style="margin-top:14px">Selecciona una etapa para ver los usuarios que se encuentran actualmente en ella. Las cifras del embudo indican usuarios que alcanzaron cada paso.</p></div>
+ <div class="fd-charts"><div class="fd-box"><h3 class="fd-heading">Estado de usuarios</h3><div id="fd-status"></div></div><div class="fd-box"><h3 class="fd-heading">Tiempo en cada etapa <small>(promedio)</small></h3><div id="fd-priorities"></div></div></div>
+ <div class="fd-box" style="margin-top:18px"><div class="fd-row"><div><h3 class="fd-heading" style="margin:0">Usuarios que requieren acción</h3><p class="fd-muted" id="fd-stage-caption">Todos los usuarios pendientes</p></div><button class="fd-action primary" id="fd-bulk" style="display:none">Preparar comunicación a seleccionados</button></div><div class="fd-tools"><input id="fd-search" placeholder="Buscar usuario o email" aria-label="Buscar usuarios"><select id="fd-stage"><option value="all">Todas las etapas</option></select><select id="fd-days"><option value="-1" selected>Toda la inactividad</option><option value="2">Más de 2 días</option><option value="3">Más de 3 días</option><option value="5">Más de 5 días</option></select></div><div class="fd-table-wrap"><table class="fd-table"><thead><tr><th style="display:none"><input type="checkbox" id="fd-all" aria-label="Seleccionar todos"></th><th>Nombre</th><th>Email</th><th>Elegibilidad</th><th>Etapa actual</th><th>Última actividad</th><th>Días sin avanzar</th><th>Acción sugerida</th><th></th></tr></thead><tbody id="fd-rows"></tbody></table></div></div>
+</section>
+<section id="fd-comms" class="fd-view">
+ <div class="fd-demo">Prototipo · usuarios ficticios · sin teléfonos reales</div>
+ <div class="cm-tabs"><button class="cm-tab active" data-cm="control">Centro de control</button><button class="cm-tab" data-cm="individual">WhatsApp individual</button><button class="cm-tab" data-cm="biblioteca">Biblioteca</button></div>
+ <div class="cm-view active" id="cm-control"><div class="fd-box"><h2 class="fd-heading">¿Dónde están detenidos los usuarios?</h2><p class="fd-muted">Selecciona una etapa para identificar a quién contactar individualmente.</p><div id="cm-stage-cards" class="cm-stages"></div></div><div class="fd-box" style="margin-top:16px"><div class="fd-row"><div><h3 class="fd-heading" style="margin:0">Usuarios que requieren acción</h3><p class="fd-muted">Seguimiento manual por WhatsApp Business</p></div></div><div class="fd-tools"><input id="cm-search" placeholder="Buscar por nombre o email"><select id="cm-need" aria-label="Filtrar por necesidad principal"><option value="all">Toda elegibilidad</option></select><select id="cm-filter"><option value="all">Todas las etapas</option></select></div><div class="fd-table-wrap"><table class="fd-table"><thead><tr><th>Nombre</th><th>Elegibilidad</th><th>Etapa actual</th><th>Días sin avanzar</th><th>Siguiente paso</th><th>Último contacto</th><th>Acción</th></tr></thead><tbody id="cm-users"></tbody></table></div></div></div>
+ <div class="cm-view" id="cm-individual"><div class="fd-row" style="margin-bottom:15px"><div><h2 class="fd-heading" style="margin:0">WhatsApp individual</h2><p class="fd-muted">Prepara el mensaje y ábrelo en WhatsApp Web. Tú confirmas el envío.</p></div></div><div class="cm-columns"><div class="fd-box"><label class="cm-label">Cliente</label><select id="cm-recipient" class="cm-field"></select><p id="cm-person-info" class="fd-muted" style="margin:8px 0 16px"></p><label class="cm-label">Plantilla</label><select id="cm-template" class="cm-field"></select><label class="cm-label">Mensaje editable</label><textarea id="cm-message" class="cm-field" rows="7"></textarea><label class="cm-label">Enlace adicional (opcional)</label><input id="cm-url" class="cm-field" placeholder="https://www.elmenudocuenta.com/"><div id="cm-resource" class="cm-resource" style="display:none"></div><div class="cm-buttons"><button class="fd-action primary" id="cm-open-wa">Abrir en WhatsApp ↗</button><button class="fd-action" id="cm-mark">Marcar como contactado</button></div><p id="cm-contact-status" class="fd-muted" style="margin-top:12px"></p></div><div class="fd-box"><h3 class="fd-heading">Vista previa</h3><div class="cm-preview"><div class="cm-bubble" id="cm-preview"></div></div><p class="fd-muted" style="margin-top:15px">El enlace prepara el texto, pero no envía el mensaje ni adjunta archivos automáticamente. Si la plantilla tiene un infográfico, descárgalo y adjúntalo en WhatsApp Web.</p></div></div></div>
+ <div class="cm-view" id="cm-biblioteca"><div class="fd-row" style="margin-bottom:16px"><div><h2 class="fd-heading" style="margin:0">Biblioteca de WhatsApp</h2><p class="fd-muted">Crea y edita plantillas, con infográficos, imágenes, PDF y videos.</p></div><button class="fd-action primary" id="cm-new">+ Nueva plantilla</button></div><div id="cm-library" class="cm-library"></div></div>
+</section>
+<section id="fd-clients" class="fd-view"><div class="fd-box"><h2 class="fd-heading">Directorio de clientes</h2><div class="fd-tools"><input id="client-search" placeholder="Buscar nombre, email o ID"><select id="client-elig"><option value="all">Toda elegibilidad</option></select></div><div class="fd-table-wrap"><table class="fd-table"><thead><tr><th>Usuario</th><th>Email</th><th>Elegibilidad</th><th>Etapa actual</th><th>Último contacto</th><th>Acción</th></tr></thead><tbody id="client-rows"></tbody></table></div></div></section></main></div><div class="overlay" id="profile"><div class="modal"><div class="modal-head"><h2 id="profile-name"></h2><button class="close-btn" id="profile-close">×</button></div><div class="modal-body" id="profile-body"></div></div></div><div class="cm-overlay" id="cm-editor"><div class="cm-dialog"><div class="fd-row"><h2 id="cm-editor-title">Nueva plantilla</h2><button class="fd-action" id="cm-close-editor">Cerrar ✕</button></div><input id="cm-edit-id" type="hidden"><label class="cm-label">Nombre de la plantilla</label><input id="cm-title" class="cm-field" placeholder="Ej. Verifica tu teléfono"><label class="cm-label">Etapa del Journey</label><select id="cm-tpl-stage" class="cm-field"></select><label class="cm-label">Mensaje</label><textarea id="cm-tpl-text" class="cm-field" placeholder="Hola {nombre}, ..."></textarea><p class="fd-muted">Usa {nombre} para personalizar el mensaje.</p><label class="cm-label">Adjuntar infográfico, imagen, PDF o video (máx. 1.5 MB en esta demo)</label><input id="cm-file" type="file" accept="image/png,image/jpeg,image/webp,application/pdf,video/mp4" class="cm-field"><div id="cm-file-preview" class="cm-resource cm-file-preview">Sin archivo adjunto</div><div class="cm-buttons"><button class="fd-action" id="cm-remove-file">Quitar adjunto</button><button class="fd-action primary" id="cm-save">Guardar plantilla</button></div></div></div><script>
+const $=id=>document.getElementById(id), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const stages=['Registro','Suscripción','Solicitud IBKR','Cuenta aprobada','Banco conectado','Primer depósito','Primera inversión'];
+const actions=['Verificar email y teléfono / activar suscripción','Completar solicitud IBKR','Completar tareas de IBKR o esperar revisión','Conectar banco','Realizar primer depósito','Realizar primera inversión','Seguimiento de servicio'];
+const eligibility=['Elegible','Por verificar','No elegible'];
+const people=Array.from({length:32},(_,i)=>({id:'DEMO-'+(100+i),name:'Usuario demo '+(i+1),email:'demo'+(i+1)+'@example.com',phone:'',stage:[0,0,0,1,1,2,2,3,4,5,6][i%11],days:(i*3)%10,elig:i%13===0?'No elegible':i%7===0?'Por verificar':'Elegible'}));
+people.forEach(p=>{if(p.elig!=='Elegible')p.stage=0});
+const read=(k,d)=>{try{return JSON.parse(localStorage.getItem('emc_demo_'+k))??d}catch{return d}},save=(k,v)=>{try{localStorage.setItem('emc_demo_'+k,JSON.stringify(v));return true}catch{alert('No se pudo guardar en este navegador.');return false}};
+let contacts=read('contacts',{}),notes=read('notes',{}),templates=read('templates',actions.map((title,stage)=>({id:'t'+stage,title,stage,text:'Hola {nombre}, te saludamos de El Menudo Cuenta. '+['¿Necesitas ayuda para verificar tu registro o activar tu suscripción?','¿Necesitas ayuda para completar tu solicitud de apertura de cuenta?','Revisa en EMC si IBKR requiere alguna acción adicional. Si tu solicitud está en revisión, espera su respuesta.','¿Necesitas ayuda para conectar tu banco desde EMC?','Si deseas continuar, puedes revisar las opciones de depósito en EMC.','Si deseas invertir, revisa las opciones disponibles y sus riesgos en EMC.','¿Podemos ayudarte con alguna duda sobre EMC?'][stage]+' Estamos para ayudarte.'}))), pending=null,selected=new Set();
+const active=people.filter(p=>p.elig==='Elegible'), actionable=people.filter(p=>p.elig!=='No elegible'&&p.stage<6), totals=stages.map((_,i)=>people.filter(p=>p.stage>=i).length), count=i=>actionable.filter(p=>p.stage===i).length;
+function tab(t){document.querySelectorAll('.fd-tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));document.querySelectorAll('.fd-view').forEach(b=>b.classList.toggle('active',b.id==='fd-'+t))}document.querySelectorAll('.fd-tab').forEach(b=>b.onclick=()=>tab(b.dataset.tab));
+function cm(t){document.querySelectorAll('.cm-tab').forEach(b=>b.classList.toggle('active',b.dataset.cm===t));document.querySelectorAll('.cm-view').forEach(b=>b.classList.toggle('active',b.id==='cm-'+t))}document.querySelectorAll('.cm-tab').forEach(b=>b.onclick=()=>cm(b.dataset.cm));
+for(const id of ['fd-stage','cm-filter','cm-tpl-stage'])stages.forEach((s,i)=>$(id).add(new Option(s,i)));for(const id of ['cm-need','client-elig'])eligibility.forEach(s=>$(id).add(new Option(s,s)));
+$('fd-kpis').innerHTML=[['◎','Registrados',people.length],['✓','Suscripciones alcanzadas',totals[1]],['▣','Cuentas aprobadas',totals[3]],['↗','Inversionistas',totals[6]]].map(x=>`<div class="fd-box fd-kpi"><div class="fd-kpi-icon">${x[0]}</div><div><div class="fd-number">${x[2]}</div><div class="fd-label">${x[1]}</div></div></div>`).join('');
+function funnel(){ $('fd-funnel').innerHTML=stages.map((s,i)=>`<button class="fd-step ${$('fd-stage').value==i?'active':''}" data-i="${i}"><strong>${totals[i]}</strong><small>${s}</small><div class="fd-stage-icon">${['◎','✓','▤','✓','▣','$','↗'][i]}</div><div class="fd-bar"><span style="width:${totals[i]/people.length*100}%"></span></div><small class="fd-percent">${Math.round(totals[i]/people.length*100)}%</small><span class="fd-see">Ver usuarios</span></button>`).join('');document.querySelectorAll('[data-i]').forEach(b=>b.onclick=()=>{$('fd-stage').value=b.dataset.i;$('fd-days').value='-1';render();$('fd-rows').scrollIntoView({block:'center',behavior:'smooth'})})}
+const groups=[['Inversionistas',totals[6],'#16a34a'],['Elegibles en proceso',active.filter(p=>p.stage<6).length,'#51069c'],['Por verificar',people.filter(p=>p.elig==='Por verificar').length,'#ffdc32'],['No elegibles',people.filter(p=>p.elig==='No elegible').length,'#bfc4cd']];let pos=0;const gradient=groups.map(g=>{let a=pos;pos+=g[1]/people.length*100;return `${g[2]} ${a}% ${pos}%`}).join(',');$('fd-status').innerHTML=`<div class="fd-status-wrap"><div class="fd-donut" data-label="${people.length} usuarios" style="background:conic-gradient(${gradient})"></div><div class="fd-legend">${groups.map(g=>`<div><i style="background:${g[2]}"></i>${g[0]} <strong>${g[1]}</strong></div>`).join('')}</div></div>`;
+$('fd-priorities').innerHTML=stages.slice(0,6).map((s,i)=>{let a=actionable.filter(p=>p.stage===i),v=a.length?a.reduce((n,p)=>n+p.days,0)/a.length:0;return `<div class="fd-time-row"><span>${s}</span><div class="fd-time-track"><i style="width:${v*10}%"></i></div><strong>${a.length?v.toFixed(1):'—'}</strong></div>`}).join('');
+const match=(p,q)=>[p.name,p.email,p.id].join(' ').toLowerCase().includes(q.toLowerCase());const last=p=>contacts[p.id]?new Date(contacts[p.id]).toLocaleString('es-US'):'Sin registrar';const next=p=>p.elig==='Por verificar'?'Confirmar elegibilidad':actions[p.stage];const badge=p=>`<span class="fd-stage-badge">${stages[p.stage]}</span>`;const person=p=>`<strong>${p.name}</strong><div class="fd-muted">${p.id}</div>`;
+function filtered(){let f=$('fd-stage').value;return (f==='6'?people:actionable).filter(p=>(f==='all'||p.stage==+f)&&p.days>+$('fd-days').value&&match(p,$('fd-search').value))}
+function render(){funnel();let a=filtered();$('fd-rows').innerHTML=a.map(p=>`<tr><td><input type="checkbox" data-check="${p.id}" ${selected.has(p.id)?'checked':''}></td><td>${person(p)}</td><td>${p.email}</td><td>${p.elig}</td><td>${badge(p)}</td><td>Hace ${p.days} días</td><td>${p.days}</td><td>${next(p)}</td><td><button class="fd-action" data-wa="${p.id}">Contactar</button></td></tr>`).join('')||'<tr><td colspan="9">Sin usuarios para estos filtros.</td></tr>';$('fd-all').checked=a.length>0&&a.every(p=>selected.has(p.id));$('fd-stage-caption').textContent=a.length+' usuarios · datos de demostración';$('fd-rows').querySelectorAll('[data-check]').forEach(b=>b.onchange=()=>{b.checked?selected.add(b.dataset.check):selected.delete(b.dataset.check);render()});bindWA();renderControl();renderClients()}
+function bindWA(){document.querySelectorAll('[data-wa]').forEach(b=>b.onclick=()=>selectPerson(b.dataset.wa))} $('fd-all').onchange=e=>{filtered().forEach(p=>e.target.checked?selected.add(p.id):selected.delete(p.id));render()};$('fd-reset').onclick=()=>{$('fd-stage').value='all';$('fd-days').value='-1';render()};for(const id of ['fd-search','fd-stage','fd-days'])$(id).oninput=render;
+function renderControl(){let f=$('cm-filter').value;$('cm-stage-cards').innerHTML=stages.slice(0,6).map((s,i)=>`<button class="cm-stage ${f==i?'active':''}" data-cstage="${i}"><strong>${count(i)}</strong><span>${s}</span><small>Ver usuarios →</small></button>`).join('');document.querySelectorAll('[data-cstage]').forEach(b=>b.onclick=()=>{$('cm-filter').value=b.dataset.cstage;renderControl()});$('cm-users').innerHTML=actionable.filter(p=>(f==='all'||p.stage==+f)&&($('cm-need').value==='all'||p.elig===$('cm-need').value)&&match(p,$('cm-search').value)).map(p=>`<tr><td>${person(p)}<div>${p.email}</div></td><td>${p.elig}</td><td>${badge(p)}</td><td>${p.days}</td><td>${next(p)}</td><td>${last(p)}</td><td><button class="fd-action" data-wa="${p.id}">Abrir ficha →</button></td></tr>`).join('')||'<tr><td colspan="7">Sin resultados.</td></tr>';bindWA()}for(const id of ['cm-search','cm-filter','cm-need'])$(id).oninput=renderControl;
+function renderClients(){$('client-rows').innerHTML=people.filter(p=>match(p,$('client-search').value)&&($('client-elig').value==='all'||p.elig===$('client-elig').value)).map(p=>`<tr><td>${person(p)}</td><td>${p.email}</td><td>${p.elig}</td><td>${badge(p)}</td><td>${last(p)}</td><td><button class="fd-action" data-profile="${p.id}">Ver ficha</button></td></tr>`).join('')||'<tr><td colspan="6">Sin resultados.</td></tr>';document.querySelectorAll('[data-profile]').forEach(b=>b.onclick=()=>profile(b.dataset.profile))} $('client-search').oninput=renderClients;$('client-elig').onchange=renderClients;
+function profile(id){let p=people.find(p=>p.id===id);$('profile-name').textContent=p.name;$('profile-body').innerHTML=`<p>${p.id} · ${p.email} · ${p.elig}</p><div class="card" style="margin:16px 0"><h3>Journey de inversión</h3><div class="program-track">${stages.map((s,i)=>`<div class="program-step ${i<=p.stage?'done':''}"><div class="program-circle">${i<=p.stage?'✓':i+1}</div><strong>${s}</strong></div>`).join('')}</div></div><div class="card"><h3>Seguimiento comercial</h3><p>${next(p)}</p><p>Último contacto: ${last(p)}</p><button class="fd-action" data-wa="${id}">WhatsApp individual</button></div><div class="card" style="margin-top:16px"><h3>Notas internas</h3>${(notes[id]||[]).map(n=>`<div class="note" style="margin:8px 0">${esc(n)}</div>`).join('')}<textarea class="cm-field" id="new-note" placeholder="Nota de seguimiento (sin información delicada)"></textarea><button class="fd-action primary" id="save-note">Guardar nota</button></div>`;$('save-note').onclick=()=>{let n=$('new-note').value.trim();if(n){(notes[id]??=[]).push(n);save('notes',notes);profile(id)}};bindWA();$('profile').classList.add('open')} $('profile-close').onclick=()=>$('profile').classList.remove('open');
+$('cm-recipient').innerHTML='<option value="">Selecciona un usuario</option>'+people.filter(p=>p.elig!=='No elegible').map(p=>`<option value="${p.id}">${p.name} · ${stages[p.stage]}</option>`).join('');const recipient=()=>people.find(p=>p.id===$('cm-recipient').value);const tpl=()=>templates.find(t=>t.id===$('cm-template').value);function options(){let old=$('cm-template').value;$('cm-template').innerHTML=templates.map(t=>`<option value="${esc(t.id)}">${esc(t.title)}</option>`).join('');if(templates.some(t=>t.id===old))$('cm-template').value=old}function preview(){let p=recipient();$('cm-preview').textContent=$('cm-message').value.replaceAll('{nombre}',p?p.name:'{nombre}')+($('cm-url').value?'\n\n'+$('cm-url').value:'')}
+function load(){let t=tpl();$('cm-message').value=t?.text||'';$('cm-resource').style.display=t?.attachment?'block':'none';$('cm-resource').innerHTML=t?.attachment?`<button class="fd-action" id="download-attachment">Descargar ${esc(t.attachment.name)}</button>`:'';if(t?.attachment)$('download-attachment').onclick=()=>{let a=document.createElement('a');a.href=t.attachment.data;a.download=t.attachment.name;a.click()};preview()}
+function personInfo(){let p=recipient();$('cm-person-info').textContent=p?`${p.email} · ${stages[p.stage]} · teléfono no disponible (demo)`:'Selecciona un usuario';$('cm-contact-status').textContent=p?'Último contacto: '+last(p):'';preview()}function selectPerson(id){$('profile').classList.remove('open');tab('comms');cm('individual');$('cm-recipient').value=id;let p=recipient();if(p){$('cm-template').value=templates.find(t=>t.stage===p.stage)?.id||templates[0]?.id;load()}personInfo()}
+$('cm-recipient').onchange=()=>selectPerson($('cm-recipient').value);$('cm-template').onchange=load;$('cm-message').oninput=preview;$('cm-url').oninput=preview;$('cm-open-wa').onclick=()=>alert('Demo sin teléfonos reales. No se enviará ningún mensaje.');$('cm-mark').onclick=()=>{let p=recipient();if(p&&confirm('¿Registrar un contacto simulado?')){contacts[p.id]=new Date().toISOString();save('contacts',contacts);personInfo();render()}};
+function library(){$('cm-library').innerHTML=templates.map(t=>`<article class="cm-template-card"><span class="fd-tag">${stages[t.stage]}</span><h3>${esc(t.title)}</h3><p>${esc(t.text)}</p><div class="cm-buttons"><button class="fd-action" data-use="${esc(t.id)}">Usar</button><button class="fd-action" data-edit="${esc(t.id)}">Editar</button></div></article>`).join('');document.querySelectorAll('[data-use]').forEach(b=>b.onclick=()=>{$('cm-template').value=b.dataset.use;load();cm('individual')});document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>editor(b.dataset.edit))}function editor(id){let t=templates.find(t=>t.id===id);$('cm-edit-id').value=id||'';$('cm-title').value=t?.title||'';$('cm-tpl-stage').value=t?.stage||0;$('cm-tpl-text').value=t?.text||'Hola {nombre}, ';pending=t?.attachment||null;$('cm-file').value='';filePreview();$('cm-editor').classList.add('open')}function filePreview(){$('cm-file-preview').textContent=pending?.name||'Sin archivo adjunto'}$('cm-new').onclick=()=>editor('');$('cm-close-editor').onclick=()=>$('cm-editor').classList.remove('open');$('cm-remove-file').onclick=()=>{pending=null;$('cm-file').value='';filePreview()};$('cm-file').onchange=e=>{let f=e.target.files[0];if(!f)return;if(f.size>1500000||!['image/png','image/jpeg','image/webp','application/pdf','video/mp4'].includes(f.type)){alert('Archivo no admitido o superior a 1.5 MB');return}let r=new FileReader();r.onload=()=>{pending={name:f.name,data:r.result};filePreview()};r.readAsDataURL(f)};$('cm-save').onclick=()=>{let id=$('cm-edit-id').value||'custom-'+Date.now(),title=$('cm-title').value.trim(),text=$('cm-tpl-text').value.trim();if(!title||!text)return alert('Completa título y mensaje');let t={id,title,text,stage:+$('cm-tpl-stage').value,attachment:pending};templates=templates.filter(x=>x.id!==id).concat(t);save('templates',templates);options();library();$('cm-editor').classList.remove('open')};options();load();library();render();
 </script></body></html>
